@@ -4,6 +4,9 @@ import json
 import os
 import time
 import urllib.request
+from datetime import datetime
+from zoneinfo import ZoneInfo
+
 
 API_KEY = os.environ["FUGLE_API_KEY"].strip()
 
@@ -14,6 +17,12 @@ FUGLE_BASE = "https://api.fugle.tw/marketdata/v1.0/stock"
 
 BATCH_SIZE = 50
 
+RESULT_FILE = "data/market_scan_results.json"
+
+
+# =========================================================
+# 基本工具
+# =========================================================
 
 def get_bytes(url, headers=None):
     req = urllib.request.Request(
@@ -29,21 +38,32 @@ def get_bytes(url, headers=None):
 
 def get_json(url, headers=None):
     raw = get_bytes(url, headers=headers)
-    return json.loads(raw.decode("utf-8"))
+
+    return json.loads(
+        raw.decode("utf-8")
+    )
 
 
 def safe_num(value):
     try:
         if value is None:
             return 0
+
         return float(value)
+
     except (TypeError, ValueError):
         return 0
 
 
-# =========================
-# TWSE 上市股票
-# =========================
+def today_taipei():
+    return datetime.now(
+        ZoneInfo("Asia/Taipei")
+    ).strftime("%Y-%m-%d")
+
+
+# =========================================================
+# TWSE 上市清單
+# =========================================================
 
 def get_twse_symbols():
     data = get_json(TWSE_LIST_URL)
@@ -51,33 +71,57 @@ def get_twse_symbols():
     stocks = []
 
     for item in data:
-        symbol = str(item.get("公司代號", "")).strip()
-        name = str(item.get("公司簡稱", "")).strip()
+        symbol = str(
+            item.get("公司代號", "")
+        ).strip()
 
-        if len(symbol) == 4 and symbol.isdigit():
-            stocks.append({
-                "symbol": symbol,
-                "name": name,
-                "market": "TWSE",
-            })
+        name = str(
+            item.get("公司簡稱", "")
+        ).strip()
 
-    print(f"TWSE 上市股票數：{len(stocks)}")
+        if (
+            len(symbol) == 4
+            and symbol.isdigit()
+        ):
+            stocks.append(
+                {
+                    "symbol": symbol,
+                    "name": name,
+                    "market": "TWSE",
+                }
+            )
+
+    print(
+        f"TWSE 上市股票數："
+        f"{len(stocks)}"
+    )
 
     return stocks
 
 
-# =========================
-# TPEx 上櫃股票 CSV
-# =========================
+# =========================================================
+# TPEx 上櫃清單
+# =========================================================
 
 def decode_csv_bytes(raw):
-    for encoding in ["utf-8-sig", "utf-8", "cp950", "big5"]:
+    encodings = [
+        "utf-8-sig",
+        "utf-8",
+        "cp950",
+        "big5",
+    ]
+
+    for encoding in encodings:
         try:
             return raw.decode(encoding)
+
         except UnicodeDecodeError:
             pass
 
-    return raw.decode("utf-8", errors="ignore")
+    return raw.decode(
+        "utf-8",
+        errors="ignore",
+    )
 
 
 def get_tpex_symbols():
@@ -95,11 +139,6 @@ def get_tpex_symbols():
         io.StringIO(text)
     )
 
-    print(
-        "TPEx CSV 欄位：",
-        reader.fieldnames
-    )
-
     stocks = []
     seen = set()
 
@@ -112,16 +151,6 @@ def get_tpex_symbols():
             row.get("公司簡稱", "")
         ).strip()
 
-        if not symbol:
-            symbol = str(
-                row.get("證券代號", "")
-            ).strip()
-
-        if not name:
-            name = str(
-                row.get("證券名稱", "")
-            ).strip()
-
         if (
             len(symbol) == 4
             and symbol.isdigit()
@@ -129,11 +158,13 @@ def get_tpex_symbols():
         ):
             seen.add(symbol)
 
-            stocks.append({
-                "symbol": symbol,
-                "name": name,
-                "market": "TPEx",
-            })
+            stocks.append(
+                {
+                    "symbol": symbol,
+                    "name": name,
+                    "market": "TPEx",
+                }
+            )
 
     print(
         f"TPEx 上櫃股票數："
@@ -143,9 +174,9 @@ def get_tpex_symbols():
     return stocks
 
 
-# =========================
-# Fugle 即時行情
-# =========================
+# =========================================================
+# Fugle 行情
+# =========================================================
 
 def get_quote(symbol):
     url = (
@@ -162,9 +193,9 @@ def get_quote(symbol):
     )
 
 
-# =========================
-# 評分
-# =========================
+# =========================================================
+# 評分模型
+# =========================================================
 
 def score_stock(data):
     price = safe_num(
@@ -193,7 +224,10 @@ def score_stock(data):
         total.get("tradeValue")
     )
 
-    if price <= 0 or reference <= 0:
+    if (
+        price <= 0
+        or reference <= 0
+    ):
         return None
 
     change_pct = (
@@ -204,7 +238,10 @@ def score_stock(data):
 
     score = 50
 
+    # -------------------------
     # 價格動能
+    # -------------------------
+
     if change_pct >= 7:
         score += 20
 
@@ -226,7 +263,11 @@ def score_stock(data):
     else:
         score -= 10
 
-    # 收在高檔
+
+    # -------------------------
+    # 收盤 / 現價靠近高點
+    # -------------------------
+
     close_strength = 0
 
     if high > low > 0:
@@ -247,7 +288,11 @@ def score_stock(data):
         elif close_strength < 0.30:
             score -= 8
 
+
+    # -------------------------
     # 成交量
+    # -------------------------
+
     if volume >= 50000:
         score += 12
 
@@ -263,7 +308,11 @@ def score_stock(data):
     elif volume < 1000:
         score -= 4
 
+
+    # -------------------------
     # 成交金額
+    # -------------------------
+
     if value >= 500_000_000:
         score += 8
 
@@ -273,9 +322,14 @@ def score_stock(data):
     elif value >= 100_000_000:
         score += 3
 
+
+    # -------------------------
     # 過熱扣分
+    # -------------------------
+
     if change_pct >= 9:
         score -= 5
+
 
     return {
         "price": price,
@@ -306,9 +360,9 @@ def classify(score):
     return "C級：暫不碰"
 
 
-# =========================
+# =========================================================
 # A / B / C 點
-# =========================
+# =========================================================
 
 def calc_abc(price, high, low):
     if price <= 0:
@@ -332,21 +386,136 @@ def calc_abc(price, high, low):
     )
 
 
-# =========================
+# =========================================================
+# 累積結果
+# =========================================================
+
+def load_saved_results():
+    if not os.path.exists(RESULT_FILE):
+        return {
+            "scan_date": today_taipei(),
+            "stocks": {},
+            "completed_batches": [],
+        }
+
+    try:
+        with open(
+            RESULT_FILE,
+            "r",
+            encoding="utf-8",
+        ) as f:
+            data = json.load(f)
+
+    except Exception:
+        data = {
+            "scan_date": today_taipei(),
+            "stocks": {},
+            "completed_batches": [],
+        }
+
+    # 換交易日就清空舊資料
+    if (
+        data.get("scan_date")
+        != today_taipei()
+    ):
+        print(
+            "偵測到新日期，"
+            "重新開始全市場掃描。"
+        )
+
+        return {
+            "scan_date": today_taipei(),
+            "stocks": {},
+            "completed_batches": [],
+        }
+
+    return data
+
+
+def save_results(data):
+    os.makedirs(
+        os.path.dirname(RESULT_FILE),
+        exist_ok=True,
+    )
+
+    with open(
+        RESULT_FILE,
+        "w",
+        encoding="utf-8",
+    ) as f:
+        json.dump(
+            data,
+            f,
+            ensure_ascii=False,
+            indent=2,
+        )
+
+
+# =========================================================
+# Top 20 顯示
+# =========================================================
+
+def print_top20(
+    title,
+    rows,
+):
+    print("")
+    print("===================================")
+    print(title)
+    print("===================================")
+    print("")
+
+    for rank, r in enumerate(
+        rows[:20],
+        start=1,
+    ):
+        print(
+            f"{rank:02d}. "
+            f"{r['symbol']} "
+            f"{r['name']} "
+            f"[{r['market']}] | "
+            f"價格 {r['price']:.2f} | "
+            f"漲跌 "
+            f"{r['change_pct']:+.2f}% | "
+            f"成交量 "
+            f"{int(r['volume'])} | "
+            f"分數 {r['score']} | "
+            f"{classify(r['score'])}"
+        )
+
+        print(
+            f"    A點 "
+            f"{r['a']:.2f} | "
+            f"B點 "
+            f"{r['b']:.2f} | "
+            f"C點 "
+            f"{r['c']:.2f}"
+        )
+
+
+# =========================================================
 # 主程式
-# =========================
+# =========================================================
 
 def main():
     print("")
     print("===================================")
-    print("華安全市場 TWSE + TPEx 輪掃器")
+    print("華安全市場累積輪掃器")
+    print("TWSE + TPEx + Fugle")
     print("===================================")
     print("")
+
+    # -------------------------
+    # 股票清單
+    # -------------------------
 
     twse = get_twse_symbols()
     tpex = get_tpex_symbols()
 
-    all_stocks = twse + tpex
+    all_stocks = (
+        twse
+        + tpex
+    )
 
     unique = {}
 
@@ -361,10 +530,12 @@ def main():
         key=lambda x: x["symbol"],
     )
 
+    total_stock_count = len(stocks)
+
     print("")
     print(
         f"全市場股票總數："
-        f"{len(stocks)}"
+        f"{total_stock_count}"
     )
 
     if not stocks:
@@ -372,7 +543,11 @@ def main():
             "完全抓不到股票清單"
         )
 
-    # GitHub Run 自動輪掃
+
+    # -------------------------
+    # 批次
+    # -------------------------
+
     run_number = int(
         os.environ.get(
             "GITHUB_RUN_NUMBER",
@@ -381,7 +556,7 @@ def main():
     )
 
     total_batches = (
-        len(stocks)
+        total_stock_count
         + BATCH_SIZE
         - 1
     ) // BATCH_SIZE
@@ -390,6 +565,10 @@ def main():
         run_number - 1
     ) % total_batches
 
+    batch_no = (
+        batch_index + 1
+    )
+
     start = (
         batch_index
         * BATCH_SIZE
@@ -397,7 +576,7 @@ def main():
 
     end = min(
         start + BATCH_SIZE,
-        len(stocks),
+        total_stock_count,
     )
 
     batch = stocks[start:end]
@@ -413,7 +592,7 @@ def main():
 
     print(
         f"本次批次："
-        f"{batch_index + 1}/"
+        f"{batch_no}/"
         f"{total_batches}"
     )
 
@@ -429,7 +608,12 @@ def main():
 
     print("")
 
-    results = []
+
+    # -------------------------
+    # 掃本批
+    # -------------------------
+
+    batch_results = []
 
     for i, stock in enumerate(
         batch,
@@ -440,9 +624,11 @@ def main():
         market = stock["market"]
 
         try:
-            data = get_quote(symbol)
+            quote = get_quote(symbol)
 
-            scored = score_stock(data)
+            scored = score_stock(
+                quote
+            )
 
             if scored is None:
                 print(
@@ -454,6 +640,7 @@ def main():
                 )
 
                 time.sleep(1.05)
+
                 continue
 
             a, b, c = calc_abc(
@@ -462,7 +649,7 @@ def main():
                 scored["low"],
             )
 
-            results.append({
+            result = {
                 "symbol": symbol,
                 "name": name,
                 "market": market,
@@ -470,7 +657,11 @@ def main():
                 "b": b,
                 "c": c,
                 **scored,
-            })
+            }
+
+            batch_results.append(
+                result
+            )
 
             print(
                 f"[{i:02d}/{len(batch)}] "
@@ -490,52 +681,157 @@ def main():
 
         time.sleep(1.05)
 
-    results.sort(
+
+    # -------------------------
+    # 本批排序
+    # -------------------------
+
+    batch_results.sort(
+        key=lambda x: x["score"],
+        reverse=True,
+    )
+
+    print_top20(
+        "本批 TOP 20",
+        batch_results,
+    )
+
+
+    # -------------------------
+    # 載入舊累積結果
+    # -------------------------
+
+    saved = load_saved_results()
+
+    saved_stocks = (
+        saved.get("stocks")
+        or {}
+    )
+
+    completed_batches = (
+        saved.get(
+            "completed_batches"
+        )
+        or []
+    )
+
+
+    # -------------------------
+    # 把本批全部加入
+    # -------------------------
+
+    for result in batch_results:
+        saved_stocks[
+            result["symbol"]
+        ] = result
+
+
+    # 記錄完成批次
+    if batch_no not in completed_batches:
+        completed_batches.append(
+            batch_no
+        )
+
+    completed_batches = sorted(
+        completed_batches
+    )
+
+
+    saved = {
+        "scan_date": today_taipei(),
+        "total_market_stocks": (
+            total_stock_count
+        ),
+        "total_batches": (
+            total_batches
+        ),
+        "completed_batches": (
+            completed_batches
+        ),
+        "stocks": saved_stocks,
+    }
+
+    save_results(saved)
+
+
+    # -------------------------
+    # 全市場暫定排名
+    # -------------------------
+
+    accumulated = list(
+        saved_stocks.values()
+    )
+
+    accumulated.sort(
         key=lambda x: x["score"],
         reverse=True,
     )
 
     print("")
-    print("===================================")
-    print("本批 TOP 20")
-    print("===================================")
-    print("")
-
-    for rank, r in enumerate(
-        results[:20],
-        start=1,
-    ):
-        print(
-            f"{rank:02d}. "
-            f"{r['symbol']} "
-            f"{r['name']} "
-            f"[{r['market']}] | "
-            f"價格 {r['price']:.2f} | "
-            f"漲跌 "
-            f"{r['change_pct']:+.2f}% | "
-            f"成交量 "
-            f"{int(r['volume'])} | "
-            f"分數 "
-            f"{r['score']} | "
-            f"{classify(r['score'])}"
-        )
-
-        print(
-            f"    A點 "
-            f"{r['a']:.2f} | "
-            f"B點 "
-            f"{r['b']:.2f} | "
-            f"C點 "
-            f"{r['c']:.2f}"
-        )
-
-    print("")
-    print("===================================")
     print(
-        f"本批有效股票："
-        f"{len(results)}"
+        f"目前已累積有效股票："
+        f"{len(accumulated)} / "
+        f"{total_stock_count}"
     )
-    print("===================================")
+
+    print(
+        f"已完成批次："
+        f"{len(completed_batches)} / "
+        f"{total_batches}"
+    )
+
+    print(
+        "完成批次編號：",
+        completed_batches
+    )
+
+
+    print_top20(
+        "全市場暫定 TOP 20",
+        accumulated,
+    )
+
+
+    # -------------------------
+    # 判斷是否整輪完成
+    # -------------------------
+
+    if (
+        len(completed_batches)
+        >= total_batches
+    ):
+        print("")
+        print(
+            "###################################"
+        )
+        print(
+            "✅ 本輪全市場掃描完成"
+        )
+        print(
+            "###################################"
+        )
+
+        print_top20(
+            "全市場最終 TOP 20",
+            accumulated,
+        )
+
+    else:
+        remaining = (
+            total_batches
+            - len(completed_batches)
+        )
+
+        print("")
+        print(
+            f"尚剩 {remaining} 批"
+            f"尚未完成。"
+        )
+
+        print(
+            "繼續開新的 "
+            "Run workflow 即可。"
+        )
 
 
 if __name__ == "__main__":
