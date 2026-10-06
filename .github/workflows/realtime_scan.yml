@@ -3,6 +3,9 @@ name: Realtime Stock Scan
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   scan:
     runs-on: ubuntu-latest
@@ -10,6 +13,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -21,3 +26,11 @@ jobs:
           FUGLE_API_KEY: ${{ secrets.FUGLE_API_KEY }}
         run: |
           python scripts/realtime_scan.py
+
+      - name: Save scan results
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add data/market_scan_results.json
+          git diff --cached --quiet || git commit -m "Update market scan results"
+          git push
