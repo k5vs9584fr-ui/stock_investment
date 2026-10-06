@@ -8,10 +8,9 @@ API_KEY = os.environ["FUGLE_API_KEY"].strip()
 
 BASE = "https://api.fugle.tw/marketdata/v1.0/stock"
 
-# 免費版先保守控制在 50 檔左右，避免 60 次/分鐘限制
+# 免費方案保守控制
 BATCH_SIZE = 50
 
-# 掃描進度檔
 STATE_FILE = "data/realtime_scan_state.json"
 
 
@@ -55,24 +54,28 @@ def save_state(state):
 
 
 def fetch_market_symbols(exchange):
-    data = api_get(
-        "/intraday/tickers",
-        {
-            "type": "EQUITY",
-            "exchange": exchange,
-            "market": "TSE" if exchange == "TWSE" else "OTC",
-        },
-    )
+    # 完全照 Fugle 官方格式：
+    # /intraday/tickers?type=EQUITY&exchange=TWSE&isNormal=true
 
-    items = data.get("data", [])
+    params = {
+        "type": "EQUITY",
+        "exchange": exchange,
+        "isNormal": "true",
+    }
+
+    data = api_get("/intraday/tickers", params)
+
+    items = data.get("data") or []
+
+    print(f"{exchange} API 回傳股票數：{len(items)}")
 
     results = []
 
     for item in items:
         symbol = str(item.get("symbol", "")).strip()
-        name = item.get("name", "")
+        name = str(item.get("name", "")).strip()
 
-        # 台股一般股票代碼通常 4 碼
+        # 先限定一般 4 碼股票
         if len(symbol) == 4 and symbol.isdigit():
             results.append(
                 {
@@ -81,6 +84,8 @@ def fetch_market_symbols(exchange):
                     "exchange": exchange,
                 }
             )
+
+    print(f"{exchange} 四碼普通股數：{len(results)}")
 
     return results
 
@@ -102,14 +107,26 @@ def score_stock(data):
     if close_price <= 0 or reference_price <= 0:
         return 0, {}
 
-    change_pct = (close_price - reference_price) / reference_price * 100
+    change_pct = (
+        (close_price - reference_price)
+        / reference_price
+        * 100
+    )
 
     close_strength = 0
     range_pct = 0
 
     if high_price > low_price > 0:
-        close_strength = (close_price - low_price) / (high_price - low_price)
-        range_pct = (high_price - low_price) / low_price * 100
+        close_strength = (
+            (close_price - low_price)
+            / (high_price - low_price)
+        )
+
+        range_pct = (
+            (high_price - low_price)
+            / low_price
+            * 100
+        )
 
     score = 50
 
@@ -129,7 +146,7 @@ def score_stock(data):
     else:
         score -= 10
 
-    # 現價靠近高點
+    # 價格靠近當日高點
     if close_strength >= 0.92:
         score += 16
     elif close_strength >= 0.80:
@@ -151,7 +168,7 @@ def score_stock(data):
     elif total_volume < 1000:
         score -= 4
 
-    # 成交值，避免太冷門
+    # 成交金額
     if total_value >= 500_000_000:
         score += 8
     elif total_value >= 200_000_000:
@@ -159,13 +176,13 @@ def score_stock(data):
     elif total_value >= 100_000_000:
         score += 3
 
-    # 波動
+    # 波動率
     if 1.0 <= range_pct <= 6.5:
         score += 5
     elif range_pct >= 10:
         score -= 5
 
-    # 過熱扣分
+    # 過熱
     if change_pct >= 9:
         score -= 5
 
@@ -183,12 +200,16 @@ def score_stock(data):
 def classify(score):
     if score >= 88:
         return "S級：強勢發動"
-    elif score >= 80:
+
+    if score >= 80:
         return "A+級：高度準備發動"
-    elif score >= 72:
+
+    if score >= 72:
         return "A級：準備發動"
-    elif score >= 64:
+
+    if score >= 64:
         return "B級：觀察"
+
     return "C級：暫不碰"
 
 
@@ -196,30 +217,53 @@ def calc_abc(price, high, low):
     if price <= 0:
         return 0, 0, 0
 
-    a = max(low, price * 0.985) if low > 0 else price * 0.985
-    b = max(high, price * 1.015) if high > 0 else price * 1.015
-    c = min(low, price * 0.97) if low > 0 else price * 0.97
+    if low > 0:
+        a = max(low, price * 0.985)
+        c = min(low, price * 0.97)
+    else:
+        a = price * 0.985
+        c = price * 0.97
+
+    if high > 0:
+        b = max(high, price * 1.015)
+    else:
+        b = price * 1.015
 
     return round(a, 2), round(b, 2), round(c, 2)
 
 
 def main():
-    print("取得上市股票清單...")
+    print("===================================")
+    print("華安全市場股票掃描器")
+    print("===================================")
+
+    print("\n取得 TWSE 上市股票...")
     twse = fetch_market_symbols("TWSE")
 
-    print("取得上櫃股票清單...")
+    print("\n取得 TPEx 上櫃股票...")
     tpex = fetch_market_symbols("TPEx")
 
     universe = twse + tpex
 
-    # 去重
     unique = {}
+
     for item in universe:
         unique[item["symbol"]] = item
 
-    universe = sorted(unique.values(), key=lambda x: x["symbol"])
+    universe = sorted(
+        unique.values(),
+        key=lambda x: x["symbol"],
+    )
 
-    print(f"股票總數：{len(universe)}")
+    print("\n===================================")
+    print(f"全市場普通股總數：{len(universe)}")
+    print("===================================")
+
+    # 如果還是 0，就直接停止並報錯
+    if len(universe) == 0:
+        raise RuntimeError(
+            "抓不到股票清單，請檢查 Fugle tickers API 回傳內容"
+        )
 
     state = load_state()
     offset = int(state.get("offset", 0))
@@ -227,11 +271,18 @@ def main():
     if offset >= len(universe):
         offset = 0
 
-    batch = universe[offset : offset + BATCH_SIZE]
+    batch = universe[
+        offset : offset + BATCH_SIZE
+    ]
+
+    start_no = offset + 1
+    end_no = min(
+        offset + BATCH_SIZE,
+        len(universe),
+    )
 
     print(
-        f"\n本次掃描第 {offset + 1} ~ "
-        f"{min(offset + BATCH_SIZE, len(universe))} 檔\n"
+        f"\n本次掃描第 {start_no} ~ {end_no} 檔"
     )
 
     results = []
@@ -248,9 +299,17 @@ def main():
             high = safe_num(data.get("highPrice"))
             low = safe_num(data.get("lowPrice"))
 
-            name = data.get("name") or item["name"] or symbol
+            name = (
+                data.get("name")
+                or item["name"]
+                or symbol
+            )
 
-            a, b, c = calc_abc(price, high, low)
+            a, b, c = calc_abc(
+                price,
+                high,
+                low,
+            )
 
             results.append(
                 {
@@ -274,16 +333,28 @@ def main():
             )
 
         except Exception as e:
-            print(f"[{i:02d}/{len(batch)}] {symbol} ERROR: {e}")
+            print(
+                f"[{i:02d}/{len(batch)}] "
+                f"{symbol} ERROR: {e}"
+            )
 
-        # 稍微降速，降低 API 限流風險
-        time.sleep(1.05)
+        # 控制 API 頻率
+        time.sleep(1.10)
 
-    results.sort(key=lambda x: x["score"], reverse=True)
+    results.sort(
+        key=lambda x: x["score"],
+        reverse=True,
+    )
 
-    print("\n=== 本批 REALTIME STOCK SCAN TOP 20 ===\n")
+    print("\n")
+    print("===================================")
+    print("本批 TOP 20")
+    print("===================================")
 
-    for rank, r in enumerate(results[:20], start=1):
+    for rank, r in enumerate(
+        results[:20],
+        start=1,
+    ):
         print(
             f"{rank:02d}. "
             f"{r['symbol']} {r['name']} | "
@@ -304,11 +375,24 @@ def main():
 
     if next_offset >= len(universe):
         next_offset = 0
-        print("\n=== 本輪全市場掃描完成，下次重新從第一批開始 ===")
-    else:
-        print(f"\n下次將從第 {next_offset + 1} 檔繼續掃描")
 
-    save_state({"offset": next_offset})
+        print(
+            "\n全市場本輪掃描完成，"
+            "下一次重新從第一檔開始。"
+        )
+
+    else:
+        print(
+            f"\n下一次從第 "
+            f"{next_offset + 1} 檔開始。"
+        )
+
+    save_state(
+        {
+            "offset": next_offset,
+            "total": len(universe),
+        }
+    )
 
 
 if __name__ == "__main__":
