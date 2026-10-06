@@ -1,3 +1,5 @@
+import csv
+import io
 import json
 import os
 import time
@@ -6,14 +8,14 @@ import urllib.request
 API_KEY = os.environ["FUGLE_API_KEY"].strip()
 
 TWSE_LIST_URL = "https://openapi.twse.com.tw/v1/opendata/t187ap03_L"
-TPEX_LIST_URL = "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap03_O"
+TPEX_CSV_URL = "https://mopsfin.twse.com.tw/opendata/t187ap03_O.csv"
 
 FUGLE_BASE = "https://api.fugle.tw/marketdata/v1.0/stock"
 
 BATCH_SIZE = 50
 
 
-def get_json(url, headers=None):
+def get_bytes(url, headers=None):
     req = urllib.request.Request(
         url,
         headers=headers or {
@@ -22,7 +24,12 @@ def get_json(url, headers=None):
     )
 
     with urllib.request.urlopen(req, timeout=30) as resp:
-        return json.load(resp)
+        return resp.read()
+
+
+def get_json(url, headers=None):
+    raw = get_bytes(url, headers=headers)
+    return json.loads(raw.decode("utf-8"))
 
 
 def safe_num(value):
@@ -44,22 +51,15 @@ def get_twse_symbols():
     stocks = []
 
     for item in data:
-        symbol = str(
-            item.get("公司代號", "")
-        ).strip()
-
-        name = str(
-            item.get("公司簡稱", "")
-        ).strip()
+        symbol = str(item.get("公司代號", "")).strip()
+        name = str(item.get("公司簡稱", "")).strip()
 
         if len(symbol) == 4 and symbol.isdigit():
-            stocks.append(
-                {
-                    "symbol": symbol,
-                    "name": name,
-                    "market": "TWSE",
-                }
-            )
+            stocks.append({
+                "symbol": symbol,
+                "name": name,
+                "market": "TWSE",
+            })
 
     print(f"TWSE 上市股票數：{len(stocks)}")
 
@@ -67,68 +67,60 @@ def get_twse_symbols():
 
 
 # =========================
-# TPEx 上櫃股票
+# TPEx 上櫃股票 CSV
 # =========================
 
-def find_first_value(item, keys):
-    for key in keys:
-        value = item.get(key)
+def decode_csv_bytes(raw):
+    for encoding in ["utf-8-sig", "utf-8", "cp950", "big5"]:
+        try:
+            return raw.decode(encoding)
+        except UnicodeDecodeError:
+            pass
 
-        if value is not None:
-            value = str(value).strip()
-
-            if value:
-                return value
-
-    return ""
+    return raw.decode("utf-8", errors="ignore")
 
 
 def get_tpex_symbols():
-    data = get_json(TPEX_LIST_URL)
+    raw = get_bytes(
+        TPEX_CSV_URL,
+        headers={
+            "User-Agent": "Mozilla/5.0",
+            "Accept": "text/csv,*/*",
+        },
+    )
 
-    print(f"TPEx API 原始資料筆數：{len(data)}")
+    text = decode_csv_bytes(raw)
 
-    # 第一次跑時方便確認實際欄位名稱
-    if data:
-        print(
-            "TPEx 第一筆欄位：",
-            list(data[0].keys())
-        )
+    reader = csv.DictReader(
+        io.StringIO(text)
+    )
+
+    print(
+        "TPEx CSV 欄位：",
+        reader.fieldnames
+    )
 
     stocks = []
     seen = set()
 
-    symbol_keys = [
-        "SecuritiesCompanyCode",
-        "公司代號",
-        "公司代碼",
-        "證券代號",
-        "股票代號",
-        "公司編號",
-        "Code",
-        "code",
-    ]
+    for row in reader:
+        symbol = str(
+            row.get("公司代號", "")
+        ).strip()
 
-    name_keys = [
-        "CompanyAbbreviation",
-        "公司簡稱",
-        "公司名稱",
-        "證券名稱",
-        "股票名稱",
-        "Name",
-        "name",
-    ]
+        name = str(
+            row.get("公司簡稱", "")
+        ).strip()
 
-    for item in data:
-        symbol = find_first_value(
-            item,
-            symbol_keys
-        )
+        if not symbol:
+            symbol = str(
+                row.get("證券代號", "")
+            ).strip()
 
-        name = find_first_value(
-            item,
-            name_keys
-        )
+        if not name:
+            name = str(
+                row.get("證券名稱", "")
+            ).strip()
 
         if (
             len(symbol) == 4
@@ -137,21 +129,22 @@ def get_tpex_symbols():
         ):
             seen.add(symbol)
 
-            stocks.append(
-                {
-                    "symbol": symbol,
-                    "name": name,
-                    "market": "TPEx",
-                }
-            )
+            stocks.append({
+                "symbol": symbol,
+                "name": name,
+                "market": "TPEx",
+            })
 
-    print(f"TPEx 上櫃股票數：{len(stocks)}")
+    print(
+        f"TPEx 上櫃股票數："
+        f"{len(stocks)}"
+    )
 
     return stocks
 
 
 # =========================
-# Fugle 個股即時行情
+# Fugle 即時行情
 # =========================
 
 def get_quote(symbol):
@@ -170,7 +163,7 @@ def get_quote(symbol):
 
 
 # =========================
-# 評分模型
+# 評分
 # =========================
 
 def score_stock(data):
@@ -211,10 +204,7 @@ def score_stock(data):
 
     score = 50
 
-    # -------------------------
-    # 1. 價格動能
-    # -------------------------
-
+    # 價格動能
     if change_pct >= 7:
         score += 20
 
@@ -236,10 +226,7 @@ def score_stock(data):
     else:
         score -= 10
 
-    # -------------------------
-    # 2. 收盤 / 現價位置
-    # -------------------------
-
+    # 收在高檔
     close_strength = 0
 
     if high > low > 0:
@@ -260,10 +247,7 @@ def score_stock(data):
         elif close_strength < 0.30:
             score -= 8
 
-    # -------------------------
-    # 3. 成交量
-    # -------------------------
-
+    # 成交量
     if volume >= 50000:
         score += 12
 
@@ -279,10 +263,7 @@ def score_stock(data):
     elif volume < 1000:
         score -= 4
 
-    # -------------------------
-    # 4. 成交金額
-    # -------------------------
-
+    # 成交金額
     if value >= 500_000_000:
         score += 8
 
@@ -292,10 +273,7 @@ def score_stock(data):
     elif value >= 100_000_000:
         score += 3
 
-    # -------------------------
-    # 5. 過熱扣分
-    # -------------------------
-
+    # 過熱扣分
     if change_pct >= 9:
         score -= 5
 
@@ -365,16 +343,11 @@ def main():
     print("===================================")
     print("")
 
-    # 取得上市股票
     twse = get_twse_symbols()
-
-    # 取得上櫃股票
     tpex = get_tpex_symbols()
 
-    # 合併
     all_stocks = twse + tpex
 
-    # 去重
     unique = {}
 
     for item in all_stocks:
@@ -399,10 +372,7 @@ def main():
             "完全抓不到股票清單"
         )
 
-    # =========================
-    # GitHub Run 自動輪批
-    # =========================
-
+    # GitHub Run 自動輪掃
     run_number = int(
         os.environ.get(
             "GITHUB_RUN_NUMBER",
@@ -461,10 +431,6 @@ def main():
 
     results = []
 
-    # =========================
-    # 逐檔掃描
-    # =========================
-
     for i, stock in enumerate(
         batch,
         start=1,
@@ -496,17 +462,15 @@ def main():
                 scored["low"],
             )
 
-            results.append(
-                {
-                    "symbol": symbol,
-                    "name": name,
-                    "market": market,
-                    "a": a,
-                    "b": b,
-                    "c": c,
-                    **scored,
-                }
-            )
+            results.append({
+                "symbol": symbol,
+                "name": name,
+                "market": market,
+                "a": a,
+                "b": b,
+                "c": c,
+                **scored,
+            })
 
             print(
                 f"[{i:02d}/{len(batch)}] "
@@ -524,12 +488,7 @@ def main():
                 f"ERROR: {e}"
             )
 
-        # Fugle 基本方案限流保護
         time.sleep(1.05)
-
-    # =========================
-    # 排名
-    # =========================
 
     results.sort(
         key=lambda x: x["score"],
