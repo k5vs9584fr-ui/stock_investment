@@ -1,14 +1,28 @@
 import json
 import os
+import re
 import time
 import urllib.request
 
 API_KEY = os.environ["FUGLE_API_KEY"].strip()
 
 TWSE_LIST_URL = "https://openapi.twse.com.tw/v1/opendata/t187ap03_L"
+TPEX_LIST_URL = "https://www.tpex.org.tw/zh-tw/mainboard/listed/company.html"
 FUGLE_BASE = "https://api.fugle.tw/marketdata/v1.0/stock"
 
 BATCH_SIZE = 50
+
+
+def get_text(url, headers=None):
+    req = urllib.request.Request(
+        url,
+        headers=headers or {
+            "User-Agent": "Mozilla/5.0"
+        }
+    )
+
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        return resp.read().decode("utf-8", errors="ignore")
 
 
 def get_json(url, headers=None):
@@ -31,14 +45,42 @@ def get_twse_symbols():
         name = str(item.get("公司簡稱", "")).strip()
 
         if len(symbol) == 4 and symbol.isdigit():
-            stocks.append(
-                {
-                    "symbol": symbol,
-                    "name": name,
-                }
-            )
+            stocks.append({
+                "symbol": symbol,
+                "name": name,
+                "market": "TWSE"
+            })
 
-    print(f"上市股票數：{len(stocks)}")
+    print(f"TWSE 上市股票數：{len(stocks)}")
+
+    return stocks
+
+
+def get_tpex_symbols():
+    html = get_text(TPEX_LIST_URL)
+
+    stocks = []
+    seen = set()
+
+    # 抓常見的 4 碼股票代號 + 公司名稱
+    pattern = re.compile(
+        r'company-detail\.html\?code=(\d{4})[^>]*>([^<]+)<'
+    )
+
+    for symbol, name in pattern.findall(html):
+        symbol = symbol.strip()
+        name = name.strip()
+
+        if symbol not in seen:
+            seen.add(symbol)
+
+            stocks.append({
+                "symbol": symbol,
+                "name": name,
+                "market": "TPEx"
+            })
+
+    print(f"TPEx 上櫃股票數：{len(stocks)}")
 
     return stocks
 
@@ -81,7 +123,6 @@ def score_stock(data):
 
     score = 50
 
-    # 漲跌幅
     if change_pct >= 7:
         score += 20
     elif change_pct >= 5:
@@ -97,7 +138,6 @@ def score_stock(data):
     else:
         score -= 10
 
-    # 收在高檔
     close_strength = 0
 
     if high > low > 0:
@@ -115,7 +155,6 @@ def score_stock(data):
         elif close_strength < 0.30:
             score -= 8
 
-    # 成交量
     if volume >= 50000:
         score += 12
     elif volume >= 20000:
@@ -127,7 +166,6 @@ def score_stock(data):
     elif volume < 1000:
         score -= 4
 
-    # 成交金額
     if value >= 500_000_000:
         score += 8
     elif value >= 200_000_000:
@@ -135,7 +173,6 @@ def score_stock(data):
     elif value >= 100_000_000:
         score += 3
 
-    # 過熱扣分
     if change_pct >= 9:
         score -= 5
 
@@ -192,13 +229,28 @@ def calc_abc(price, high, low):
 
 def main():
     print("===================================")
-    print("華安上市股票輪掃器")
+    print("華安全市場上市 + 上櫃輪掃器")
     print("===================================")
 
-    stocks = get_twse_symbols()
+    twse = get_twse_symbols()
+    tpex = get_tpex_symbols()
+
+    all_stocks = twse + tpex
+
+    unique = {}
+
+    for item in all_stocks:
+        unique[item["symbol"]] = item
+
+    stocks = sorted(
+        unique.values(),
+        key=lambda x: x["symbol"]
+    )
+
+    print(f"全市場股票總數：{len(stocks)}")
 
     if not stocks:
-        raise RuntimeError("抓不到上市股票清單")
+        raise RuntimeError("抓不到台股股票清單")
 
     run_number = int(
         os.environ.get(
@@ -217,11 +269,7 @@ def main():
         run_number - 1
     ) % total_batches
 
-    start = (
-        batch_index
-        * BATCH_SIZE
-    )
-
+    start = batch_index * BATCH_SIZE
     end = min(
         start + BATCH_SIZE,
         len(stocks)
@@ -253,6 +301,7 @@ def main():
     ):
         symbol = stock["symbol"]
         name = stock["name"]
+        market = stock["market"]
 
         try:
             data = get_quote(symbol)
@@ -272,20 +321,19 @@ def main():
                 scored["low"],
             )
 
-            results.append(
-                {
-                    "symbol": symbol,
-                    "name": name,
-                    "a": a,
-                    "b": b,
-                    "c": c,
-                    **scored,
-                }
-            )
+            results.append({
+                "symbol": symbol,
+                "name": name,
+                "market": market,
+                "a": a,
+                "b": b,
+                "c": c,
+                **scored,
+            })
 
             print(
                 f"[{i:02d}/{len(batch)}] "
-                f"{symbol} {name} OK"
+                f"{symbol} {name} {market} OK"
             )
 
         except Exception as e:
@@ -312,7 +360,8 @@ def main():
     ):
         print(
             f"{rank:02d}. "
-            f"{r['symbol']} {r['name']} | "
+            f"{r['symbol']} {r['name']} "
+            f"[{r['market']}] | "
             f"價格 {r['price']:.2f} | "
             f"漲跌 {r['change_pct']:+.2f}% | "
             f"成交量 {int(r['volume'])} | "
