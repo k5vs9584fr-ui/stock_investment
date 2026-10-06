@@ -61,9 +61,23 @@ def main():
     if not stocks:
         raise RuntimeError("抓不到上市股票清單")
 
-    batch = stocks[:BATCH_SIZE]
+    # 用 GitHub Actions 的執行次數自動決定掃描批次
+run_number = int(os.environ.get("GITHUB_RUN_NUMBER", "1"))
 
-    print(f"本次掃描：{len(batch)} 檔")
+total_batches = (len(stocks) + BATCH_SIZE - 1) // BATCH_SIZE
+
+batch_index = (run_number - 1) % total_batches
+
+start = batch_index * BATCH_SIZE
+end = min(start + BATCH_SIZE, len(stocks))
+
+batch = stocks[start:end]
+
+print(f"GitHub Run #{run_number}")
+print(f"總批次：{total_batches}")
+print(f"本次批次：{batch_index + 1}/{total_batches}")
+print(f"本次掃描股票位置：{start + 1} ~ {end}")
+print(f"本次掃描：{len(batch)} 檔")
 
     results = []
 
