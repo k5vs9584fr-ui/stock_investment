@@ -9,6 +9,7 @@ permissions:
 jobs:
   scan:
     runs-on: ubuntu-latest
+    timeout-minutes: 90
 
     steps:
       - name: Checkout repository
@@ -21,16 +22,28 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Run realtime scan
+      - name: Scan entire Taiwan market
         env:
           FUGLE_API_KEY: ${{ secrets.FUGLE_API_KEY }}
         run: |
-          python scripts/realtime_scan.py
+          for batch in $(seq 1 50)
+          do
+            echo "======================================"
+            echo "START BATCH $batch"
+            echo "======================================"
+
+            SCAN_BATCH=$batch python scripts/realtime_scan.py
+
+            echo "FINISH BATCH $batch"
+          done
 
       - name: Save scan results
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
+
           git add data/market_scan_results.json
-          git diff --cached --quiet || git commit -m "Update market scan results"
+
+          git diff --cached --quiet || git commit -m "Update full market scan"
+
           git push
