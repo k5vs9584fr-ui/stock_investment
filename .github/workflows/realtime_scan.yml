@@ -73,3 +73,16 @@ jobs:
 
             echo "FINISH BATCH $batch"
           done
+
+      - name: Retry missing quotes
+        env:
+          FUGLE_API_KEY: ${{ secrets.FUGLE_API_KEY }}
+        run: |
+          python scripts/retry_missing.py
+
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add data/market_scan_results.json
+          git diff --cached --quiet || git commit -m "Retry missing market quotes"
+          git push
