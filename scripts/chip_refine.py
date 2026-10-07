@@ -266,13 +266,22 @@ def main():
         volume_lots = safe_num(row.get("volume"), 0)
         today_volume_shares = int(volume_lots * 1000)
 
-        proxy = fetcher.fetch(
-            ticker=symbol,
-            trade_date=trade_date,
-            today_volume=today_volume_shares,
-        )
+        try:
+            proxy = fetcher.fetch(
+                ticker=symbol,
+                trade_date=trade_date,
+                today_volume=today_volume_shares,
+            )
+            c_score, c_flags = chip_score(proxy)
+        except Exception as exc:
+            proxy = None
+            c_score = 0.0
+            c_flags = [f"CHIP_FETCH_ERROR:{type(exc).__name__}"]
+            print(
+                f"[{i:02d}/{len(rows)}] {symbol} "
+                f"chip fetch failed: {type(exc).__name__}: {exc}"
+            )
 
-        c_score, c_flags = chip_score(proxy)
         refined = safe_num(row.get("refined_score"), 0)
 
         # 技術/結構 70%，籌碼 30%；籌碼負分可有效把散戶接刀型態打下去
@@ -292,7 +301,7 @@ def main():
             {
                 "chip_score": c_score,
                 "chip_flags": c_flags,
-                "chip_data": proxy_to_dict(proxy),
+                "chip_data": proxy_to_dict(proxy) if proxy is not None else {},
                 "final_score": round(max(0, min(100, final)), 1),
             }
         )
