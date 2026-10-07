@@ -88,7 +88,11 @@
         "up_days5": 1,
         "consecutive_up_days": 1,
         "trend_accelerator": false,
-        "steady_3_to_6pct_trend": false
+        "steady_3_to_6pct_trend": false,
+        "fresh_ignition": false,
+        "early_main_move": false,
+        "overextended": false,
+        "chaseable": false
       }
     },
     {
@@ -178,7 +182,11 @@
         "up_days5": 3,
         "consecutive_up_days": 2,
         "trend_accelerator": false,
-        "steady_3_to_6pct_trend": false
+        "steady_3_to_6pct_trend": false,
+        "fresh_ignition": false,
+        "early_main_move": false,
+        "overextended": false,
+        "chaseable": false
       }
     },
     {
@@ -253,15 +261,16 @@
       "final_score": 83.1,
       "final_phase": "A+級：預備發動",
       "trade_style": "隔日沖",
-      "surge_score": 100.0,
-      "surge_stage": "S級：主升段候選",
+      "surge_score": 92.3,
+      "surge_stage": "X級：延伸過熱/不追",
       "surge_flags": [
         "VOLUME_EXPANSION",
         "BREAKOUT_20D",
         "MA_BULL_STACK",
         "UP_4_OF_5",
         "CONSEC_UP_7D",
-        "CLOSE_STRONG"
+        "CLOSE_STRONG",
+        "CHASE_OVEREXTENDED"
       ],
       "surge_metrics": {
         "return3_pct": 3.31,
@@ -273,7 +282,11 @@
         "up_days5": 4,
         "consecutive_up_days": 7,
         "trend_accelerator": false,
-        "steady_3_to_6pct_trend": false
+        "steady_3_to_6pct_trend": false,
+        "fresh_ignition": false,
+        "early_main_move": false,
+        "overextended": true,
+        "chaseable": false
       }
     },
     {
@@ -362,7 +375,11 @@
         "up_days5": 2,
         "consecutive_up_days": 1,
         "trend_accelerator": false,
-        "steady_3_to_6pct_trend": false
+        "steady_3_to_6pct_trend": false,
+        "fresh_ignition": false,
+        "early_main_move": false,
+        "overextended": false,
+        "chaseable": false
       }
     },
     {
@@ -435,15 +452,16 @@
       "final_score": 79.0,
       "final_phase": "A級：潛伏",
       "trade_style": "隔日沖",
-      "surge_score": 100.0,
-      "surge_stage": "S級：主升段候選",
+      "surge_score": 91.3,
+      "surge_stage": "X級：延伸過熱/不追",
       "surge_flags": [
         "VOLUME_EXPANSION",
         "BREAKOUT_20D",
         "MA_BULL_STACK",
         "UP_4_OF_5",
         "CONSEC_UP_4D",
-        "CLOSE_STRONG"
+        "CLOSE_STRONG",
+        "CHASE_OVEREXTENDED"
       ],
       "surge_metrics": {
         "return3_pct": 3.98,
@@ -455,7 +473,11 @@
         "up_days5": 4,
         "consecutive_up_days": 4,
         "trend_accelerator": false,
-        "steady_3_to_6pct_trend": false
+        "steady_3_to_6pct_trend": false,
+        "fresh_ignition": false,
+        "early_main_move": false,
+        "overextended": true,
+        "chaseable": false
       }
     },
     {
@@ -529,12 +551,13 @@
       "final_score": 78.1,
       "final_phase": "A級：潛伏",
       "trade_style": "隔日沖",
-      "surge_score": 64.3,
-      "surge_stage": "A+級：加速前/點火",
+      "surge_score": 74.3,
+      "surge_stage": "S級：首發動可追",
       "surge_flags": [
         "BREAKOUT_20D",
         "MA_BULL_STACK",
-        "IGNITION_DAY"
+        "IGNITION_DAY",
+        "FRESH_IGNITION_CHASABLE"
       ],
       "surge_metrics": {
         "return3_pct": 3.18,
@@ -546,7 +569,11 @@
         "up_days5": 3,
         "consecutive_up_days": 2,
         "trend_accelerator": false,
-        "steady_3_to_6pct_trend": false
+        "steady_3_to_6pct_trend": false,
+        "fresh_ignition": true,
+        "early_main_move": false,
+        "overextended": false,
+        "chaseable": true
       }
     },
     {
@@ -634,7 +661,11 @@
         "up_days5": 1,
         "consecutive_up_days": 0,
         "trend_accelerator": false,
-        "steady_3_to_6pct_trend": false
+        "steady_3_to_6pct_trend": false,
+        "fresh_ignition": false,
+        "early_main_move": false,
+        "overextended": false,
+        "chaseable": false
       }
     },
     {
@@ -721,7 +752,11 @@
         "up_days5": 1,
         "consecutive_up_days": 0,
         "trend_accelerator": false,
-        "steady_3_to_6pct_trend": false
+        "steady_3_to_6pct_trend": false,
+        "fresh_ignition": false,
+        "early_main_move": false,
+        "overextended": false,
+        "chaseable": false
       }
     },
     {
@@ -808,7 +843,11 @@
         "up_days5": 2,
         "consecutive_up_days": 2,
         "trend_accelerator": false,
-        "steady_3_to_6pct_trend": false
+        "steady_3_to_6pct_trend": false,
+        "fresh_ignition": false,
+        "early_main_move": false,
+        "overextended": false,
+        "chaseable": false
       }
     },
     {
@@ -882,15 +921,16 @@
       "final_score": 73.1,
       "final_phase": "A級：潛伏",
       "trade_style": "波段",
-      "surge_score": 100.0,
-      "surge_stage": "S級：主升段候選",
+      "surge_score": 84.3,
+      "surge_stage": "X級：延伸過熱/不追",
       "surge_flags": [
         "VOLUME_EXPANSION",
         "BREAKOUT_20D",
         "MA_BULL_STACK",
         "UP_4_OF_5",
         "CONSEC_UP_6D",
-        "CLOSE_STRONG"
+        "CLOSE_STRONG",
+        "CHASE_OVEREXTENDED"
       ],
       "surge_metrics": {
         "return3_pct": 3.12,
@@ -902,7 +942,11 @@
         "up_days5": 4,
         "consecutive_up_days": 6,
         "trend_accelerator": false,
-        "steady_3_to_6pct_trend": false
+        "steady_3_to_6pct_trend": false,
+        "fresh_ignition": false,
+        "early_main_move": false,
+        "overextended": true,
+        "chaseable": false
       }
     },
     {
@@ -987,7 +1031,11 @@
         "up_days5": 2,
         "consecutive_up_days": 1,
         "trend_accelerator": false,
-        "steady_3_to_6pct_trend": false
+        "steady_3_to_6pct_trend": false,
+        "fresh_ignition": false,
+        "early_main_move": false,
+        "overextended": false,
+        "chaseable": false
       }
     },
     {
@@ -1079,7 +1127,11 @@
         "up_days5": 2,
         "consecutive_up_days": 0,
         "trend_accelerator": false,
-        "steady_3_to_6pct_trend": false
+        "steady_3_to_6pct_trend": false,
+        "fresh_ignition": false,
+        "early_main_move": false,
+        "overextended": false,
+        "chaseable": false
       }
     },
     {
@@ -1167,7 +1219,11 @@
         "up_days5": 2,
         "consecutive_up_days": 1,
         "trend_accelerator": false,
-        "steady_3_to_6pct_trend": false
+        "steady_3_to_6pct_trend": false,
+        "fresh_ignition": false,
+        "early_main_move": false,
+        "overextended": false,
+        "chaseable": false
       }
     },
     {
@@ -1239,11 +1295,12 @@
       "final_score": 63.7,
       "final_phase": "B級：觀察",
       "trade_style": "短波段",
-      "surge_score": 32.7,
+      "surge_score": 42.7,
       "surge_stage": "B級：非飆股型",
       "surge_flags": [
         "MA_BULL_STACK",
-        "IGNITION_DAY"
+        "IGNITION_DAY",
+        "FRESH_IGNITION_CHASABLE"
       ],
       "surge_metrics": {
         "return3_pct": 2.35,
@@ -1255,7 +1312,11 @@
         "up_days5": 2,
         "consecutive_up_days": 1,
         "trend_accelerator": false,
-        "steady_3_to_6pct_trend": false
+        "steady_3_to_6pct_trend": false,
+        "fresh_ignition": true,
+        "early_main_move": false,
+        "overextended": false,
+        "chaseable": true
       }
     },
     {
@@ -1342,7 +1403,11 @@
         "up_days5": 2,
         "consecutive_up_days": 1,
         "trend_accelerator": false,
-        "steady_3_to_6pct_trend": false
+        "steady_3_to_6pct_trend": false,
+        "fresh_ignition": false,
+        "early_main_move": false,
+        "overextended": false,
+        "chaseable": false
       }
     },
     {
@@ -1416,7 +1481,7 @@
       "final_phase": "B級：觀察",
       "trade_style": "短波段",
       "surge_score": 100.0,
-      "surge_stage": "S+級：主升段飆股",
+      "surge_stage": "X級：延伸過熱/不追",
       "surge_flags": [
         "RET3_ACCEL",
         "RET5_MAIN_MOVE",
@@ -1427,7 +1492,8 @@
         "UP_4_OF_5",
         "CONSEC_UP_6D",
         "CLOSE_STRONG",
-        "TREND_ACCELERATOR"
+        "TREND_ACCELERATOR",
+        "CHASE_OVEREXTENDED"
       ],
       "surge_metrics": {
         "return3_pct": 9.28,
@@ -1439,7 +1505,11 @@
         "up_days5": 4,
         "consecutive_up_days": 6,
         "trend_accelerator": true,
-        "steady_3_to_6pct_trend": false
+        "steady_3_to_6pct_trend": false,
+        "fresh_ignition": false,
+        "early_main_move": false,
+        "overextended": true,
+        "chaseable": false
       }
     },
     {
@@ -1511,13 +1581,14 @@
       "final_score": 62.6,
       "final_phase": "B級：觀察",
       "trade_style": "短波段",
-      "surge_score": 84.0,
-      "surge_stage": "S+級：主升段飆股",
+      "surge_score": 90.0,
+      "surge_stage": "S+級：主升初段可追",
       "surge_flags": [
         "RET5_MAIN_MOVE",
         "RET10_TREND",
         "MA_BULL_STACK",
-        "CLOSE_STRONG"
+        "CLOSE_STRONG",
+        "EARLY_MAIN_MOVE_CHASABLE"
       ],
       "surge_metrics": {
         "return3_pct": 1.18,
@@ -1529,7 +1600,11 @@
         "up_days5": 3,
         "consecutive_up_days": 2,
         "trend_accelerator": false,
-        "steady_3_to_6pct_trend": false
+        "steady_3_to_6pct_trend": false,
+        "fresh_ignition": false,
+        "early_main_move": true,
+        "overextended": false,
+        "chaseable": true
       }
     },
     {
@@ -1617,7 +1692,11 @@
         "up_days5": 3,
         "consecutive_up_days": 1,
         "trend_accelerator": false,
-        "steady_3_to_6pct_trend": false
+        "steady_3_to_6pct_trend": false,
+        "fresh_ignition": false,
+        "early_main_move": false,
+        "overextended": false,
+        "chaseable": false
       }
     },
     {
@@ -1689,7 +1768,7 @@
       "final_phase": "C級：暫不碰",
       "trade_style": "短波段",
       "surge_score": 100.0,
-      "surge_stage": "S+級：主升段飆股",
+      "surge_stage": "X級：延伸過熱/不追",
       "surge_flags": [
         "RET3_ACCEL",
         "RET5_MAIN_MOVE",
@@ -1701,7 +1780,8 @@
         "IGNITION_DAY",
         "CLOSE_STRONG",
         "TREND_ACCELERATOR",
-        "STEADY_3_TO_6PCT_TREND"
+        "STEADY_3_TO_6PCT_TREND",
+        "CHASE_OVEREXTENDED"
       ],
       "surge_metrics": {
         "return3_pct": 8.03,
@@ -1713,7 +1793,11 @@
         "up_days5": 4,
         "consecutive_up_days": 4,
         "trend_accelerator": true,
-        "steady_3_to_6pct_trend": true
+        "steady_3_to_6pct_trend": true,
+        "fresh_ignition": false,
+        "early_main_move": false,
+        "overextended": true,
+        "chaseable": false
       }
     }
   ]
