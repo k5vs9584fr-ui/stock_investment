@@ -372,3 +372,5 @@ if __name__ == "__main__":
 # trigger: chip refine validation
 
 # trigger: unified chip pipeline v2
+
+# trigger: chip pipeline v2 concurrency
