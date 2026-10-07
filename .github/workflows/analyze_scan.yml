@@ -49,11 +49,17 @@ jobs:
           FINMIND_TOKEN: ${{ secrets.FINMIND_TOKEN }}
         run: python scripts/chip_refine.py
 
+      - name: Finalize with chip confirmation
+        env:
+          PYTHONPATH: src
+          FUGLE_API_KEY: ${{ secrets.FUGLE_API_KEY }}
+        run: python scripts/chip_finalize.py
+
       - name: Save report
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add data/scan_report.json data/electronic_watchlist.json data/electronic_chip_results.json data/final_signal_report.json
+          git add data/scan_report.json data/electronic_watchlist.json data/final_scan_results.json data/electronic_chip_results.json data/final_signal_report.json
           git diff --cached --quiet || git commit -m "Update scan analysis report"
 
           # The repo may advance while this analysis is running.
