@@ -17,10 +17,17 @@ ELECTRONIC_PREFIXES = {
     "68","69","80","81"
 }
 
+# 電信服務商雖然代號落在電子/通信區段，但不符合短線電子股雷達用途
+ELECTRONIC_EXCLUDES = {"2412", "3045", "4904"}
+
 
 def is_electronic(symbol):
     s = str(symbol or "")
-    return len(s) >= 2 and s[:2] in ELECTRONIC_PREFIXES
+    return (
+        len(s) >= 2
+        and s[:2] in ELECTRONIC_PREFIXES
+        and s not in ELECTRONIC_EXCLUDES
+    )
 
 
 def avg(xs):
@@ -236,11 +243,29 @@ for idx, r in enumerate(candidates, 1):
     else:
         price_bonus = 0
 
+    value = float(r.get("value") or 0)
+    volume = float(r.get("volume") or 0)
+
+    if value >= 200_000_000:
+        liquidity_bonus = 8
+    elif value >= 100_000_000:
+        liquidity_bonus = 5
+    elif value >= 50_000_000:
+        liquidity_bonus = 1
+    elif value >= 20_000_000:
+        liquidity_bonus = -8
+    else:
+        liquidity_bonus = -20
+
+    if volume < 300:
+        liquidity_bonus -= 8
+
     refined = (
         float(r.get("latent_score", 0)) * 0.35
         + s_score * 0.52
         + sector_bonus
         + price_bonus
+        + liquidity_bonus
     )
 
     r["structure_score"] = s_score
