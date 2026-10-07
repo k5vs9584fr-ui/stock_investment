@@ -827,12 +827,47 @@ def score_surge(history, row, chip_score):
         score += 8
         flags.append("STEADY_3_TO_6PCT_TREND")
 
+    # 追價規則：允許首發動/主升初段；排除已連漲多根與短線過度延伸
+    overextended = (
+        consec_up >= 4
+        or ret5 > 28
+        or ret10 > 45
+        or (up_days5 >= 4 and ret5 > 22)
+    )
+    fresh_ignition = (
+        current_chg >= 3.0
+        and current_chg <= 9.9
+        and consec_up <= 2
+        and ret5 <= 20
+        and close_strength >= 0.72
+    )
+    early_main_move = (
+        score >= 74
+        and consec_up <= 3
+        and ret5 <= 26
+        and ret10 <= 38
+    )
+
+    if overextended:
+        score -= 18
+        flags.append("CHASE_OVEREXTENDED")
+    elif fresh_ignition:
+        score += 10
+        flags.append("FRESH_IGNITION_CHASABLE")
+    elif early_main_move:
+        score += 6
+        flags.append("EARLY_MAIN_MOVE_CHASABLE")
+
     score = round(max(0.0, min(100.0, score)), 1)
 
-    if score >= 84 and ret5 >= 7:
-        stage = "S+級：主升段飆股"
+    if overextended:
+        stage = "X級：延伸過熱/不追"
+    elif fresh_ignition and score >= 72:
+        stage = "S級：首發動可追"
+    elif early_main_move and score >= 82:
+        stage = "S+級：主升初段可追"
     elif trend_accel and score >= 72:
-        stage = "S級：趨勢加速型"
+        stage = "S級：趨勢加速可追"
     elif score >= 74:
         stage = "S級：主升段候選"
     elif score >= 64:
@@ -853,6 +888,10 @@ def score_surge(history, row, chip_score):
         "consecutive_up_days": consec_up,
         "trend_accelerator": trend_accel,
         "steady_3_to_6pct_trend": steady_5pct_profile,
+        "fresh_ignition": fresh_ignition,
+        "early_main_move": early_main_move,
+        "overextended": overextended,
+        "chaseable": bool((fresh_ignition or early_main_move or trend_accel) and not overextended),
     }
     return score, stage, flags, metrics
 
@@ -1069,8 +1108,9 @@ report = {
     "top_actionable_movers": [
         slim(x) for x in surge_ranked
         if x.get("surge_stage") in {
-            "S+級：主升段飆股",
-            "S級：趨勢加速型",
+            "S+級：主升初段可追",
+            "S級：首發動可追",
+            "S級：趨勢加速可追",
             "S級：主升段候選"
         }
     ][:25],
