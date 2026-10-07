@@ -331,10 +331,26 @@ class ChipProxyFetcher:
                 return None, None, None
 
             fields = body.get("fields", [])
-            try:
-                code_idx = fields.index("證券代號")
-                foreign_idx = fields.index("外陸資買賣超股數")
-            except ValueError:
+
+            def _field_idx_exact_or_contains(exact: str, contains: tuple[str, ...]) -> int | None:
+                if exact in fields:
+                    return fields.index(exact)
+                for idx, field in enumerate(fields):
+                    f = str(field)
+                    if any(token in f for token in contains):
+                        return idx
+                return None
+
+            code_idx = _field_idx_exact_or_contains("證券代號", ("證券代號", "股票代號"))
+            foreign_idx = _field_idx_exact_or_contains(
+                "外陸資買賣超股數",
+                (
+                    "外陸資買賣超股數",
+                    "外資及陸資買賣超股數",
+                ),
+            )
+
+            if code_idx is None or foreign_idx is None:
                 flags.append("TWSE_T86_SCHEMA_CHANGED")
                 # Schema change on TWSE side — still try TPEx for OTC stocks
                 tpex_result = self._fetch_tpex_t86_data(ticker, trade_date, flags)
@@ -342,9 +358,15 @@ class ChipProxyFetcher:
                     return tpex_result
                 return None, None, None
 
-            # 投信買賣超股數 and 自營商買賣超股數 are optional columns
-            trust_idx: int | None = fields.index("投信買賣超股數") if "投信買賣超股數" in fields else None
-            dealer_idx: int | None = fields.index("自營商買賣超股數") if "自營商買賣超股數" in fields else None
+            # 投信 / 自營商欄位目前維持原名；用 contains 容忍附註文字。
+            trust_idx = _field_idx_exact_or_contains(
+                "投信買賣超股數",
+                ("投信買賣超股數",),
+            )
+            dealer_idx = _field_idx_exact_or_contains(
+                "自營商買賣超股數",
+                ("自營商買賣超股數",),
+            )
 
             # Parse ALL rows into date-level cache and write per-ticker parquet files.
             date_map: dict[str, tuple[int | None, int | None, int | None]] = {}
