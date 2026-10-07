@@ -321,13 +321,52 @@ def score_daytrade(base, ticker, bars):
         score -= 7
         flags.append("INTRADAY_RANGE_TOO_WIDE")
 
+    # 強制收斂：沒有短線動能或突破，不讓高流動性/貼近日高直接灌成 A 級。
+    if ret15 < 0.20:
+        score -= 8
+        flags.append("15M_MOMENTUM_WEAK")
+    if not breakout:
+        score -= 8
+        flags.append("NO_5M_BREAKOUT")
+    if day_range < 1.2:
+        score -= 6
+        flags.append("RANGE_TOO_TIGHT_FOR_DAYTRADE")
+    if change < 0.5:
+        score -= 6
+        flags.append("DAILY_MOVE_TOO_SMALL")
+
     score = round(max(0.0, min(100.0, score)), 1)
 
-    if score >= 78:
+    strong_structure = sum([
+        1 if breakout else 0,
+        1 if higher_closes else 0,
+        1 if higher_lows else 0,
+        1 if vol_accel >= 1.25 else 0,
+        1 if ret15 >= 0.20 else 0,
+        1 if near_high >= 0.985 else 0,
+    ])
+
+    if (
+        score >= 82
+        and breakout
+        and vol_accel >= 1.25
+        and ret15 >= 0.25
+        and near_high >= 0.99
+        and change >= 0.5
+        and day_range >= 1.2
+        and value >= 200_000_000
+    ):
         phase = "DT-A+：當沖強候選"
-    elif score >= 66:
+    elif (
+        score >= 72
+        and strong_structure >= 4
+        and near_high >= 0.985
+        and change >= 0.3
+        and day_range >= 1.2
+        and value >= 100_000_000
+    ):
         phase = "DT-A：可當沖"
-    elif score >= 56:
+    elif score >= 58:
         phase = "DT-B：觀察"
     else:
         phase = "DT-C：不做"
@@ -423,7 +462,7 @@ def main():
 
     strong = [
         x for x in results
-        if x.get("dt_score", 0) >= 66
+        if str(x.get("dt_phase", "")).startswith("DT-A")
     ]
 
     payload = {
