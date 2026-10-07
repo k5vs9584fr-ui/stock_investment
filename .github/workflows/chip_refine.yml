@@ -10,6 +10,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: chip-refine-main
+  cancel-in-progress: true
+
 jobs:
   refine:
     runs-on: ubuntu-latest
