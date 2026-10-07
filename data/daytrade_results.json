@@ -1,7 +1,7 @@
 {
   "source": "fallback",
   "candidate_count": 30,
-  "strong_count": 14,
+  "strong_count": 6,
   "top_daytrade": [
     {
       "symbol": "6197",
@@ -191,7 +191,7 @@
       "b": 130.43,
       "c": 124.64,
       "dt_score": 88.0,
-      "dt_phase": "DT-A：可當沖",
+      "dt_phase": "DT-B：觀察",
       "dt_direction": "偏多",
       "dt_flags": [
         "LIQUIDITY_PRIME",
@@ -404,7 +404,7 @@
       "b": 36.44,
       "c": 34.82,
       "dt_score": 80.0,
-      "dt_phase": "DT-A：可當沖",
+      "dt_phase": "DT-B：觀察",
       "dt_direction": "偏多",
       "dt_flags": [
         "ABOVE_VWAP_HEALTHY",
@@ -457,7 +457,7 @@
       "b": 71.05,
       "c": 67.9,
       "dt_score": 79.0,
-      "dt_phase": "DT-A：可當沖",
+      "dt_phase": "DT-B：觀察",
       "dt_direction": "偏多",
       "dt_flags": [
         "LIQUIDITY_PRIME",
@@ -510,7 +510,7 @@
       "b": 25.32,
       "c": 24.2,
       "dt_score": 79.0,
-      "dt_phase": "DT-A：可當沖",
+      "dt_phase": "DT-B：觀察",
       "dt_direction": "偏多",
       "dt_flags": [
         "ABOVE_VWAP_HEALTHY",
@@ -727,7 +727,7 @@
       "b": 50.55,
       "c": 48.31,
       "dt_score": 72.0,
-      "dt_phase": "DT-A：可當沖",
+      "dt_phase": "DT-B：觀察",
       "dt_direction": "偏多",
       "dt_flags": [
         "LIQUIDITY_STRONG",
@@ -782,7 +782,7 @@
       "b": 39.48,
       "c": 37.73,
       "dt_score": 72.0,
-      "dt_phase": "DT-A：可當沖",
+      "dt_phase": "DT-B：觀察",
       "dt_direction": "偏多",
       "dt_flags": [
         "LIQUIDITY_STRONG",
@@ -836,7 +836,7 @@
       "b": 50.24,
       "c": 48.02,
       "dt_score": 72.0,
-      "dt_phase": "DT-A：可當沖",
+      "dt_phase": "DT-B：觀察",
       "dt_direction": "偏多",
       "dt_flags": [
         "ABOVE_VWAP_HEALTHY",
@@ -890,7 +890,7 @@
       "b": 39.58,
       "c": 37.83,
       "dt_score": 72.0,
-      "dt_phase": "DT-A：可當沖",
+      "dt_phase": "DT-B：觀察",
       "dt_direction": "偏多",
       "dt_flags": [
         "ABOVE_VWAP_HEALTHY",
@@ -1269,7 +1269,7 @@
       "b": 130.43,
       "c": 124.64,
       "dt_score": 88.0,
-      "dt_phase": "DT-A：可當沖",
+      "dt_phase": "DT-B：觀察",
       "dt_direction": "偏多",
       "dt_flags": [
         "LIQUIDITY_PRIME",
@@ -1482,7 +1482,7 @@
       "b": 36.44,
       "c": 34.82,
       "dt_score": 80.0,
-      "dt_phase": "DT-A：可當沖",
+      "dt_phase": "DT-B：觀察",
       "dt_direction": "偏多",
       "dt_flags": [
         "ABOVE_VWAP_HEALTHY",
@@ -1535,7 +1535,7 @@
       "b": 71.05,
       "c": 67.9,
       "dt_score": 79.0,
-      "dt_phase": "DT-A：可當沖",
+      "dt_phase": "DT-B：觀察",
       "dt_direction": "偏多",
       "dt_flags": [
         "LIQUIDITY_PRIME",
@@ -1588,7 +1588,7 @@
       "b": 25.32,
       "c": 24.2,
       "dt_score": 79.0,
-      "dt_phase": "DT-A：可當沖",
+      "dt_phase": "DT-B：觀察",
       "dt_direction": "偏多",
       "dt_flags": [
         "ABOVE_VWAP_HEALTHY",
@@ -1805,7 +1805,7 @@
       "b": 50.55,
       "c": 48.31,
       "dt_score": 72.0,
-      "dt_phase": "DT-A：可當沖",
+      "dt_phase": "DT-B：觀察",
       "dt_direction": "偏多",
       "dt_flags": [
         "LIQUIDITY_STRONG",
@@ -1860,7 +1860,7 @@
       "b": 39.48,
       "c": 37.73,
       "dt_score": 72.0,
-      "dt_phase": "DT-A：可當沖",
+      "dt_phase": "DT-B：觀察",
       "dt_direction": "偏多",
       "dt_flags": [
         "LIQUIDITY_STRONG",
@@ -1914,7 +1914,7 @@
       "b": 50.24,
       "c": 48.02,
       "dt_score": 72.0,
-      "dt_phase": "DT-A：可當沖",
+      "dt_phase": "DT-B：觀察",
       "dt_direction": "偏多",
       "dt_flags": [
         "ABOVE_VWAP_HEALTHY",
@@ -1968,7 +1968,7 @@
       "b": 39.58,
       "c": 37.83,
       "dt_score": 72.0,
-      "dt_phase": "DT-A：可當沖",
+      "dt_phase": "DT-B：觀察",
       "dt_direction": "偏多",
       "dt_flags": [
         "ABOVE_VWAP_HEALTHY",
