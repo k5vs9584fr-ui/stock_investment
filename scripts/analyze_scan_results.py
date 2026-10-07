@@ -663,6 +663,172 @@ def classify_refined(score):
     return "C級：暫不碰"
 
 
+def score_surge(history, row, chip_score):
+    if len(history) < 22:
+        return 0.0, "資料不足", [], {}
+
+    bars = history[-30:]
+    closes = [float(x.get("close") or 0) for x in bars]
+    highs = [float(x.get("high") or 0) for x in bars]
+    vols = [float(x.get("volume") or 0) for x in bars]
+
+    close = closes[-1]
+    if close <= 0:
+        return 0.0, "資料不足", [], {}
+
+    def ret(n):
+        if len(closes) <= n or closes[-1-n] <= 0:
+            return 0.0
+        return (close / closes[-1-n] - 1) * 100
+
+    ret3 = ret(3)
+    ret5 = ret(5)
+    ret10 = ret(10)
+
+    v3 = avg(vols[-3:])
+    v20 = avg(vols[-20:])
+    vol_ratio = v3 / v20 if v20 > 0 else 0.0
+
+    prev20_high = max(highs[-21:-1]) if len(highs) >= 21 else max(highs[:-1])
+    breakout20 = prev20_high > 0 and close >= prev20_high * 0.995
+
+    ma5 = avg(closes[-5:])
+    ma10 = avg(closes[-10:])
+    ma20 = avg(closes[-20:])
+    ma_stack = ma5 > ma10 > ma20
+
+    up_days5 = 0
+    for i in range(max(1, len(closes) - 4), len(closes)):
+        if closes[i] > closes[i - 1]:
+            up_days5 += 1
+
+    consec_up = 0
+    for i in range(len(closes) - 1, 0, -1):
+        if closes[i] > closes[i - 1]:
+            consec_up += 1
+        else:
+            break
+
+    current_chg = float(row.get("change_pct") or 0)
+    close_strength = float(row.get("close_strength") or 0)
+    value = float(row.get("value") or 0)
+
+    score = 0.0
+    flags = []
+
+    # 3~10日加速度：飆股核心，不再偏好每天小漲
+    if 4 <= ret3 <= 15:
+        score += 16
+        flags.append("RET3_ACCEL")
+    elif 2 <= ret3 < 4:
+        score += 8
+    elif ret3 > 15:
+        score += 8
+        flags.append("RET3_HOT")
+
+    if 7 <= ret5 <= 22:
+        score += 20
+        flags.append("RET5_MAIN_MOVE")
+    elif 3 <= ret5 < 7:
+        score += 10
+    elif 22 < ret5 <= 35:
+        score += 10
+        flags.append("RET5_EXTENDED")
+    elif ret5 > 35:
+        score -= 5
+        flags.append("RET5_OVERHEAT")
+
+    if 10 <= ret10 <= 32:
+        score += 14
+        flags.append("RET10_TREND")
+    elif 5 <= ret10 < 10:
+        score += 7
+    elif ret10 > 40:
+        score -= 8
+        flags.append("RET10_OVERHEAT")
+
+    # 放量：主升段需要量能推動
+    if 1.35 <= vol_ratio <= 3.5:
+        score += 16
+        flags.append("VOLUME_EXPANSION")
+    elif 1.10 <= vol_ratio < 1.35:
+        score += 8
+    elif vol_ratio > 3.5:
+        score += 7
+        flags.append("VOLUME_CLIMAX_RISK")
+
+    # 突破20日高 / 均線多頭
+    if breakout20:
+        score += 14
+        flags.append("BREAKOUT_20D")
+    if ma_stack:
+        score += 8
+        flags.append("MA_BULL_STACK")
+
+    # 連漲特徵
+    if up_days5 >= 4:
+        score += 12
+        flags.append("UP_4_OF_5")
+    elif up_days5 == 3:
+        score += 7
+
+    if consec_up >= 3:
+        score += 8
+        flags.append(f"CONSEC_UP_{consec_up}D")
+    elif consec_up == 2:
+        score += 4
+
+    # 當日點火強度
+    if 2 <= current_chg <= 7.5:
+        score += 10
+        flags.append("IGNITION_DAY")
+    elif 0.5 <= current_chg < 2:
+        score += 5
+    elif current_chg >= 9:
+        score += 3
+        flags.append("LIMIT_MOVE_RISK")
+
+    if close_strength >= 0.82:
+        score += 8
+        flags.append("CLOSE_STRONG")
+
+    if value >= 500_000_000:
+        score += 8
+    elif value >= 150_000_000:
+        score += 5
+    elif value < 30_000_000:
+        score -= 12
+        flags.append("LOW_LIQUIDITY")
+
+    # 籌碼只做加速確認，不讓它蓋過價格動能
+    score += min(10.0, float(chip_score or 0) / 3.0)
+
+    score = round(max(0.0, min(100.0, score)), 1)
+
+    if score >= 84 and ret5 >= 7:
+        stage = "S+級：主升段飆股"
+    elif score >= 74:
+        stage = "S級：主升段候選"
+    elif score >= 64:
+        stage = "A+級：加速前/點火"
+    elif score >= 52:
+        stage = "A級：觀察加速"
+    else:
+        stage = "B級：非飆股型"
+
+    metrics = {
+        "return3_pct": round(ret3, 2),
+        "return5_pct": round(ret5, 2),
+        "return10_pct": round(ret10, 2),
+        "volume3_vs_20": round(vol_ratio, 2),
+        "breakout20": breakout20,
+        "ma_bull_stack": ma_stack,
+        "up_days5": up_days5,
+        "consecutive_up_days": consec_up,
+    }
+    return score, stage, flags, metrics
+
+
 def slim(r):
     keys = [
         "symbol","name","market","price","change_pct","score","latent_score",
@@ -670,7 +836,7 @@ def slim(r):
         "latent_flags","industry_code","is_electronic","structure_score","structure_flags",
         "structure_metrics","refined_score","refined_phase",
         "chip_score","chip_flags","chip_metrics","final_score","final_phase",
-        "trade_style"
+        "trade_style","surge_score","surge_stage","surge_flags","surge_metrics"
     ]
     return {k: r.get(k) for k in keys}
 
@@ -697,13 +863,33 @@ for r in stocks:
 latent = sorted(stocks, key=lambda x: x.get("latent_score", 0), reverse=True)
 strength = sorted(stocks, key=lambda x: x.get("score", 0), reverse=True)
 
-# 只深挖前段候選：避免重跑全市場，速度控制在約 1~2 分鐘
-candidates = [
+# 兩種雷達共用深挖池：
+# 1) 潛伏型：latent 高
+# 2) 飆股型：當日已有點火/強勢，不限產業，避免漏掉南亞這類非電子主升股
+latent_pool = [
     r for r in latent
     if r.get("latent_score", 0) >= 55
-    and r.get("change_pct", 0) < 5
-    and r.get("is_electronic")
-][:60]
+    and r.get("change_pct", 0) < 6
+][:80]
+
+momentum_pool = sorted(
+    [
+        r for r in stocks
+        if float(r.get("value") or 0) >= 50_000_000
+        and float(r.get("change_pct") or 0) >= 0.5
+        and float(r.get("change_pct") or 0) <= 10.5
+    ],
+    key=lambda x: (
+        float(x.get("change_pct") or 0) * 2
+        + float(x.get("score") or 0)
+    ),
+    reverse=True,
+)[:80]
+
+candidate_map = {}
+for r in latent_pool + momentum_pool:
+    candidate_map[str(r.get("symbol"))] = r
+candidates = list(candidate_map.values())
 
 for idx, r in enumerate(candidates, 1):
     try:
@@ -775,6 +961,16 @@ for idx, r in enumerate(candidates, 1):
     r["final_phase"] = classify_final(r["final_score"])
     r["trade_style"] = classify_trade_style(r)
 
+    surge_score, surge_stage, surge_flags, surge_metrics = score_surge(
+        history,
+        r,
+        chip_score,
+    )
+    r["surge_score"] = surge_score
+    r["surge_stage"] = surge_stage
+    r["surge_flags"] = surge_flags
+    r["surge_metrics"] = surge_metrics
+
     print(
         f"[{idx:03d}/{len(candidates)}] {r.get('symbol')} {r.get('name')} "
         f"latent={r.get('latent_score')} structure={s_score} "
@@ -792,6 +988,12 @@ refined = sorted(
 final_ranked = sorted(
     candidates,
     key=lambda x: x.get("final_score", 0),
+    reverse=True,
+)
+
+surge_ranked = sorted(
+    candidates,
+    key=lambda x: x.get("surge_score", 0),
     reverse=True,
 )
 refined_electronics = [
@@ -823,6 +1025,15 @@ report = {
         slim(x) for x in final_ranked
         if x.get("is_electronic")
     ][:30],
+    "top_surge": [slim(x) for x in surge_ranked[:30]],
+    "top_surge_prelaunch": [
+        slim(x) for x in surge_ranked
+        if x.get("surge_stage") in {"A+級：加速前/點火", "S級：主升段候選"}
+    ][:20],
+    "top_surge_active": [
+        slim(x) for x in surge_ranked
+        if x.get("surge_stage") == "S+級：主升段飆股"
+    ][:20],
 }
 
 for r in stocks:
