@@ -223,7 +223,8 @@ candidates = [
     r for r in latent
     if r.get("latent_score", 0) >= 55
     and r.get("change_pct", 0) < 5
-][:100]
+    and r.get("is_electronic")
+][:60]
 
 for idx, r in enumerate(candidates, 1):
     try:
