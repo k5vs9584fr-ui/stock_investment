@@ -5,7 +5,8 @@ on:
     paths:
       - "scripts/analyze_scan_results.py"
       - "scripts/chip_confirm.py"
-      - "data/market_scan_results.json"
+      - "scripts/chip_refine.py"
+      - ".github/workflows/analyze_scan.yml"
   workflow_dispatch:
 
 permissions:
@@ -42,11 +43,17 @@ jobs:
           FINMIND_API_KEY: ${{ secrets.FINMIND_API_KEY }}
         run: python scripts/chip_confirm.py
 
+      - name: Run full chip refinement
+        env:
+          FINMIND_API_KEY: ${{ secrets.FINMIND_API_KEY }}
+          FINMIND_TOKEN: ${{ secrets.FINMIND_TOKEN }}
+        run: python scripts/chip_refine.py
+
       - name: Save report
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add data/scan_report.json data/electronic_watchlist.json data/electronic_chip_results.json
+          git add data/scan_report.json data/electronic_watchlist.json data/electronic_chip_results.json data/final_signal_report.json
           git diff --cached --quiet || git commit -m "Update scan analysis report"
 
           # The repo may advance while this analysis is running.
