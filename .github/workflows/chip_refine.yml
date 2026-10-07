@@ -20,6 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
+      FUGLE_API_KEY: ${{ secrets.FUGLE_API_KEY }}
       FINMIND_API_KEY: ${{ secrets.FINMIND_API_KEY }}
       FINMIND_TOKEN: ${{ secrets.FINMIND_TOKEN }}
 
