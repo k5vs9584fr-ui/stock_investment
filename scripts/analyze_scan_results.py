@@ -1,3 +1,5 @@
+import csv
+import io
 import json
 import os
 import time
@@ -11,24 +13,74 @@ OUT = Path("data/scan_report.json")
 WATCHLIST_OUT = Path("data/electronic_watchlist.json")
 API_KEY = os.environ.get("FUGLE_API_KEY", "").strip()
 FUGLE_BASE = "https://api.fugle.tw/marketdata/v1.0/stock"
+TWSE_LIST_URL = "https://openapi.twse.com.tw/v1/opendata/t187ap03_L"
+TPEX_CSV_URL = "https://mopsfin.twse.com.tw/opendata/t187ap03_O.csv"
 
-ELECTRONIC_PREFIXES = {
-    "23","24","30","31","32","33","34","35","36","37",
-    "49","52","53","54","61","62","64","65","66","67",
-    "68","69","80","81"
+# TWSE official industry codes for electronic industries.
+ELECTRONIC_INDUSTRY_CODES = {
+    "24",  # 半導體
+    "25",  # 電腦及週邊設備
+    "26",  # 光電
+    "27",  # 通信網路
+    "28",  # 電子零組件
+    "29",  # 電子通路
+    "30",  # 資訊服務
+    "31",  # 其他電子
 }
 
-# 電信服務商雖然代號落在電子/通信區段，但不符合短線電子股雷達用途
-ELECTRONIC_EXCLUDES = {"2412", "3045", "4904"}
+
+def _decode_csv_bytes(raw):
+    for enc in ("utf-8-sig", "utf-8", "cp950", "big5"):
+        try:
+            return raw.decode(enc)
+        except UnicodeDecodeError:
+            pass
+    return raw.decode("utf-8", errors="ignore")
 
 
-def is_electronic(symbol):
-    s = str(symbol or "")
-    return (
-        len(s) >= 2
-        and s[:2] in ELECTRONIC_PREFIXES
-        and s not in ELECTRONIC_EXCLUDES
-    )
+def load_industry_map():
+    industry = {}
+
+    try:
+        req = urllib.request.Request(
+            TWSE_LIST_URL,
+            headers={"User-Agent": "Mozilla/5.0"},
+        )
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            rows = json.loads(resp.read().decode("utf-8"))
+        for item in rows:
+            symbol = str(item.get("公司代號", "")).strip()
+            code = str(item.get("產業別", "")).strip().zfill(2)
+            if symbol:
+                industry[symbol] = code
+    except Exception as e:
+        print(f"TWSE industry map error: {e}")
+
+    try:
+        req = urllib.request.Request(
+            TPEX_CSV_URL,
+            headers={
+                "User-Agent": "Mozilla/5.0",
+                "Accept": "text/csv,*/*",
+            },
+        )
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            raw = resp.read()
+        reader = csv.DictReader(io.StringIO(_decode_csv_bytes(raw)))
+        for row in reader:
+            symbol = str(row.get("公司代號", "")).strip()
+            code = str(row.get("產業別", "")).strip().zfill(2)
+            if symbol:
+                industry[symbol] = code
+    except Exception as e:
+        print(f"TPEx industry map error: {e}")
+
+    return industry
+
+
+def is_electronic(symbol, industry_map):
+    code = str(industry_map.get(str(symbol), "")).strip().zfill(2)
+    return code in ELECTRONIC_INDUSTRY_CODES
 
 
 def avg(xs):
@@ -193,7 +245,7 @@ def slim(r):
     keys = [
         "symbol","name","market","price","change_pct","score","latent_score",
         "phase","close_strength","range_pct","volume","value","a","b","c",
-        "latent_flags","is_electronic","structure_score","structure_flags",
+        "latent_flags","industry_code","is_electronic","structure_score","structure_flags",
         "structure_metrics","refined_score","refined_phase"
     ]
     return {k: r.get(k) for k in keys}
@@ -203,6 +255,7 @@ with SRC.open("r", encoding="utf-8") as f:
     data = json.load(f)
 
 stocks = list((data.get("stocks") or {}).values())
+industry_map = load_industry_map()
 
 for r in stocks:
     r.setdefault("latent_score", 0)
@@ -213,7 +266,8 @@ for r in stocks:
     r.setdefault("volume", 0)
     r.setdefault("close_strength", 0)
     r.setdefault("range_pct", 0)
-    r["is_electronic"] = is_electronic(r.get("symbol"))
+    r["industry_code"] = industry_map.get(str(r.get("symbol")), "")
+    r["is_electronic"] = is_electronic(r.get("symbol"), industry_map)
 
 latent = sorted(stocks, key=lambda x: x.get("latent_score", 0), reverse=True)
 strength = sorted(stocks, key=lambda x: x.get("score", 0), reverse=True)
