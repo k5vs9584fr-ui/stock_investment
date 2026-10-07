@@ -803,10 +803,36 @@ def score_surge(history, row, chip_score):
     # 籌碼只做加速確認，不讓它蓋過價格動能
     score += min(10.0, float(chip_score or 0) / 3.0)
 
+    # 聯電型「趨勢加速」：不一定噴板，但連續幾天能走 3~6%
+    trend_accel = (
+        3.0 <= ret3 <= 18.0
+        and 6.0 <= ret5 <= 26.0
+        and 0.5 <= current_chg <= 7.5
+        and ma_stack
+        and up_days5 >= 3
+        and value >= 100_000_000
+    )
+    if trend_accel:
+        score += 12
+        flags.append("TREND_ACCELERATOR")
+
+    steady_5pct_profile = (
+        8.0 <= ret3 <= 20.0
+        and 12.0 <= ret5 <= 30.0
+        and current_chg >= 2.0
+        and current_chg <= 7.5
+        and close_strength >= 0.72
+    )
+    if steady_5pct_profile:
+        score += 8
+        flags.append("STEADY_3_TO_6PCT_TREND")
+
     score = round(max(0.0, min(100.0, score)), 1)
 
     if score >= 84 and ret5 >= 7:
         stage = "S+級：主升段飆股"
+    elif trend_accel and score >= 72:
+        stage = "S級：趨勢加速型"
     elif score >= 74:
         stage = "S級：主升段候選"
     elif score >= 64:
@@ -825,6 +851,8 @@ def score_surge(history, row, chip_score):
         "ma_bull_stack": ma_stack,
         "up_days5": up_days5,
         "consecutive_up_days": consec_up,
+        "trend_accelerator": trend_accel,
+        "steady_3_to_6pct_trend": steady_5pct_profile,
     }
     return score, stage, flags, metrics
 
@@ -1034,6 +1062,18 @@ report = {
         slim(x) for x in surge_ranked
         if x.get("surge_stage") == "S+級：主升段飆股"
     ][:20],
+    "top_trend_accelerators": [
+        slim(x) for x in surge_ranked
+        if x.get("surge_stage") == "S級：趨勢加速型"
+    ][:20],
+    "top_actionable_movers": [
+        slim(x) for x in surge_ranked
+        if x.get("surge_stage") in {
+            "S+級：主升段飆股",
+            "S級：趨勢加速型",
+            "S級：主升段候選"
+        }
+    ][:25],
 }
 
 for r in stocks:
