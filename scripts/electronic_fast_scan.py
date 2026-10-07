@@ -64,6 +64,9 @@ def main():
                 "refined_score": stock.get("refined_score", 0),
                 "refined_phase": stock.get("refined_phase", ""),
                 "structure_score": stock.get("structure_score", 0),
+                "chip_score": stock.get("chip_score", 50),
+                "final_score": stock.get("final_score", stock.get("refined_score", 0)),
+                "final_phase": stock.get("final_phase", stock.get("refined_phase", "")),
                 "chip_score": chip.get("chip_score"),
                 "chip_flags": chip.get("chip_flags", []),
                 "chip_available": chip.get("chip_available", False),
@@ -114,6 +117,7 @@ def main():
             f"價 {r['price']:.2f} | "
             f"漲跌 {r['change_pct']:+.2f}% | "
             f"latent {r['latent_score']:.1f} | "
+            f"final {r.get('final_score', r['refined_score']):.1f} | "
             f"refined {r['refined_score']:.1f} | "
             f"chip {r.get('chip_score')} | "
             f"fast {r.get('fast_score',0):.1f} | "
