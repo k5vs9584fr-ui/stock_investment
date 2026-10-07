@@ -2,6 +2,9 @@ name: Day Trade Scan
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - "scripts/daytrade_scan.py"
 
 permissions:
   contents: write
