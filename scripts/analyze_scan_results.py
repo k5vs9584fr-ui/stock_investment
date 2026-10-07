@@ -8,6 +8,7 @@ from pathlib import Path
 
 SRC = Path("data/market_scan_results.json")
 OUT = Path("data/scan_report.json")
+WATCHLIST_OUT = Path("data/electronic_watchlist.json")
 API_KEY = os.environ.get("FUGLE_API_KEY", "").strip()
 FUGLE_BASE = "https://api.fugle.tw/marketdata/v1.0/stock"
 
@@ -291,6 +292,13 @@ refined_electronics = [
     if x.get("is_electronic")
 ]
 
+watchlist_rows = [
+    slim(x)
+    for x in refined_electronics
+    if x.get("refined_score", 0) >= 58
+    and float(x.get("value") or 0) >= 50_000_000
+][:60]
+
 report = {
     "scan_date": data.get("scan_date"),
     "total_market_stocks": data.get("total_market_stocks"),
@@ -311,5 +319,17 @@ for r in stocks:
 OUT.parent.mkdir(parents=True, exist_ok=True)
 with OUT.open("w", encoding="utf-8") as f:
     json.dump(report, f, ensure_ascii=False, indent=2)
+
+with WATCHLIST_OUT.open("w", encoding="utf-8") as f:
+    json.dump(
+        {
+            "scan_date": data.get("scan_date"),
+            "count": len(watchlist_rows),
+            "stocks": watchlist_rows,
+        },
+        f,
+        ensure_ascii=False,
+        indent=2,
+    )
 
 print(json.dumps(report, ensure_ascii=False, indent=2))
