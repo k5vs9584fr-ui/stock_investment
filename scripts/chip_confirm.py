@@ -46,20 +46,24 @@ def fetch_light_chip(fetcher, ticker, trade_date):
         holder_decline_weeks,
     ) = fetcher._fetch_tdcc_ownership(ticker, trade_date)
 
-    available = any(
-        x is not None
-        for x in [
-            foreign,
-            trust,
-            dealer,
-            margin_change,
-            large_chg,
-            retail_chg,
-        ]
+    institutional_available = any(
+        x is not None for x in [foreign, trust, dealer]
+    )
+    margin_available = margin_change is not None
+    ownership_available = any(
+        x is not None for x in [large_chg, retail_chg, super_large_chg]
+    )
+    available = (
+        institutional_available
+        or margin_available
+        or ownership_available
     )
 
     return {
         "available": available,
+        "institutional_available": institutional_available,
+        "margin_available": margin_available,
+        "ownership_available": ownership_available,
         "foreign_net_buy": int(foreign or 0),
         "trust_net_buy": int(trust or 0),
         "dealer_net_buy": int(dealer or 0),
@@ -78,6 +82,17 @@ def fetch_light_chip(fetcher, ticker, trade_date):
 def chip_score(chip):
     if not chip or not chip.get("available"):
         return None, ["CHIP_DATA_UNAVAILABLE"]
+
+    institutional_available = bool(chip.get("institutional_available"))
+    ownership_available = bool(chip.get("ownership_available"))
+    margin_available = bool(chip.get("margin_available"))
+
+    # Margin-only data is useful context, but it is not enough to call
+    # "chip confirmation". Keep the structure score and explicitly mark
+    # chips as unconfirmed.
+    if not institutional_available and not ownership_available:
+        flags = ["CHIP_PARTIAL_MARGIN_ONLY"] if margin_available else ["CHIP_DATA_UNAVAILABLE"]
+        return None, flags
 
     score = 45.0
     flags = []
@@ -241,6 +256,17 @@ def main():
                 "chip_score": cscore,
                 "chip_flags": cflags,
                 "chip_available": bool(chip.get("available")),
+                "chip_coverage": (
+                    "full"
+                    if chip.get("institutional_available") and chip.get("ownership_available")
+                    else "institutional_partial"
+                    if chip.get("institutional_available")
+                    else "ownership_partial"
+                    if chip.get("ownership_available")
+                    else "margin_only"
+                    if chip.get("margin_available")
+                    else "none"
+                ),
                 "final_score": round(final_score, 1),
                 "final_phase": final_phase(refined, cscore),
             }
