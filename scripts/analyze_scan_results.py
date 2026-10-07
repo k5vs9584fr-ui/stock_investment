@@ -846,3 +846,5 @@ with WATCHLIST_OUT.open("w", encoding="utf-8") as f:
     )
 
 print(json.dumps(report, ensure_ascii=False, indent=2))
+
+# COMPLETE_V1_TRIGGER
