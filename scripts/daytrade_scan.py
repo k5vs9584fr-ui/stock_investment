@@ -358,12 +358,21 @@ def score_daytrade(base, ticker, bars):
     ):
         phase = "DT-A+：當沖強候選"
     elif (
-        score >= 72
-        and strong_structure >= 4
+        score >= 75
         and near_high >= 0.985
         and change >= 0.3
         and day_range >= 1.2
         and value >= 100_000_000
+        and vol_accel >= 1.25
+        and ret15 >= 0.20
+        and (
+            breakout
+            or (
+                higher_closes
+                and higher_lows
+                and ret15 >= 0.30
+            )
+        )
     ):
         phase = "DT-A：可當沖"
     elif score >= 58:
