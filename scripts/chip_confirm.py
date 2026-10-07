@@ -1,4 +1,4 @@
-# workflow-trigger: chip-layer-v1
+# workflow-trigger: chip-layer-v2-light
 import json
 import sys
 from datetime import date
@@ -19,123 +19,152 @@ def clamp(x, lo=0.0, hi=100.0):
     return max(lo, min(hi, x))
 
 
-def chip_score(proxy):
-    if not proxy or not proxy.is_available:
-        return None, ["CHIP_DATA_UNAVAILABLE"]
+def fetch_light_chip(fetcher, ticker, trade_date):
+    """Fast confirmation layer.
 
-    score = 40.0
+    Only fetch the high-value signals needed for pre-breakout confirmation:
+    today's foreign/trust flow, today's margin change, and weekly TDCC
+    large/retail holder transfer. Heavy 20-day institutional/SBL/daytrade
+    history is deliberately excluded from this fast pass.
+    """
     flags = []
 
-    # 法人連續性
-    f = int(proxy.foreign_consecutive_buy_days or 0)
-    t = int(proxy.trust_consecutive_buy_days or 0)
+    foreign, trust, dealer = fetcher._fetch_t86_data(
+        ticker, trade_date, flags
+    )
+    margin_change = fetcher._fetch_margin_balance_change(
+        ticker, trade_date, flags
+    )
 
-    if f >= 8:
-        score += 16
-        flags.append("FOREIGN_CONSEC_8D")
-    elif f >= 5:
-        score += 12
-        flags.append("FOREIGN_CONSEC_5D")
-    elif f >= 3:
+    (
+        large_chg,
+        retail_chg,
+        super_large_chg,
+        super_large_count_chg,
+        large_2w_trend,
+        holder_count_chg,
+        holder_decline_weeks,
+    ) = fetcher._fetch_tdcc_ownership(ticker, trade_date)
+
+    available = any(
+        x is not None
+        for x in [
+            foreign,
+            trust,
+            dealer,
+            margin_change,
+            large_chg,
+            retail_chg,
+        ]
+    )
+
+    return {
+        "available": available,
+        "foreign_net_buy": int(foreign or 0),
+        "trust_net_buy": int(trust or 0),
+        "dealer_net_buy": int(dealer or 0),
+        "margin_balance_change": int(margin_change or 0),
+        "large_holder_chg_pct": large_chg,
+        "retail_holder_chg_pct": retail_chg,
+        "super_large_holder_chg_pct": super_large_chg,
+        "super_large_holder_count_chg": super_large_count_chg,
+        "large_holder_2w_trend": large_2w_trend,
+        "holder_count_chg_weekly": holder_count_chg,
+        "holder_count_decline_weeks": int(holder_decline_weeks or 0),
+        "data_quality_flags": flags,
+    }
+
+
+def chip_score(chip):
+    if not chip or not chip.get("available"):
+        return None, ["CHIP_DATA_UNAVAILABLE"]
+
+    score = 45.0
+    flags = []
+
+    foreign = chip.get("foreign_net_buy", 0)
+    trust = chip.get("trust_net_buy", 0)
+    margin_change = chip.get("margin_balance_change", 0)
+
+    # Today institutional flow: confirmation, not the main setup driver.
+    if foreign > 0:
         score += 8
-        flags.append("FOREIGN_CONSEC_3D")
+        flags.append("FOREIGN_BUY")
+    elif foreign < 0:
+        score -= 6
+        flags.append("FOREIGN_SELL")
 
-    if t >= 8:
-        score += 20
-        flags.append("TRUST_CONSEC_8D")
-    elif t >= 5:
-        score += 15
-        flags.append("TRUST_CONSEC_5D")
-    elif t >= 3:
+    if trust > 0:
         score += 10
-        flags.append("TRUST_CONSEC_3D")
+        flags.append("TRUST_BUY")
+    elif trust < 0:
+        score -= 7
+        flags.append("TRUST_SELL")
 
-    if proxy.institution_buy_2_of_3:
-        score += 8
-        flags.append("INST_BUY_2_OF_3")
-
-    if proxy.foreign_and_trust_both_buy:
+    if foreign > 0 and trust > 0:
         score += 8
         flags.append("FOREIGN_TRUST_BOTH_BUY")
 
-    cumul = int(proxy.cumul_foreign_20d or 0) + int(proxy.cumul_trust_20d or 0)
-    if cumul > 0:
-        score += 6
-        flags.append("CUMUL_INST_POSITIVE")
-    elif cumul < 0:
-        score -= 8
-        flags.append("CUMUL_INST_NEGATIVE")
+    # Margin decreasing while price structure holds = cleaner chips.
+    if margin_change < 0:
+        score += 8
+        flags.append("MARGIN_DECREASE")
+    elif margin_change > 0:
+        score -= 5
+        flags.append("MARGIN_INCREASE")
 
-    if float(proxy.inst_flow_accel or 0) >= 1.2:
-        score += 5
-        flags.append("INST_FLOW_ACCEL")
-
-    if float(proxy.inst_accel_3d_10d or 0) >= 1.2:
-        score += 4
-        flags.append("INST_3D_ACCEL")
-
-    # 融資下降 = 籌碼變乾淨
-    m = int(proxy.margin_decline_streak or 0)
-    if m >= 8:
-        score += 14
-        flags.append("MARGIN_DECLINE_8D")
-    elif m >= 5:
-        score += 10
-        flags.append("MARGIN_DECLINE_5D")
-    elif m >= 3:
-        score += 6
-        flags.append("MARGIN_DECLINE_3D")
-
-    # 大戶 / 散戶轉移
-    lh = proxy.large_holder_chg_pct
-    if lh is not None:
-        if lh >= 0.5:
-            score += 12
+    # Core preference: large holders accumulating + retail leaving.
+    large = chip.get("large_holder_chg_pct")
+    if large is not None:
+        if large >= 1.0:
+            score += 18
             flags.append("LARGE_HOLDER_ACCUM_PRIME")
-        elif lh > 0:
-            score += 8
+        elif large >= 0.5:
+            score += 14
+            flags.append("LARGE_HOLDER_ACCUM_STRONG")
+        elif large > 0:
+            score += 9
             flags.append("LARGE_HOLDER_ACCUM")
-        elif lh < 0:
-            score -= 10
+        elif large < 0:
+            score -= 12
             flags.append("LARGE_HOLDER_EXIT")
 
-    rh = proxy.retail_holder_chg_pct
-    if rh is not None:
-        if rh <= -0.5:
-            score += 12
+    retail = chip.get("retail_holder_chg_pct")
+    if retail is not None:
+        if retail <= -1.0:
+            score += 18
             flags.append("RETAIL_EXIT_PRIME")
-        elif rh < 0:
-            score += 8
+        elif retail <= -0.5:
+            score += 14
+            flags.append("RETAIL_EXIT_STRONG")
+        elif retail < 0:
+            score += 9
             flags.append("RETAIL_EXIT")
-        elif rh > 0:
-            score -= 8
+        elif retail > 0:
+            score -= 10
             flags.append("RETAIL_INCREASE")
 
-    slh = proxy.super_large_holder_chg_pct
-    if slh is not None and slh > 0:
-        score += 5
+    super_large = chip.get("super_large_holder_chg_pct")
+    if super_large is not None and super_large > 0:
+        score += 6
         flags.append("SUPER_LARGE_ACCUM")
 
-    weeks = int(proxy.holder_count_decline_weeks or 0)
+    large_2w = chip.get("large_holder_2w_trend")
+    if large_2w is not None:
+        if large_2w > 0:
+            score += 5
+            flags.append("LARGE_HOLDER_2W_UP")
+        elif large_2w < 0:
+            score -= 4
+            flags.append("LARGE_HOLDER_2W_DOWN")
+
+    weeks = int(chip.get("holder_count_decline_weeks") or 0)
     if weeks >= 2:
         score += 7
         flags.append("HOLDER_COUNT_DECLINE_2W")
     elif weeks >= 1:
         score += 4
         flags.append("HOLDER_COUNT_DECLINE_1W")
-
-    # 風險扣分
-    if proxy.short_balance_increased:
-        score -= 5
-        flags.append("SHORT_BALANCE_RISING")
-
-    if float(proxy.sbl_ratio or 0) >= 0.12:
-        score -= 5
-        flags.append("SBL_HIGH")
-
-    if proxy.is_disposal or proxy.is_trading_halt:
-        score -= 30
-        flags.append("TRADING_RESTRICTION")
 
     return round(clamp(score), 1), flags
 
@@ -150,17 +179,13 @@ def final_phase(refined, chip):
 
     final = refined * 0.72 + chip * 0.28
 
-    # A+ 必須型態跟籌碼一起過
     if refined >= 78 and chip >= 58 and final >= 78:
-        phase = "A+級：型態＋籌碼確認"
-    elif refined >= 72 and chip >= 48 and final >= 70:
-        phase = "A級：潛伏"
-    elif final >= 60:
-        phase = "B級：觀察"
-    else:
-        phase = "C級：暫不碰"
-
-    return phase
+        return "A+級：型態＋籌碼確認"
+    if refined >= 72 and chip >= 48 and final >= 70:
+        return "A級：潛伏"
+    if final >= 60:
+        return "B級：觀察"
+    return "C級：暫不碰"
 
 
 def save_partial(scan_date, results):
@@ -198,40 +223,24 @@ def main():
 
     for i, row in enumerate(candidates, 1):
         symbol = row["symbol"]
-        volume = int(float(row.get("volume") or 0))
 
         try:
-            proxy = fetcher.fetch(
-                symbol,
-                scan_date,
-                today_volume=volume,
-            )
-            cscore, cflags = chip_score(proxy)
+            chip = fetch_light_chip(fetcher, symbol, scan_date)
+            cscore, cflags = chip_score(chip)
 
             refined = float(row.get("refined_score") or 0)
-            if cscore is None:
-                final_score = refined
-            else:
-                final_score = refined * 0.72 + cscore * 0.28
+            final_score = (
+                refined
+                if cscore is None
+                else refined * 0.72 + cscore * 0.28
+            )
 
             enriched = {
                 **row,
+                **chip,
                 "chip_score": cscore,
                 "chip_flags": cflags,
-                "chip_available": bool(proxy.is_available),
-                "foreign_net_buy": int(proxy.foreign_net_buy or 0),
-                "trust_net_buy": int(proxy.trust_net_buy or 0),
-                "dealer_net_buy": int(proxy.dealer_net_buy or 0),
-                "foreign_consecutive_buy_days": int(proxy.foreign_consecutive_buy_days or 0),
-                "trust_consecutive_buy_days": int(proxy.trust_consecutive_buy_days or 0),
-                "margin_decline_streak": int(proxy.margin_decline_streak or 0),
-                "large_holder_chg_pct": proxy.large_holder_chg_pct,
-                "retail_holder_chg_pct": proxy.retail_holder_chg_pct,
-                "super_large_holder_chg_pct": proxy.super_large_holder_chg_pct,
-                "holder_count_decline_weeks": int(proxy.holder_count_decline_weeks or 0),
-                "cumul_foreign_20d": int(proxy.cumul_foreign_20d or 0),
-                "cumul_trust_20d": int(proxy.cumul_trust_20d or 0),
-                "inst_flow_accel": float(proxy.inst_flow_accel or 0),
+                "chip_available": bool(chip.get("available")),
                 "final_score": round(final_score, 1),
                 "final_phase": final_phase(refined, cscore),
             }
@@ -241,7 +250,8 @@ def main():
             print(
                 f"[{i:02d}/{len(candidates)}] {symbol} {row.get('name','')} "
                 f"refined={refined:.1f} chip={cscore} "
-                f"final={enriched['final_score']:.1f} {enriched['final_phase']}"
+                f"final={enriched['final_score']:.1f} "
+                f"{enriched['final_phase']}"
             )
         except Exception as e:
             print(f"{symbol} CHIP ERROR: {e}")
@@ -251,27 +261,21 @@ def main():
                 "chip_flags": [f"CHIP_ERROR:{type(e).__name__}"],
                 "chip_available": False,
                 "final_score": float(row.get("refined_score") or 0),
-                "final_phase": final_phase(float(row.get("refined_score") or 0), None),
+                "final_phase": final_phase(
+                    float(row.get("refined_score") or 0),
+                    None,
+                ),
             })
             save_partial(payload.get("scan_date"), results)
 
-    results.sort(key=lambda x: x.get("final_score", 0), reverse=True)
+    results.sort(
+        key=lambda x: x.get("final_score", 0),
+        reverse=True,
+    )
+    save_partial(payload.get("scan_date"), results)
 
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    with OUT.open("w", encoding="utf-8") as f:
-        json.dump(
-            {
-                "scan_date": payload.get("scan_date"),
-                "count": len(results),
-                "stocks": results,
-            },
-            f,
-            ensure_ascii=False,
-            indent=2,
-        )
-
-    print("\n=== 型態＋籌碼 最終 TOP 20 ===")
-    for i, r in enumerate(results[:20], 1):
+    print("\n=== 型態＋籌碼 最終 TOP 12 ===")
+    for i, r in enumerate(results, 1):
         print(
             f"{i:02d}. {r['symbol']} {r['name']} | "
             f"refined={r.get('refined_score',0):.1f} | "
