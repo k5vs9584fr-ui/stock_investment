@@ -6,6 +6,7 @@ from realtime_scan import get_quote, score_stock, calc_abc
 
 WATCHLIST = Path("data/electronic_watchlist.json")
 CHIP_RESULTS = Path("data/electronic_chip_results.json")
+FINAL_SIGNAL = Path("data/final_signal_report.json")
 OUT = Path("data/electronic_fast_results.json")
 
 
@@ -21,15 +22,17 @@ def main():
     watchlist = payload.get("stocks") or []
 
     chip_map = {}
-    if CHIP_RESULTS.exists():
+    chip_source = FINAL_SIGNAL if FINAL_SIGNAL.exists() else CHIP_RESULTS
+    if chip_source.exists():
         try:
-            with CHIP_RESULTS.open("r", encoding="utf-8") as f:
+            with chip_source.open("r", encoding="utf-8") as f:
                 chip_payload = json.load(f)
             chip_map = {
                 x.get("symbol"): x
                 for x in (chip_payload.get("stocks") or [])
                 if x.get("symbol")
             }
+            print(f"chip source: {chip_source}")
         except Exception as e:
             print(f"chip results load error: {e}")
 
