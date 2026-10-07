@@ -33,13 +33,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e .
 
-      - name: Run chip refinement
+      - name: Run fast chip confirmation
+        run: python scripts/chip_confirm.py
+
+      - name: Run full chip refinement
         run: python scripts/chip_refine.py
 
       - name: Save final signal report
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add data/final_signal_report.json
+          git add data/final_signal_report.json data/electronic_chip_results.json
           git diff --cached --quiet || git commit -m "Update final chip-refined signals"
           git push
