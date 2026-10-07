@@ -3,7 +3,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "data" / "final_signal_report.json"
-WATCHLIST = ROOT / "data" / "electronic_watchlist.json"
+WATCHLIST = ROOT / "data" / "electronic_final_watchlist.json"
 OUT = ROOT / "data" / "final_scan_results.json"
 
 
@@ -19,7 +19,7 @@ def main():
 
     report = {
         "scan_date": payload.get("scan_date"),
-        "model_version": "complete-v1",
+        "model_version": "complete-v2",
         "pipeline": [
             "intraday_latent",
             "multi_day_structure",
@@ -43,7 +43,7 @@ def main():
         json.dump(
             {
                 "scan_date": payload.get("scan_date"),
-                "model_version": "complete-v1",
+                "model_version": "complete-v2",
                 "count": len(rows),
                 "stocks": rows,
             },
