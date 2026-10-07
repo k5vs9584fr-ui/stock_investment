@@ -163,6 +163,26 @@ def final_phase(refined, chip):
     return phase
 
 
+def save_partial(scan_date, results):
+    ranked = sorted(
+        results,
+        key=lambda x: x.get("final_score", 0),
+        reverse=True,
+    )
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    with OUT.open("w", encoding="utf-8") as f:
+        json.dump(
+            {
+                "scan_date": scan_date,
+                "count": len(ranked),
+                "stocks": ranked,
+            },
+            f,
+            ensure_ascii=False,
+            indent=2,
+        )
+
+
 def main():
     if not WATCHLIST.exists():
         raise RuntimeError("electronic_watchlist.json 不存在")
@@ -171,7 +191,7 @@ def main():
         payload = json.load(f)
 
     scan_date = date.fromisoformat(payload["scan_date"])
-    candidates = (payload.get("stocks") or [])[:20]
+    candidates = (payload.get("stocks") or [])[:12]
 
     fetcher = ChipProxyFetcher()
     results = []
@@ -216,6 +236,7 @@ def main():
                 "final_phase": final_phase(refined, cscore),
             }
             results.append(enriched)
+            save_partial(payload.get("scan_date"), results)
 
             print(
                 f"[{i:02d}/{len(candidates)}] {symbol} {row.get('name','')} "
@@ -232,6 +253,7 @@ def main():
                 "final_score": float(row.get("refined_score") or 0),
                 "final_phase": final_phase(float(row.get("refined_score") or 0), None),
             })
+            save_partial(payload.get("scan_date"), results)
 
     results.sort(key=lambda x: x.get("final_score", 0), reverse=True)
 
