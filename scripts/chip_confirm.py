@@ -171,7 +171,7 @@ def main():
         payload = json.load(f)
 
     scan_date = date.fromisoformat(payload["scan_date"])
-    candidates = (payload.get("stocks") or [])[:40]
+    candidates = (payload.get("stocks") or [])[:20]
 
     fetcher = ChipProxyFetcher()
     results = []
