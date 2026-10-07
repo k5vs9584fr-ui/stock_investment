@@ -2,6 +2,8 @@ import json
 import math
 import time
 import urllib.parse
+from datetime import datetime
+from zoneinfo import ZoneInfo
 from pathlib import Path
 
 from realtime_scan import API_KEY, FUGLE_BASE, get_json, get_quote, score_stock, calc_abc
@@ -474,7 +476,10 @@ def main():
         if str(x.get("dt_phase", "")).startswith("DT-A")
     ]
 
+    now = datetime.now(ZoneInfo("Asia/Taipei"))
     payload = {
+        "generated_at": now.isoformat(timespec="seconds"),
+        "scan_date": now.strftime("%Y-%m-%d"),
         "source": source,
         "candidate_count": len(results),
         "strong_count": len(strong),
