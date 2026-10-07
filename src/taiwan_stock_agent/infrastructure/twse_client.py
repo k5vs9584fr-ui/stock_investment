@@ -1124,6 +1124,150 @@ class ChipProxyFetcher:
             self._daytrade_date_cache[trade_date] = {}
             return None
 
+    def _fetch_tdcc_ownership_fugle(
+        self, ticker: str, trade_date: date
+    ) -> tuple[float | None, float | None, float | None, int | None, float | None, int | None, int] | None:
+        """Fetch TDCC weekly holder distribution from Fugle ownership API.
+
+        Returns the same 7-tuple as _fetch_tdcc_ownership().
+        Returns None when FUGLE_API_KEY is absent, the plan has no access,
+        or the response is insufficient; caller then falls back to FinMind.
+        """
+        import os as _os
+        import re as _re
+
+        api_key = (_os.environ.get("FUGLE_API_KEY", "") or "").strip()
+        if not api_key:
+            return None
+
+        start = trade_date - timedelta(days=35)
+        url = (
+            "https://api.fugle.tw/marketdata/v1.0/stock/"
+            f"ownership/tdcc-distribution/{ticker}"
+        )
+
+        try:
+            resp = requests.get(
+                url,
+                params={
+                    "from": str(start),
+                    "to": str(trade_date),
+                    "sort": "asc",
+                },
+                headers={
+                    "X-API-KEY": api_key,
+                    "User-Agent": _TWSE_HEADERS["User-Agent"],
+                },
+                timeout=15,
+            )
+
+            # Developer/advanced-plan endpoint. 401/403 means fall back cleanly.
+            if resp.status_code in (401, 403, 404):
+                return None
+
+            resp.raise_for_status()
+            body = resp.json()
+            periods = body.get("data") or []
+            if len(periods) < 2:
+                return None
+
+            periods = sorted(periods, key=lambda x: str(x.get("date") or ""))
+            latest_periods = periods[-3:]
+
+            def _range_bounds(label: str):
+                raw = str(label or "").replace(",", "").strip().lower()
+                if not raw or "合計" in raw or "異動" in raw or raw == "total":
+                    return None
+                nums = [int(x) for x in _re.findall(r"\d+", raw)]
+                if not nums:
+                    return None
+                open_ended = (
+                    "以上" in raw
+                    or "more than" in raw
+                    or "over" in raw
+                    or raw.endswith("+")
+                )
+                if open_ended:
+                    return nums[0], None
+                if len(nums) >= 2:
+                    return min(nums[0], nums[1]), max(nums[0], nums[1])
+                return nums[0], nums[0]
+
+            def _summarize(period):
+                large_pct = 0.0
+                retail_pct = 0.0
+                super_pct = 0.0
+                super_count = 0
+                total_holders = 0
+
+                for row in (period.get("distributions") or []):
+                    bounds = _range_bounds(row.get("range"))
+                    if bounds is None:
+                        continue
+
+                    lower, upper = bounds
+                    proportion = float(row.get("proportion") or 0)
+                    holders = int(row.get("holders") or 0)
+
+                    total_holders += holders
+
+                    if lower >= 400_000:
+                        large_pct += proportion
+                    if lower >= 1_000_000:
+                        super_pct += proportion
+                        super_count += holders
+                    if upper is not None and upper <= 100_000:
+                        retail_pct += proportion
+
+                return (
+                    large_pct,
+                    retail_pct,
+                    super_pct,
+                    super_count,
+                    total_holders,
+                )
+
+            summaries = [_summarize(p) for p in latest_periods]
+            if len(summaries) < 2:
+                return None
+
+            cur = summaries[-1]
+            prev = summaries[-2]
+
+            large_chg = cur[0] - prev[0]
+            retail_chg = cur[1] - prev[1]
+            super_pct_chg = cur[2] - prev[2]
+            super_count_chg = cur[3] - prev[3]
+
+            large_2w_trend = None
+            if len(summaries) >= 3:
+                large_2w_trend = cur[0] - summaries[-3][0]
+
+            holder_count_chg = None
+            if cur[4] > 0 and prev[4] > 0:
+                holder_count_chg = cur[4] - prev[4]
+
+            holder_decline_weeks = 0
+            if holder_count_chg is not None and holder_count_chg < 0:
+                holder_decline_weeks = 1
+                if len(summaries) >= 3 and summaries[-3][4] > 0:
+                    if prev[4] - summaries[-3][4] < 0:
+                        holder_decline_weeks = 2
+
+            return (
+                large_chg,
+                retail_chg,
+                super_pct_chg,
+                super_count_chg,
+                large_2w_trend,
+                holder_count_chg,
+                holder_decline_weeks,
+            )
+
+        except Exception as e:
+            logger.debug("Fugle TDCC fetch failed %s %s: %s", ticker, trade_date, e)
+            return None
+
     def _fetch_tdcc_ownership(
         self, ticker: str, trade_date: date
     ) -> tuple[float | None, float | None, float | None, int | None, float | None, int | None, int]:
@@ -1144,6 +1288,12 @@ class ChipProxyFetcher:
         千張大戶: ≥ 1,000,000 shares (1000張，機構/主力等級)
         散戶定義: < 100,000 shares (100張)
         """
+        # Prefer Fugle TDCC when the connected plan supports ownership data.
+        # Fall back to FinMind so the chip layer remains functional on lower plans.
+        fugle_tdcc = self._fetch_tdcc_ownership_fugle(ticker, trade_date)
+        if fugle_tdcc is not None:
+            return fugle_tdcc
+
         import os as _os
         api_key = (_os.environ.get("FINMIND_API_KEY", "") or _os.environ.get("FINMIND_TOKEN", ""))
         if not api_key:
