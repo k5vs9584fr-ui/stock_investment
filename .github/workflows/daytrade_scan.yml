@@ -1,0 +1,35 @@
+name: Day Trade Scan
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run day-trade scan
+        env:
+          FUGLE_API_KEY: ${{ secrets.FUGLE_API_KEY }}
+        run: python scripts/daytrade_scan.py
+
+      - name: Save day-trade results
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add data/daytrade_results.json
+          git diff --cached --quiet || git commit -m "Update day-trade scan"
+          git pull --rebase origin main
+          git push
