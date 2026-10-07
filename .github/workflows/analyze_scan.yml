@@ -31,6 +31,6 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add data/scan_report.json
+          git add data/scan_report.json data/electronic_watchlist.json
           git diff --cached --quiet || git commit -m "Update scan analysis report"
           git push
