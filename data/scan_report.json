@@ -81,7 +81,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "2886",
@@ -111,7 +116,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "2892",
@@ -141,7 +151,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "2330",
@@ -187,7 +202,33 @@
         "higher_low": true
       },
       "refined_score": 74.6,
-      "refined_phase": "A級：潛伏"
+      "refined_phase": "A級：潛伏",
+      "chip_score": 6.0,
+      "chip_flags": [
+        "INST_SELL_TODAY",
+        "INST_CONSEC_5D",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": -1163351,
+          "trust": 72763,
+          "dealer": 447067,
+          "inst": -1090588
+        },
+        "foreign_consecutive_buy_days": 0,
+        "trust_consecutive_buy_days": 5,
+        "inst_cumul_5d": 5778279,
+        "margin_change": 365,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 64.8,
+      "final_phase": "B級：觀察"
     },
     {
       "symbol": "2412",
@@ -217,7 +258,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "2618",
@@ -247,7 +293,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "2801",
@@ -277,7 +328,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "1102",
@@ -307,7 +363,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "2347",
@@ -350,7 +411,34 @@
         "higher_low": true
       },
       "refined_score": 82.9,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 19.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 1579134,
+          "trust": -668461,
+          "dealer": 52592,
+          "inst": 910673
+        },
+        "foreign_consecutive_buy_days": 5,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 8599779,
+        "margin_change": 9,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 79.4,
+      "final_phase": "A級：潛伏"
     },
     {
       "symbol": "3706",
@@ -394,7 +482,34 @@
         "higher_low": true
       },
       "refined_score": 93.8,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 25.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_2D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 1168886,
+          "trust": 20000,
+          "dealer": -28963,
+          "inst": 1188886
+        },
+        "foreign_consecutive_buy_days": 2,
+        "trust_consecutive_buy_days": 1,
+        "inst_cumul_5d": 2146704,
+        "margin_change": -11,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 91.9,
+      "final_phase": "A+級：預備發動"
     },
     {
       "symbol": "4904",
@@ -424,7 +539,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "9904",
@@ -454,7 +574,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "6197",
@@ -497,7 +622,34 @@
         "higher_low": true
       },
       "refined_score": 62.8,
-      "refined_phase": "B級：觀察"
+      "refined_phase": "B級：觀察",
+      "chip_score": 19.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_3D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 382546,
+          "trust": 0,
+          "dealer": -59705,
+          "inst": 382546
+        },
+        "foreign_consecutive_buy_days": 3,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 1018462,
+        "margin_change": 40,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 62.9,
+      "final_phase": "B級：觀察"
     },
     {
       "symbol": "2884",
@@ -527,7 +679,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "2887",
@@ -557,7 +714,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "2885",
@@ -587,7 +749,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "2610",
@@ -617,7 +784,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "2359",
@@ -659,7 +831,32 @@
         "higher_low": false
       },
       "refined_score": 77.0,
-      "refined_phase": "A級：潛伏"
+      "refined_phase": "A級：潛伏",
+      "chip_score": 5.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 76477,
+          "trust": 0,
+          "dealer": -9829,
+          "inst": 76477
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -999723,
+        "margin_change": -15,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 66.1,
+      "final_phase": "B級：觀察"
     },
     {
       "symbol": "4966",
@@ -703,7 +900,33 @@
         "higher_low": false
       },
       "refined_score": 60.8,
-      "refined_phase": "B級：觀察"
+      "refined_phase": "B級：觀察",
+      "chip_score": 24.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 112882,
+          "trust": 9000,
+          "dealer": 3915,
+          "inst": 121882
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 5,
+        "inst_cumul_5d": 22730,
+        "margin_change": null,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 64.3,
+      "final_phase": "B級：觀察"
     },
     {
       "symbol": "6547",
@@ -733,7 +956,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "2542",
@@ -762,7 +990,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "5876",
@@ -791,7 +1024,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "6533",
@@ -834,7 +1072,32 @@
         "higher_low": true
       },
       "refined_score": 65.0,
-      "refined_phase": "B級：觀察"
+      "refined_phase": "B級：觀察",
+      "chip_score": 0.0,
+      "chip_flags": [
+        "INST_SELL_TODAY",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": -142003,
+          "trust": 0,
+          "dealer": -1000,
+          "inst": -142003
+        },
+        "foreign_consecutive_buy_days": 0,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 1633484,
+        "margin_change": 62,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 53.3,
+      "final_phase": "C級：暫不碰"
     },
     {
       "symbol": "2912",
@@ -864,7 +1127,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "1609",
@@ -894,7 +1162,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "2002",
@@ -924,7 +1197,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "2441",
@@ -969,7 +1247,34 @@
         "higher_low": true
       },
       "refined_score": 88.3,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 22.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 43441,
+          "trust": 171000,
+          "dealer": -15734,
+          "inst": 214441
+        },
+        "foreign_consecutive_buy_days": 2,
+        "trust_consecutive_buy_days": 5,
+        "inst_cumul_5d": 107969,
+        "margin_change": 116,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 85.6,
+      "final_phase": "A+級：預備發動"
     },
     {
       "symbol": "3293",
@@ -999,7 +1304,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "4938",
@@ -1043,7 +1353,32 @@
         "higher_low": false
       },
       "refined_score": 93.0,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 0.0,
+      "chip_flags": [
+        "INST_SELL_TODAY",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": -674692,
+          "trust": -144217,
+          "dealer": 66587,
+          "inst": -818909
+        },
+        "foreign_consecutive_buy_days": 0,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -2712507,
+        "margin_change": -126,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 76.3,
+      "final_phase": "A級：潛伏"
     },
     {
       "symbol": "2633",
@@ -1073,7 +1408,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     }
   ],
   "top_strength": [
@@ -1103,7 +1443,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "6278",
@@ -1132,7 +1477,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "1301",
@@ -1161,7 +1511,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "1802",
@@ -1190,7 +1545,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "2492",
@@ -1219,7 +1579,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "2484",
@@ -1248,7 +1613,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "4989",
@@ -1277,7 +1647,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "3624",
@@ -1305,7 +1680,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "1303",
@@ -1334,7 +1714,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "1455",
@@ -1363,7 +1748,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "2241",
@@ -1392,7 +1782,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "4908",
@@ -1420,7 +1815,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "8086",
@@ -1449,7 +1849,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "2464",
@@ -1478,7 +1883,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "2466",
@@ -1507,7 +1917,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "6147",
@@ -1535,7 +1950,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "6218",
@@ -1564,7 +1984,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "8039",
@@ -1592,7 +2017,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "3234",
@@ -1621,7 +2051,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     },
     {
       "symbol": "8131",
@@ -1650,7 +2085,12 @@
       "structure_flags": null,
       "structure_metrics": null,
       "refined_score": null,
-      "refined_phase": null
+      "refined_phase": null,
+      "chip_score": null,
+      "chip_flags": null,
+      "chip_metrics": null,
+      "final_score": null,
+      "final_phase": null
     }
   ],
   "top_refined": [
@@ -1696,7 +2136,34 @@
         "higher_low": true
       },
       "refined_score": 93.8,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 25.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_2D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 1168886,
+          "trust": 20000,
+          "dealer": -28963,
+          "inst": 1188886
+        },
+        "foreign_consecutive_buy_days": 2,
+        "trust_consecutive_buy_days": 1,
+        "inst_cumul_5d": 2146704,
+        "margin_change": -11,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 91.9,
+      "final_phase": "A+級：預備發動"
     },
     {
       "symbol": "4938",
@@ -1740,7 +2207,32 @@
         "higher_low": false
       },
       "refined_score": 93.0,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 0.0,
+      "chip_flags": [
+        "INST_SELL_TODAY",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": -674692,
+          "trust": -144217,
+          "dealer": 66587,
+          "inst": -818909
+        },
+        "foreign_consecutive_buy_days": 0,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -2712507,
+        "margin_change": -126,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 76.3,
+      "final_phase": "A級：潛伏"
     },
     {
       "symbol": "6214",
@@ -1784,7 +2276,34 @@
         "higher_low": true
       },
       "refined_score": 90.4,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 28.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_4D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 396737,
+          "trust": 12000,
+          "dealer": 1000,
+          "inst": 408737
+        },
+        "foreign_consecutive_buy_days": 3,
+        "trust_consecutive_buy_days": 4,
+        "inst_cumul_5d": 983964,
+        "margin_change": -2,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 90.9,
+      "final_phase": "A+級：預備發動"
     },
     {
       "symbol": "2377",
@@ -1827,7 +2346,34 @@
         "higher_low": true
       },
       "refined_score": 89.9,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 25.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 1011911,
+          "trust": -27383,
+          "dealer": 32745,
+          "inst": 984528
+        },
+        "foreign_consecutive_buy_days": 5,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 4967887,
+        "margin_change": -31,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 88.7,
+      "final_phase": "A+級：預備發動"
     },
     {
       "symbol": "2441",
@@ -1872,7 +2418,34 @@
         "higher_low": true
       },
       "refined_score": 88.3,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 22.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 43441,
+          "trust": 171000,
+          "dealer": -15734,
+          "inst": 214441
+        },
+        "foreign_consecutive_buy_days": 2,
+        "trust_consecutive_buy_days": 5,
+        "inst_cumul_5d": 107969,
+        "margin_change": 116,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 85.6,
+      "final_phase": "A+級：預備發動"
     },
     {
       "symbol": "6282",
@@ -1915,7 +2488,32 @@
         "higher_low": true
       },
       "refined_score": 87.0,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 7.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 882379,
+          "trust": -41000,
+          "dealer": -82934,
+          "inst": 841379
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 271047,
+        "margin_change": 45,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 75.5,
+      "final_phase": "A級：潛伏"
     },
     {
       "symbol": "2312",
@@ -1957,7 +2555,34 @@
         "higher_low": true
       },
       "refined_score": 84.4,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 14.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_3D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 2376254,
+          "trust": 45000,
+          "dealer": 290950,
+          "inst": 2421254
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 3,
+        "inst_cumul_5d": -2033985,
+        "margin_change": 338,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 77.6,
+      "final_phase": "A級：潛伏"
     },
     {
       "symbol": "2458",
@@ -2001,7 +2626,34 @@
         "higher_low": true
       },
       "refined_score": 83.3,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 28.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 154088,
+          "trust": 80804,
+          "dealer": 15982,
+          "inst": 234892
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 5,
+        "inst_cumul_5d": 609142,
+        "margin_change": -51,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 85.1,
+      "final_phase": "A+級：預備發動"
     },
     {
       "symbol": "2347",
@@ -2044,7 +2696,34 @@
         "higher_low": true
       },
       "refined_score": 82.9,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 19.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 1579134,
+          "trust": -668461,
+          "dealer": 52592,
+          "inst": 910673
+        },
+        "foreign_consecutive_buy_days": 5,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 8599779,
+        "margin_change": 9,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 79.4,
+      "final_phase": "A級：潛伏"
     },
     {
       "symbol": "2353",
@@ -2086,7 +2765,33 @@
         "higher_low": false
       },
       "refined_score": 82.3,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 10.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 557014,
+          "trust": -35000,
+          "dealer": -2231,
+          "inst": 522014
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -3104401,
+        "margin_change": -3136,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 73.5,
+      "final_phase": "A級：潛伏"
     },
     {
       "symbol": "3022",
@@ -2132,7 +2837,33 @@
         "higher_low": false
       },
       "refined_score": 81.6,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 18.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 29859,
+          "trust": 0,
+          "dealer": -1621,
+          "inst": 29859
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 455584,
+        "margin_change": -200,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 77.7,
+      "final_phase": "A級：潛伏"
     },
     {
       "symbol": "8096",
@@ -2174,7 +2905,33 @@
         "higher_low": true
       },
       "refined_score": 81.2,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 21.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_4D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 356260,
+          "trust": 0,
+          "dealer": 9843,
+          "inst": 356260
+        },
+        "foreign_consecutive_buy_days": 4,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 1755229,
+        "margin_change": null,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 79.2,
+      "final_phase": "A級：潛伏"
     },
     {
       "symbol": "6191",
@@ -2219,7 +2976,34 @@
         "higher_low": true
       },
       "refined_score": 80.8,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 28.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 489365,
+          "trust": 20000,
+          "dealer": 14508,
+          "inst": 509365
+        },
+        "foreign_consecutive_buy_days": 5,
+        "trust_consecutive_buy_days": 2,
+        "inst_cumul_5d": 1849668,
+        "margin_change": -30,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 83.1,
+      "final_phase": "A+級：預備發動"
     },
     {
       "symbol": "3596",
@@ -2261,7 +3045,32 @@
         "higher_low": true
       },
       "refined_score": 80.0,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 0.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 5457,
+          "trust": 0,
+          "dealer": 6775,
+          "inst": 5457
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -604050,
+        "margin_change": 118,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 65.6,
+      "final_phase": "B級：觀察"
     },
     {
       "symbol": "6166",
@@ -2304,7 +3113,33 @@
         "higher_low": true
       },
       "refined_score": 79.5,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 18.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 149188,
+          "trust": 0,
+          "dealer": 982,
+          "inst": 149188
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 3218,
+        "margin_change": -59,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 76.0,
+      "final_phase": "A級：潛伏"
     },
     {
       "symbol": "3702",
@@ -2345,7 +3180,34 @@
         "higher_low": true
       },
       "refined_score": 78.5,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 28.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_3D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 2530046,
+          "trust": 50000,
+          "dealer": -5861,
+          "inst": 2580046
+        },
+        "foreign_consecutive_buy_days": 3,
+        "trust_consecutive_buy_days": 2,
+        "inst_cumul_5d": 8907313,
+        "margin_change": -93,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 81.2,
+      "final_phase": "A級：潛伏"
     },
     {
       "symbol": "8110",
@@ -2388,7 +3250,34 @@
         "higher_low": true
       },
       "refined_score": 78.1,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 22.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_2D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 880100,
+          "trust": 0,
+          "dealer": -5728,
+          "inst": 880100
+        },
+        "foreign_consecutive_buy_days": 2,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 1233487,
+        "margin_change": -250,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 77.2,
+      "final_phase": "A級：潛伏"
     },
     {
       "symbol": "2393",
@@ -2431,7 +3320,34 @@
         "higher_low": true
       },
       "refined_score": 78.0,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 25.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 990776,
+          "trust": -11264,
+          "dealer": -92347,
+          "inst": 979512
+        },
+        "foreign_consecutive_buy_days": 5,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 3904374,
+        "margin_change": -51,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 79.0,
+      "final_phase": "A級：潛伏"
     },
     {
       "symbol": "2359",
@@ -2473,7 +3389,32 @@
         "higher_low": false
       },
       "refined_score": 77.0,
-      "refined_phase": "A級：潛伏"
+      "refined_phase": "A級：潛伏",
+      "chip_score": 5.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 76477,
+          "trust": 0,
+          "dealer": -9829,
+          "inst": 76477
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -999723,
+        "margin_change": -15,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 66.1,
+      "final_phase": "B級：觀察"
     },
     {
       "symbol": "3010",
@@ -2517,7 +3458,34 @@
         "higher_low": true
       },
       "refined_score": 75.2,
-      "refined_phase": "A級：潛伏"
+      "refined_phase": "A級：潛伏",
+      "chip_score": 19.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 267599,
+          "trust": 0,
+          "dealer": 11241,
+          "inst": 267599
+        },
+        "foreign_consecutive_buy_days": 5,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 1190738,
+        "margin_change": 44,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 73.1,
+      "final_phase": "A級：潛伏"
     },
     {
       "symbol": "2330",
@@ -2563,7 +3531,33 @@
         "higher_low": true
       },
       "refined_score": 74.6,
-      "refined_phase": "A級：潛伏"
+      "refined_phase": "A級：潛伏",
+      "chip_score": 6.0,
+      "chip_flags": [
+        "INST_SELL_TODAY",
+        "INST_CONSEC_5D",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": -1163351,
+          "trust": 72763,
+          "dealer": 447067,
+          "inst": -1090588
+        },
+        "foreign_consecutive_buy_days": 0,
+        "trust_consecutive_buy_days": 5,
+        "inst_cumul_5d": 5778279,
+        "margin_change": 365,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 64.8,
+      "final_phase": "B級：觀察"
     },
     {
       "symbol": "2382",
@@ -2605,7 +3599,34 @@
         "higher_low": false
       },
       "refined_score": 72.2,
-      "refined_phase": "A級：潛伏"
+      "refined_phase": "A級：潛伏",
+      "chip_score": 14.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_2D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 1441121,
+          "trust": -17474,
+          "dealer": 40781,
+          "inst": 1423647
+        },
+        "foreign_consecutive_buy_days": 2,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -4543529,
+        "margin_change": -157,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 67.6,
+      "final_phase": "B級：觀察"
     },
     {
       "symbol": "3149",
@@ -2648,7 +3669,33 @@
         "higher_low": true
       },
       "refined_score": 72.0,
-      "refined_phase": "A級：潛伏"
+      "refined_phase": "A級：潛伏",
+      "chip_score": 4.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 840383,
+          "trust": 0,
+          "dealer": -1785,
+          "inst": 840383
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -1874337,
+        "margin_change": 242,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 61.4,
+      "final_phase": "C級：暫不碰"
     },
     {
       "symbol": "8150",
@@ -2691,7 +3738,33 @@
         "higher_low": true
       },
       "refined_score": 72.0,
-      "refined_phase": "A級：潛伏"
+      "refined_phase": "A級：潛伏",
+      "chip_score": 6.0,
+      "chip_flags": [
+        "INST_SELL_TODAY",
+        "INST_CONSEC_5D",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": -2169566,
+          "trust": 40000,
+          "dealer": -217592,
+          "inst": -2129566
+        },
+        "foreign_consecutive_buy_days": 0,
+        "trust_consecutive_buy_days": 5,
+        "inst_cumul_5d": 9762599,
+        "margin_change": 4023,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 62.6,
+      "final_phase": "B級：觀察"
     },
     {
       "symbol": "2481",
@@ -2732,7 +3805,33 @@
         "higher_low": true
       },
       "refined_score": 71.9,
-      "refined_phase": "A級：潛伏"
+      "refined_phase": "A級：潛伏",
+      "chip_score": 18.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 3942213,
+          "trust": -91000,
+          "dealer": 154440,
+          "inst": 3851213
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 9663924,
+        "margin_change": -79,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 69.8,
+      "final_phase": "B級：觀察"
     },
     {
       "symbol": "7712",
@@ -2774,7 +3873,31 @@
         "higher_low": true
       },
       "refined_score": 68.9,
-      "refined_phase": "A級：潛伏"
+      "refined_phase": "A級：潛伏",
+      "chip_score": 0.0,
+      "chip_flags": [
+        "INST_SELL_TODAY",
+        "INST_CUMUL_5D_NEG"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": -1000,
+          "trust": 0,
+          "dealer": -6511,
+          "inst": -1000
+        },
+        "foreign_consecutive_buy_days": 0,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -373372,
+        "margin_change": null,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 56.5,
+      "final_phase": "C級：暫不碰"
     },
     {
       "symbol": "2324",
@@ -2814,7 +3937,32 @@
         "higher_low": false
       },
       "refined_score": 68.1,
-      "refined_phase": "A級：潛伏"
+      "refined_phase": "A級：潛伏",
+      "chip_score": 0.0,
+      "chip_flags": [
+        "INST_SELL_TODAY",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": -4579307,
+          "trust": -12000,
+          "dealer": -137768,
+          "inst": -4591307
+        },
+        "foreign_consecutive_buy_days": 0,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -72124235,
+        "margin_change": -124,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 55.8,
+      "final_phase": "C級：暫不碰"
     },
     {
       "symbol": "2355",
@@ -2856,7 +4004,32 @@
         "higher_low": false
       },
       "refined_score": 68.0,
-      "refined_phase": "A級：潛伏"
+      "refined_phase": "A級：潛伏",
+      "chip_score": 0.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 797156,
+          "trust": 0,
+          "dealer": 3958,
+          "inst": 797156
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -520599,
+        "margin_change": 58,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 55.8,
+      "final_phase": "C級：暫不碰"
     },
     {
       "symbol": "6415",
@@ -2898,7 +4071,33 @@
         "higher_low": false
       },
       "refined_score": 65.5,
-      "refined_phase": "B級：觀察"
+      "refined_phase": "B級：觀察",
+      "chip_score": 15.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 232565,
+          "trust": 2000,
+          "dealer": -30260,
+          "inst": 234565
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 1,
+        "inst_cumul_5d": 454092,
+        "margin_change": 132,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 62.7,
+      "final_phase": "B級：觀察"
     },
     {
       "symbol": "3526",
@@ -2941,7 +4140,31 @@
         "higher_low": true
       },
       "refined_score": 65.4,
-      "refined_phase": "B級：觀察"
+      "refined_phase": "B級：觀察",
+      "chip_score": 0.0,
+      "chip_flags": [
+        "INST_SELL_TODAY",
+        "INST_CUMUL_5D_NEG"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": -3000,
+          "trust": -152,
+          "dealer": -12674,
+          "inst": -3152
+        },
+        "foreign_consecutive_buy_days": 0,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -181782,
+        "margin_change": null,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 53.6,
+      "final_phase": "C級：暫不碰"
     }
   ],
   "top_electronics_refined": [
@@ -2987,7 +4210,34 @@
         "higher_low": true
       },
       "refined_score": 93.8,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 25.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_2D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 1168886,
+          "trust": 20000,
+          "dealer": -28963,
+          "inst": 1188886
+        },
+        "foreign_consecutive_buy_days": 2,
+        "trust_consecutive_buy_days": 1,
+        "inst_cumul_5d": 2146704,
+        "margin_change": -11,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 91.9,
+      "final_phase": "A+級：預備發動"
     },
     {
       "symbol": "4938",
@@ -3031,7 +4281,32 @@
         "higher_low": false
       },
       "refined_score": 93.0,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 0.0,
+      "chip_flags": [
+        "INST_SELL_TODAY",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": -674692,
+          "trust": -144217,
+          "dealer": 66587,
+          "inst": -818909
+        },
+        "foreign_consecutive_buy_days": 0,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -2712507,
+        "margin_change": -126,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 76.3,
+      "final_phase": "A級：潛伏"
     },
     {
       "symbol": "6214",
@@ -3075,7 +4350,34 @@
         "higher_low": true
       },
       "refined_score": 90.4,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 28.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_4D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 396737,
+          "trust": 12000,
+          "dealer": 1000,
+          "inst": 408737
+        },
+        "foreign_consecutive_buy_days": 3,
+        "trust_consecutive_buy_days": 4,
+        "inst_cumul_5d": 983964,
+        "margin_change": -2,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 90.9,
+      "final_phase": "A+級：預備發動"
     },
     {
       "symbol": "2377",
@@ -3118,7 +4420,34 @@
         "higher_low": true
       },
       "refined_score": 89.9,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 25.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 1011911,
+          "trust": -27383,
+          "dealer": 32745,
+          "inst": 984528
+        },
+        "foreign_consecutive_buy_days": 5,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 4967887,
+        "margin_change": -31,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 88.7,
+      "final_phase": "A+級：預備發動"
     },
     {
       "symbol": "2441",
@@ -3163,7 +4492,34 @@
         "higher_low": true
       },
       "refined_score": 88.3,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 22.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 43441,
+          "trust": 171000,
+          "dealer": -15734,
+          "inst": 214441
+        },
+        "foreign_consecutive_buy_days": 2,
+        "trust_consecutive_buy_days": 5,
+        "inst_cumul_5d": 107969,
+        "margin_change": 116,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 85.6,
+      "final_phase": "A+級：預備發動"
     },
     {
       "symbol": "6282",
@@ -3206,7 +4562,32 @@
         "higher_low": true
       },
       "refined_score": 87.0,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 7.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 882379,
+          "trust": -41000,
+          "dealer": -82934,
+          "inst": 841379
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 271047,
+        "margin_change": 45,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 75.5,
+      "final_phase": "A級：潛伏"
     },
     {
       "symbol": "2312",
@@ -3248,7 +4629,34 @@
         "higher_low": true
       },
       "refined_score": 84.4,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 14.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_3D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 2376254,
+          "trust": 45000,
+          "dealer": 290950,
+          "inst": 2421254
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 3,
+        "inst_cumul_5d": -2033985,
+        "margin_change": 338,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 77.6,
+      "final_phase": "A級：潛伏"
     },
     {
       "symbol": "2458",
@@ -3292,7 +4700,34 @@
         "higher_low": true
       },
       "refined_score": 83.3,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 28.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 154088,
+          "trust": 80804,
+          "dealer": 15982,
+          "inst": 234892
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 5,
+        "inst_cumul_5d": 609142,
+        "margin_change": -51,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 85.1,
+      "final_phase": "A+級：預備發動"
     },
     {
       "symbol": "2347",
@@ -3335,7 +4770,34 @@
         "higher_low": true
       },
       "refined_score": 82.9,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 19.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 1579134,
+          "trust": -668461,
+          "dealer": 52592,
+          "inst": 910673
+        },
+        "foreign_consecutive_buy_days": 5,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 8599779,
+        "margin_change": 9,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 79.4,
+      "final_phase": "A級：潛伏"
     },
     {
       "symbol": "2353",
@@ -3377,7 +4839,33 @@
         "higher_low": false
       },
       "refined_score": 82.3,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 10.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 557014,
+          "trust": -35000,
+          "dealer": -2231,
+          "inst": 522014
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -3104401,
+        "margin_change": -3136,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 73.5,
+      "final_phase": "A級：潛伏"
     },
     {
       "symbol": "3022",
@@ -3423,7 +4911,33 @@
         "higher_low": false
       },
       "refined_score": 81.6,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 18.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 29859,
+          "trust": 0,
+          "dealer": -1621,
+          "inst": 29859
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 455584,
+        "margin_change": -200,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 77.7,
+      "final_phase": "A級：潛伏"
     },
     {
       "symbol": "8096",
@@ -3465,7 +4979,33 @@
         "higher_low": true
       },
       "refined_score": 81.2,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 21.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_4D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 356260,
+          "trust": 0,
+          "dealer": 9843,
+          "inst": 356260
+        },
+        "foreign_consecutive_buy_days": 4,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 1755229,
+        "margin_change": null,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 79.2,
+      "final_phase": "A級：潛伏"
     },
     {
       "symbol": "6191",
@@ -3510,7 +5050,34 @@
         "higher_low": true
       },
       "refined_score": 80.8,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 28.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 489365,
+          "trust": 20000,
+          "dealer": 14508,
+          "inst": 509365
+        },
+        "foreign_consecutive_buy_days": 5,
+        "trust_consecutive_buy_days": 2,
+        "inst_cumul_5d": 1849668,
+        "margin_change": -30,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 83.1,
+      "final_phase": "A+級：預備發動"
     },
     {
       "symbol": "3596",
@@ -3552,7 +5119,32 @@
         "higher_low": true
       },
       "refined_score": 80.0,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 0.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 5457,
+          "trust": 0,
+          "dealer": 6775,
+          "inst": 5457
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -604050,
+        "margin_change": 118,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 65.6,
+      "final_phase": "B級：觀察"
     },
     {
       "symbol": "6166",
@@ -3595,7 +5187,33 @@
         "higher_low": true
       },
       "refined_score": 79.5,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 18.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 149188,
+          "trust": 0,
+          "dealer": 982,
+          "inst": 149188
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 3218,
+        "margin_change": -59,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 76.0,
+      "final_phase": "A級：潛伏"
     },
     {
       "symbol": "3702",
@@ -3636,7 +5254,34 @@
         "higher_low": true
       },
       "refined_score": 78.5,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 28.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_3D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 2530046,
+          "trust": 50000,
+          "dealer": -5861,
+          "inst": 2580046
+        },
+        "foreign_consecutive_buy_days": 3,
+        "trust_consecutive_buy_days": 2,
+        "inst_cumul_5d": 8907313,
+        "margin_change": -93,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 81.2,
+      "final_phase": "A級：潛伏"
     },
     {
       "symbol": "8110",
@@ -3679,7 +5324,34 @@
         "higher_low": true
       },
       "refined_score": 78.1,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 22.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_2D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 880100,
+          "trust": 0,
+          "dealer": -5728,
+          "inst": 880100
+        },
+        "foreign_consecutive_buy_days": 2,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 1233487,
+        "margin_change": -250,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 77.2,
+      "final_phase": "A級：潛伏"
     },
     {
       "symbol": "2393",
@@ -3722,7 +5394,34 @@
         "higher_low": true
       },
       "refined_score": 78.0,
-      "refined_phase": "A+級：預備發動"
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 25.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 990776,
+          "trust": -11264,
+          "dealer": -92347,
+          "inst": 979512
+        },
+        "foreign_consecutive_buy_days": 5,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 3904374,
+        "margin_change": -51,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 79.0,
+      "final_phase": "A級：潛伏"
     },
     {
       "symbol": "2359",
@@ -3764,7 +5463,32 @@
         "higher_low": false
       },
       "refined_score": 77.0,
-      "refined_phase": "A級：潛伏"
+      "refined_phase": "A級：潛伏",
+      "chip_score": 5.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 76477,
+          "trust": 0,
+          "dealer": -9829,
+          "inst": 76477
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -999723,
+        "margin_change": -15,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 66.1,
+      "final_phase": "B級：觀察"
     },
     {
       "symbol": "3010",
@@ -3808,7 +5532,34 @@
         "higher_low": true
       },
       "refined_score": 75.2,
-      "refined_phase": "A級：潛伏"
+      "refined_phase": "A級：潛伏",
+      "chip_score": 19.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 267599,
+          "trust": 0,
+          "dealer": 11241,
+          "inst": 267599
+        },
+        "foreign_consecutive_buy_days": 5,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 1190738,
+        "margin_change": 44,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 73.1,
+      "final_phase": "A級：潛伏"
     },
     {
       "symbol": "2330",
@@ -3854,7 +5605,33 @@
         "higher_low": true
       },
       "refined_score": 74.6,
-      "refined_phase": "A級：潛伏"
+      "refined_phase": "A級：潛伏",
+      "chip_score": 6.0,
+      "chip_flags": [
+        "INST_SELL_TODAY",
+        "INST_CONSEC_5D",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": -1163351,
+          "trust": 72763,
+          "dealer": 447067,
+          "inst": -1090588
+        },
+        "foreign_consecutive_buy_days": 0,
+        "trust_consecutive_buy_days": 5,
+        "inst_cumul_5d": 5778279,
+        "margin_change": 365,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 64.8,
+      "final_phase": "B級：觀察"
     },
     {
       "symbol": "2382",
@@ -3896,7 +5673,34 @@
         "higher_low": false
       },
       "refined_score": 72.2,
-      "refined_phase": "A級：潛伏"
+      "refined_phase": "A級：潛伏",
+      "chip_score": 14.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_2D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 1441121,
+          "trust": -17474,
+          "dealer": 40781,
+          "inst": 1423647
+        },
+        "foreign_consecutive_buy_days": 2,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -4543529,
+        "margin_change": -157,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 67.6,
+      "final_phase": "B級：觀察"
     },
     {
       "symbol": "3149",
@@ -3939,7 +5743,33 @@
         "higher_low": true
       },
       "refined_score": 72.0,
-      "refined_phase": "A級：潛伏"
+      "refined_phase": "A級：潛伏",
+      "chip_score": 4.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 840383,
+          "trust": 0,
+          "dealer": -1785,
+          "inst": 840383
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -1874337,
+        "margin_change": 242,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 61.4,
+      "final_phase": "C級：暫不碰"
     },
     {
       "symbol": "8150",
@@ -3982,7 +5812,33 @@
         "higher_low": true
       },
       "refined_score": 72.0,
-      "refined_phase": "A級：潛伏"
+      "refined_phase": "A級：潛伏",
+      "chip_score": 6.0,
+      "chip_flags": [
+        "INST_SELL_TODAY",
+        "INST_CONSEC_5D",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": -2169566,
+          "trust": 40000,
+          "dealer": -217592,
+          "inst": -2129566
+        },
+        "foreign_consecutive_buy_days": 0,
+        "trust_consecutive_buy_days": 5,
+        "inst_cumul_5d": 9762599,
+        "margin_change": 4023,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 62.6,
+      "final_phase": "B級：觀察"
     },
     {
       "symbol": "2481",
@@ -4023,7 +5879,33 @@
         "higher_low": true
       },
       "refined_score": 71.9,
-      "refined_phase": "A級：潛伏"
+      "refined_phase": "A級：潛伏",
+      "chip_score": 18.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 3942213,
+          "trust": -91000,
+          "dealer": 154440,
+          "inst": 3851213
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 9663924,
+        "margin_change": -79,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 69.8,
+      "final_phase": "B級：觀察"
     },
     {
       "symbol": "7712",
@@ -4065,7 +5947,31 @@
         "higher_low": true
       },
       "refined_score": 68.9,
-      "refined_phase": "A級：潛伏"
+      "refined_phase": "A級：潛伏",
+      "chip_score": 0.0,
+      "chip_flags": [
+        "INST_SELL_TODAY",
+        "INST_CUMUL_5D_NEG"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": -1000,
+          "trust": 0,
+          "dealer": -6511,
+          "inst": -1000
+        },
+        "foreign_consecutive_buy_days": 0,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -373372,
+        "margin_change": null,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 56.5,
+      "final_phase": "C級：暫不碰"
     },
     {
       "symbol": "2324",
@@ -4105,7 +6011,32 @@
         "higher_low": false
       },
       "refined_score": 68.1,
-      "refined_phase": "A級：潛伏"
+      "refined_phase": "A級：潛伏",
+      "chip_score": 0.0,
+      "chip_flags": [
+        "INST_SELL_TODAY",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": -4579307,
+          "trust": -12000,
+          "dealer": -137768,
+          "inst": -4591307
+        },
+        "foreign_consecutive_buy_days": 0,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -72124235,
+        "margin_change": -124,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 55.8,
+      "final_phase": "C級：暫不碰"
     },
     {
       "symbol": "2355",
@@ -4147,7 +6078,32 @@
         "higher_low": false
       },
       "refined_score": 68.0,
-      "refined_phase": "A級：潛伏"
+      "refined_phase": "A級：潛伏",
+      "chip_score": 0.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 797156,
+          "trust": 0,
+          "dealer": 3958,
+          "inst": 797156
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -520599,
+        "margin_change": 58,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 55.8,
+      "final_phase": "C級：暫不碰"
     },
     {
       "symbol": "6415",
@@ -4189,7 +6145,33 @@
         "higher_low": false
       },
       "refined_score": 65.5,
-      "refined_phase": "B級：觀察"
+      "refined_phase": "B級：觀察",
+      "chip_score": 15.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 232565,
+          "trust": 2000,
+          "dealer": -30260,
+          "inst": 234565
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 1,
+        "inst_cumul_5d": 454092,
+        "margin_change": 132,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 62.7,
+      "final_phase": "B級：觀察"
     },
     {
       "symbol": "3526",
@@ -4232,7 +6214,4203 @@
         "higher_low": true
       },
       "refined_score": 65.4,
-      "refined_phase": "B級：觀察"
+      "refined_phase": "B級：觀察",
+      "chip_score": 0.0,
+      "chip_flags": [
+        "INST_SELL_TODAY",
+        "INST_CUMUL_5D_NEG"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": -3000,
+          "trust": -152,
+          "dealer": -12674,
+          "inst": -3152
+        },
+        "foreign_consecutive_buy_days": 0,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -181782,
+        "margin_change": null,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 53.6,
+      "final_phase": "C級：暫不碰"
+    }
+  ],
+  "top_final": [
+    {
+      "symbol": "3706",
+      "name": "神達",
+      "market": "TWSE",
+      "price": 80.9,
+      "change_pct": 0.7471980074719907,
+      "score": 75,
+      "latent_score": 96,
+      "phase": "A+級：預備發動",
+      "close_strength": 1.0,
+      "range_pct": 0.87,
+      "volume": 2992.0,
+      "value": 241208500.0,
+      "a": 80.2,
+      "b": 82.11,
+      "c": 78.47,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_NEAR_HIGH",
+        "RANGE_TIGHT",
+        "COIL_PROXY"
+      ],
+      "industry_code": "25",
+      "is_electronic": true,
+      "structure_score": 62.0,
+      "structure_flags": [
+        "MA_CONVERGENCE_PRIME",
+        "HIGHER_LOW",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "NOT_EXTENDED_10D"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 1.29,
+        "vol5_vs_20": 0.92,
+        "near_20d_high": 0.981,
+        "range20_pct": 6.06,
+        "return10_pct": 1.38,
+        "up_down_vol_ratio": 1.1,
+        "higher_low": true
+      },
+      "refined_score": 93.8,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 25.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_2D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 1168886,
+          "trust": 20000,
+          "dealer": -28963,
+          "inst": 1188886
+        },
+        "foreign_consecutive_buy_days": 2,
+        "trust_consecutive_buy_days": 1,
+        "inst_cumul_5d": 2146704,
+        "margin_change": -11,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 91.9,
+      "final_phase": "A+級：預備發動"
+    },
+    {
+      "symbol": "6214",
+      "name": "精誠",
+      "market": "TWSE",
+      "price": 189.5,
+      "change_pct": 0.5305039787798408,
+      "score": 53,
+      "latent_score": 65,
+      "phase": "A級：潛伏",
+      "close_strength": 0.6,
+      "range_pct": 1.33,
+      "volume": 624.0,
+      "value": 118293000.0,
+      "a": 188.0,
+      "b": 192.34,
+      "c": 183.81,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "RANGE_TIGHT"
+      ],
+      "industry_code": "30",
+      "is_electronic": true,
+      "structure_score": 82.0,
+      "structure_flags": [
+        "MA_CONVERGENCE_PRIME",
+        "HIGHER_LOW",
+        "VOL_DRYUP_PRIME",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "NOT_EXTENDED_10D",
+        "MA20_RISING"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 0.32,
+        "vol5_vs_20": 0.33,
+        "near_20d_high": 0.972,
+        "range20_pct": 6.33,
+        "return10_pct": -1.04,
+        "up_down_vol_ratio": 0.9,
+        "higher_low": true
+      },
+      "refined_score": 90.4,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 28.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_4D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 396737,
+          "trust": 12000,
+          "dealer": 1000,
+          "inst": 408737
+        },
+        "foreign_consecutive_buy_days": 3,
+        "trust_consecutive_buy_days": 4,
+        "inst_cumul_5d": 983964,
+        "margin_change": -2,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 90.9,
+      "final_phase": "A+級：預備發動"
+    },
+    {
+      "symbol": "2377",
+      "name": "微星",
+      "market": "TWSE",
+      "price": 156.0,
+      "change_pct": 0.6451612903225806,
+      "score": 69,
+      "latent_score": 73,
+      "phase": "A級：潛伏",
+      "close_strength": 0.6666666666666666,
+      "range_pct": 0.97,
+      "volume": 3913.0,
+      "value": 609194000.0,
+      "a": 155.0,
+      "b": 158.34,
+      "c": 151.32,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "RANGE_TIGHT"
+      ],
+      "industry_code": "25",
+      "is_electronic": true,
+      "structure_score": 70.0,
+      "structure_flags": [
+        "MA_CONVERGENCE_PRIME",
+        "HIGHER_LOW",
+        "VOL_DRYUP",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "NOT_EXTENDED_10D"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 1.36,
+        "vol5_vs_20": 0.77,
+        "near_20d_high": 0.981,
+        "range20_pct": 9.29,
+        "return10_pct": 1.96,
+        "up_down_vol_ratio": 0.86,
+        "higher_low": true
+      },
+      "refined_score": 89.9,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 25.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 1011911,
+          "trust": -27383,
+          "dealer": 32745,
+          "inst": 984528
+        },
+        "foreign_consecutive_buy_days": 5,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 4967887,
+        "margin_change": -31,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 88.7,
+      "final_phase": "A+級：預備發動"
+    },
+    {
+      "symbol": "2441",
+      "name": "超豐",
+      "market": "TWSE",
+      "price": 127.0,
+      "change_pct": 0.3952569169960474,
+      "score": 71,
+      "latent_score": 89,
+      "phase": "A+級：預備發動",
+      "close_strength": 0.8,
+      "range_pct": 1.98,
+      "volume": 2720.0,
+      "value": 343513500.0,
+      "a": 125.09,
+      "b": 128.91,
+      "c": 123.19,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_STRONG",
+        "RANGE_TIGHT",
+        "COIL_PROXY"
+      ],
+      "industry_code": "24",
+      "is_electronic": true,
+      "structure_score": 56.0,
+      "structure_flags": [
+        "HIGHER_LOW",
+        "VOL_DRYUP",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION",
+        "NOT_EXTENDED_10D",
+        "MA20_RISING"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 3.6,
+        "vol5_vs_20": 0.76,
+        "near_20d_high": 0.966,
+        "range20_pct": 17.32,
+        "return10_pct": -0.39,
+        "up_down_vol_ratio": 0.98,
+        "higher_low": true
+      },
+      "refined_score": 88.3,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 22.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 43441,
+          "trust": 171000,
+          "dealer": -15734,
+          "inst": 214441
+        },
+        "foreign_consecutive_buy_days": 2,
+        "trust_consecutive_buy_days": 5,
+        "inst_cumul_5d": 107969,
+        "margin_change": 116,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 85.6,
+      "final_phase": "A+級：預備發動"
+    },
+    {
+      "symbol": "2458",
+      "name": "義隆",
+      "market": "TWSE",
+      "price": 134.0,
+      "change_pct": 0.7518796992481203,
+      "score": 69,
+      "latent_score": 79,
+      "phase": "A級：潛伏",
+      "close_strength": 0.8333333333333334,
+      "range_pct": 2.26,
+      "volume": 1013.0,
+      "value": 135066500.0,
+      "a": 131.99,
+      "b": 136.01,
+      "c": 129.98,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_STRONG",
+        "COIL_PROXY"
+      ],
+      "industry_code": "24",
+      "is_electronic": true,
+      "structure_score": 59.0,
+      "structure_flags": [
+        "MA_CONVERGENCE",
+        "HIGHER_LOW",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "NOT_EXTENDED_10D",
+        "MA20_RISING"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 2.85,
+        "vol5_vs_20": 1.19,
+        "near_20d_high": 0.961,
+        "range20_pct": 11.19,
+        "return10_pct": 2.68,
+        "up_down_vol_ratio": 1.01,
+        "higher_low": true
+      },
+      "refined_score": 83.3,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 28.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 154088,
+          "trust": 80804,
+          "dealer": 15982,
+          "inst": 234892
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 5,
+        "inst_cumul_5d": 609142,
+        "margin_change": -51,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 85.1,
+      "final_phase": "A+級：預備發動"
+    },
+    {
+      "symbol": "6191",
+      "name": "精成科",
+      "market": "TWSE",
+      "price": 87.5,
+      "change_pct": 0.8064516129032291,
+      "score": 69,
+      "latent_score": 85,
+      "phase": "A+級：預備發動",
+      "close_strength": 0.8749999999999989,
+      "range_pct": 1.84,
+      "volume": 2056.0,
+      "value": 179196100.0,
+      "a": 86.19,
+      "b": 88.81,
+      "c": 84.88,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_STRONG",
+        "RANGE_TIGHT",
+        "COIL_PROXY"
+      ],
+      "industry_code": "28",
+      "is_electronic": true,
+      "structure_score": 50.0,
+      "structure_flags": [
+        "MA_CONVERGENCE",
+        "HIGHER_LOW",
+        "AT_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "MA20_RISING",
+        "UPVOL_DOMINANT"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 2.73,
+        "vol5_vs_20": 1.46,
+        "near_20d_high": 0.998,
+        "range20_pct": 8.23,
+        "return10_pct": 5.17,
+        "up_down_vol_ratio": 1.44,
+        "higher_low": true
+      },
+      "refined_score": 80.8,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 28.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 489365,
+          "trust": 20000,
+          "dealer": 14508,
+          "inst": 509365
+        },
+        "foreign_consecutive_buy_days": 5,
+        "trust_consecutive_buy_days": 2,
+        "inst_cumul_5d": 1849668,
+        "margin_change": -30,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 83.1,
+      "final_phase": "A+級：預備發動"
+    },
+    {
+      "symbol": "3702",
+      "name": "大聯大",
+      "market": "TWSE",
+      "price": 120.0,
+      "change_pct": 0.8403361344537815,
+      "score": 73,
+      "latent_score": 67,
+      "phase": "A級：潛伏",
+      "close_strength": 0.7142857142857143,
+      "range_pct": 2.94,
+      "volume": 5115.0,
+      "value": 610632500.0,
+      "a": 118.2,
+      "b": 121.8,
+      "c": 116.4,
+      "latent_flags": [
+        "NOT_EXTENDED"
+      ],
+      "industry_code": "29",
+      "is_electronic": true,
+      "structure_score": 52.0,
+      "structure_flags": [
+        "HIGHER_LOW",
+        "VOL_DRYUP_PRIME",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION",
+        "MA20_RISING"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 5.46,
+        "vol5_vs_20": 0.67,
+        "near_20d_high": 0.992,
+        "range20_pct": 15.0,
+        "return10_pct": 5.26,
+        "up_down_vol_ratio": 0.96,
+        "higher_low": true
+      },
+      "refined_score": 78.5,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 28.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_3D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 2530046,
+          "trust": 50000,
+          "dealer": -5861,
+          "inst": 2580046
+        },
+        "foreign_consecutive_buy_days": 3,
+        "trust_consecutive_buy_days": 2,
+        "inst_cumul_5d": 8907313,
+        "margin_change": -93,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 81.2,
+      "final_phase": "A級：潛伏"
+    },
+    {
+      "symbol": "2347",
+      "name": "聯強",
+      "market": "TWSE",
+      "price": 96.8,
+      "change_pct": 1.0438413361169103,
+      "score": 75,
+      "latent_score": 96,
+      "phase": "A+級：預備發動",
+      "close_strength": 1.0,
+      "range_pct": 1.67,
+      "volume": 2328.0,
+      "value": 223809300.0,
+      "a": 95.35,
+      "b": 98.25,
+      "c": 93.9,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_NEAR_HIGH",
+        "RANGE_TIGHT",
+        "COIL_PROXY"
+      ],
+      "industry_code": "29",
+      "is_electronic": true,
+      "structure_score": 41.0,
+      "structure_flags": [
+        "HIGHER_LOW",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION",
+        "MA20_RISING"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 4.43,
+        "vol5_vs_20": 1.09,
+        "near_20d_high": 0.968,
+        "range20_pct": 12.81,
+        "return10_pct": 7.8,
+        "up_down_vol_ratio": 1.09,
+        "higher_low": true
+      },
+      "refined_score": 82.9,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 19.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 1579134,
+          "trust": -668461,
+          "dealer": 52592,
+          "inst": 910673
+        },
+        "foreign_consecutive_buy_days": 5,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 8599779,
+        "margin_change": 9,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 79.4,
+      "final_phase": "A級：潛伏"
+    },
+    {
+      "symbol": "8096",
+      "name": "擎亞",
+      "market": "TPEx",
+      "price": 90.1,
+      "change_pct": 1.4639639639639608,
+      "score": 69,
+      "latent_score": 79,
+      "phase": "A級：潛伏",
+      "close_strength": 0.8333333333333314,
+      "range_pct": 2.7,
+      "volume": 1455.0,
+      "value": 129513400.0,
+      "a": 88.75,
+      "b": 91.45,
+      "c": 87.4,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_STRONG",
+        "COIL_PROXY"
+      ],
+      "industry_code": "29",
+      "is_electronic": true,
+      "structure_score": 55.0,
+      "structure_flags": [
+        "MA_CONVERGENCE_PRIME",
+        "HIGHER_LOW",
+        "VOL_DRYUP_PRIME",
+        "NOT_EXTENDED_10D"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 1.83,
+        "vol5_vs_20": 0.65,
+        "near_20d_high": 0.842,
+        "range20_pct": 28.41,
+        "return10_pct": 4.16,
+        "up_down_vol_ratio": 0.74,
+        "higher_low": true
+      },
+      "refined_score": 81.2,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 21.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_4D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 356260,
+          "trust": 0,
+          "dealer": 9843,
+          "inst": 356260
+        },
+        "foreign_consecutive_buy_days": 4,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 1755229,
+        "margin_change": null,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 79.2,
+      "final_phase": "A級：潛伏"
+    },
+    {
+      "symbol": "2393",
+      "name": "億光",
+      "market": "TWSE",
+      "price": 68.0,
+      "change_pct": 1.1904761904761862,
+      "score": 73,
+      "latent_score": 86,
+      "phase": "A+級：預備發動",
+      "close_strength": 1.0,
+      "range_pct": 2.83,
+      "volume": 2267.0,
+      "value": 152453800.0,
+      "a": 66.98,
+      "b": 69.02,
+      "c": 65.96,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_NEAR_HIGH",
+        "COIL_PROXY"
+      ],
+      "industry_code": "26",
+      "is_electronic": true,
+      "structure_score": 44.0,
+      "structure_flags": [
+        "HIGHER_LOW",
+        "AT_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "MA20_RISING",
+        "UPVOL_DOMINANT"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 3.73,
+        "vol5_vs_20": 1.44,
+        "near_20d_high": 1.0,
+        "range20_pct": 10.29,
+        "return10_pct": 5.92,
+        "up_down_vol_ratio": 1.7,
+        "higher_low": true
+      },
+      "refined_score": 78.0,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 25.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 990776,
+          "trust": -11264,
+          "dealer": -92347,
+          "inst": 979512
+        },
+        "foreign_consecutive_buy_days": 5,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 3904374,
+        "margin_change": -51,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 79.0,
+      "final_phase": "A級：潛伏"
+    },
+    {
+      "symbol": "3022",
+      "name": "威強電",
+      "market": "TWSE",
+      "price": 90.7,
+      "change_pct": -0.11013215859030212,
+      "score": 55,
+      "latent_score": 81,
+      "phase": "A+級：預備發動",
+      "close_strength": 0.8000000000000019,
+      "range_pct": 1.65,
+      "volume": 627.0,
+      "value": 56510600.0,
+      "a": 89.5,
+      "b": 92.06,
+      "c": 87.98,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_STRONG",
+        "RANGE_TIGHT",
+        "COIL_PROXY"
+      ],
+      "industry_code": "25",
+      "is_electronic": true,
+      "structure_score": 62.0,
+      "structure_flags": [
+        "MA_CONVERGENCE",
+        "VOL_DRYUP_PRIME",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION",
+        "NOT_EXTENDED_10D",
+        "MA20_RISING",
+        "UPVOL_DOMINANT"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 2.67,
+        "vol5_vs_20": 0.58,
+        "near_20d_high": 0.951,
+        "range20_pct": 14.66,
+        "return10_pct": -2.26,
+        "up_down_vol_ratio": 1.24,
+        "higher_low": false
+      },
+      "refined_score": 81.6,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 18.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 29859,
+          "trust": 0,
+          "dealer": -1621,
+          "inst": 29859
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 455584,
+        "margin_change": -200,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 77.7,
+      "final_phase": "A級：潛伏"
+    },
+    {
+      "symbol": "2312",
+      "name": "金寶",
+      "market": "TWSE",
+      "price": 31.05,
+      "change_pct": 1.1400651465798093,
+      "score": 70,
+      "latent_score": 69,
+      "phase": "A級：潛伏",
+      "close_strength": 0.6666666666666686,
+      "range_pct": 1.95,
+      "volume": 6926.0,
+      "value": 214510400.0,
+      "a": 30.65,
+      "b": 31.52,
+      "c": 30.12,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "RANGE_TIGHT"
+      ],
+      "industry_code": "31",
+      "is_electronic": true,
+      "structure_score": 62.0,
+      "structure_flags": [
+        "MA_CONVERGENCE_PRIME",
+        "HIGHER_LOW",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "NOT_EXTENDED_10D"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 0.38,
+        "vol5_vs_20": 0.94,
+        "near_20d_high": 0.96,
+        "range20_pct": 7.57,
+        "return10_pct": -0.8,
+        "up_down_vol_ratio": 1.03,
+        "higher_low": true
+      },
+      "refined_score": 84.4,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 14.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_3D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 2376254,
+          "trust": 45000,
+          "dealer": 290950,
+          "inst": 2421254
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 3,
+        "inst_cumul_5d": -2033985,
+        "margin_change": 338,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 77.6,
+      "final_phase": "A級：潛伏"
+    },
+    {
+      "symbol": "8110",
+      "name": "華東",
+      "market": "TWSE",
+      "price": 49.5,
+      "change_pct": 1.4344262295082026,
+      "score": 64,
+      "latent_score": 79,
+      "phase": "A級：潛伏",
+      "close_strength": 0.7692307692307709,
+      "range_pct": 2.66,
+      "volume": 4044.0,
+      "value": 198805900.0,
+      "a": 48.76,
+      "b": 50.24,
+      "c": 48.02,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_STRONG",
+        "COIL_PROXY"
+      ],
+      "industry_code": "24",
+      "is_electronic": true,
+      "structure_score": 49.0,
+      "structure_flags": [
+        "HIGHER_LOW",
+        "VOL_DRYUP_PRIME",
+        "NEAR_BREAKOUT",
+        "MA20_RISING",
+        "UPVOL_DOMINANT"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 5.53,
+        "vol5_vs_20": 0.62,
+        "near_20d_high": 0.932,
+        "range20_pct": 25.45,
+        "return10_pct": -4.99,
+        "up_down_vol_ratio": 1.66,
+        "higher_low": true
+      },
+      "refined_score": 78.1,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 22.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_2D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 880100,
+          "trust": 0,
+          "dealer": -5728,
+          "inst": 880100
+        },
+        "foreign_consecutive_buy_days": 2,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 1233487,
+        "margin_change": -250,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 77.2,
+      "final_phase": "A級：潛伏"
+    },
+    {
+      "symbol": "4938",
+      "name": "和碩",
+      "market": "TWSE",
+      "price": 90.0,
+      "change_pct": 0.0,
+      "score": 71,
+      "latent_score": 89,
+      "phase": "A+級：預備發動",
+      "close_strength": 0.8750000000000067,
+      "range_pct": 0.89,
+      "volume": 3324.0,
+      "value": 298577100.0,
+      "a": 89.3,
+      "b": 91.35,
+      "c": 87.3,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_STRONG",
+        "RANGE_TIGHT",
+        "COIL_PROXY"
+      ],
+      "industry_code": "25",
+      "is_electronic": true,
+      "structure_score": 65.0,
+      "structure_flags": [
+        "MA_CONVERGENCE_PRIME",
+        "VOL_DRYUP_PRIME",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "NOT_EXTENDED_10D"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 0.71,
+        "vol5_vs_20": 0.69,
+        "near_20d_high": 0.947,
+        "range20_pct": 7.44,
+        "return10_pct": -0.88,
+        "up_down_vol_ratio": 0.89,
+        "higher_low": false
+      },
+      "refined_score": 93.0,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 0.0,
+      "chip_flags": [
+        "INST_SELL_TODAY",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": -674692,
+          "trust": -144217,
+          "dealer": 66587,
+          "inst": -818909
+        },
+        "foreign_consecutive_buy_days": 0,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -2712507,
+        "margin_change": -126,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 76.3,
+      "final_phase": "A級：潛伏"
+    },
+    {
+      "symbol": "6166",
+      "name": "凌華",
+      "market": "TWSE",
+      "price": 131.0,
+      "change_pct": 0.7692307692307693,
+      "score": 73,
+      "latent_score": 86,
+      "phase": "A+級：預備發動",
+      "close_strength": 1.0,
+      "range_pct": 2.69,
+      "volume": 1159.0,
+      "value": 149929500.0,
+      "a": 129.03,
+      "b": 132.96,
+      "c": 127.07,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_NEAR_HIGH",
+        "COIL_PROXY"
+      ],
+      "industry_code": "25",
+      "is_electronic": true,
+      "structure_score": 47.0,
+      "structure_flags": [
+        "HIGHER_LOW",
+        "VOL_DRYUP_PRIME",
+        "NOT_EXTENDED_10D",
+        "MA20_RISING",
+        "UPVOL_DOMINANT"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 6.41,
+        "vol5_vs_20": 0.62,
+        "near_20d_high": 0.913,
+        "range20_pct": 27.48,
+        "return10_pct": 4.38,
+        "up_down_vol_ratio": 1.21,
+        "higher_low": true
+      },
+      "refined_score": 79.5,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 18.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 149188,
+          "trust": 0,
+          "dealer": 982,
+          "inst": 149188
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 3218,
+        "margin_change": -59,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 76.0,
+      "final_phase": "A級：潛伏"
+    },
+    {
+      "symbol": "6282",
+      "name": "康舒",
+      "market": "TWSE",
+      "price": 44.05,
+      "change_pct": 0.5707762557077626,
+      "score": 59,
+      "latent_score": 69,
+      "phase": "A級：潛伏",
+      "close_strength": 0.5882352941176461,
+      "range_pct": 1.94,
+      "volume": 4647.0,
+      "value": 204722950.0,
+      "a": 43.55,
+      "b": 44.71,
+      "c": 42.73,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "RANGE_TIGHT"
+      ],
+      "industry_code": "28",
+      "is_electronic": true,
+      "structure_score": 67.0,
+      "structure_flags": [
+        "MA_CONVERGENCE_PRIME",
+        "HIGHER_LOW",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "NOT_EXTENDED_10D",
+        "UPVOL_DOMINANT"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 1.76,
+        "vol5_vs_20": 1.24,
+        "near_20d_high": 0.977,
+        "range20_pct": 8.06,
+        "return10_pct": 1.61,
+        "up_down_vol_ratio": 1.29,
+        "higher_low": true
+      },
+      "refined_score": 87.0,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 7.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 882379,
+          "trust": -41000,
+          "dealer": -82934,
+          "inst": 841379
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 271047,
+        "margin_change": 45,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 75.5,
+      "final_phase": "A級：潛伏"
+    },
+    {
+      "symbol": "2353",
+      "name": "宏碁",
+      "market": "TWSE",
+      "price": 31.3,
+      "change_pct": 0.8051529790660225,
+      "score": 63,
+      "latent_score": 69,
+      "phase": "A級：潛伏",
+      "close_strength": 0.6250000000000022,
+      "range_pct": 1.29,
+      "volume": 7666.0,
+      "value": 239772400.0,
+      "a": 31.05,
+      "b": 31.77,
+      "c": 30.36,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "RANGE_TIGHT"
+      ],
+      "industry_code": "25",
+      "is_electronic": true,
+      "structure_score": 58.0,
+      "structure_flags": [
+        "MA_CONVERGENCE_PRIME",
+        "VOL_DRYUP",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "NOT_EXTENDED_10D"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 0.48,
+        "vol5_vs_20": 0.89,
+        "near_20d_high": 0.954,
+        "range20_pct": 6.55,
+        "return10_pct": -2.64,
+        "up_down_vol_ratio": 0.98,
+        "higher_low": false
+      },
+      "refined_score": 82.3,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 10.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 557014,
+          "trust": -35000,
+          "dealer": -2231,
+          "inst": 522014
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -3104401,
+        "margin_change": -3136,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 73.5,
+      "final_phase": "A級：潛伏"
+    },
+    {
+      "symbol": "3010",
+      "name": "華立",
+      "market": "TWSE",
+      "price": 132.0,
+      "change_pct": 0.7633587786259541,
+      "score": 66,
+      "latent_score": 88,
+      "phase": "A+級：預備發動",
+      "close_strength": 1.0,
+      "range_pct": 1.15,
+      "volume": 602.0,
+      "value": 79062000.0,
+      "a": 130.5,
+      "b": 133.98,
+      "c": 128.04,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_NEAR_HIGH",
+        "RANGE_TIGHT",
+        "COIL_PROXY"
+      ],
+      "industry_code": "29",
+      "is_electronic": true,
+      "structure_score": 45.0,
+      "structure_flags": [
+        "MA_CONVERGENCE",
+        "HIGHER_LOW",
+        "AT_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "MA20_RISING"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 2.63,
+        "vol5_vs_20": 1.47,
+        "near_20d_high": 1.0,
+        "range20_pct": 7.2,
+        "return10_pct": 5.6,
+        "up_down_vol_ratio": 0.81,
+        "higher_low": true
+      },
+      "refined_score": 75.2,
+      "refined_phase": "A級：潛伏",
+      "chip_score": 19.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 267599,
+          "trust": 0,
+          "dealer": 11241,
+          "inst": 267599
+        },
+        "foreign_consecutive_buy_days": 5,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 1190738,
+        "margin_change": 44,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 73.1,
+      "final_phase": "A級：潛伏"
+    },
+    {
+      "symbol": "2481",
+      "name": "強茂",
+      "market": "TWSE",
+      "price": 178.5,
+      "change_pct": 1.4204545454545454,
+      "score": 81,
+      "latent_score": 66,
+      "phase": "A級：潛伏",
+      "close_strength": 0.8,
+      "range_pct": 4.26,
+      "volume": 18038.0,
+      "value": 3187016500.0,
+      "a": 175.82,
+      "b": 181.18,
+      "c": 172.5,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_STRONG"
+      ],
+      "industry_code": "24",
+      "is_electronic": true,
+      "structure_score": 40.0,
+      "structure_flags": [
+        "HIGHER_LOW",
+        "VOL_DRYUP",
+        "NEAR_BREAKOUT",
+        "MA20_RISING"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 5.76,
+        "vol5_vs_20": 0.84,
+        "near_20d_high": 0.932,
+        "range20_pct": 25.49,
+        "return10_pct": 6.25,
+        "up_down_vol_ratio": 1.12,
+        "higher_low": true
+      },
+      "refined_score": 71.9,
+      "refined_phase": "A級：潛伏",
+      "chip_score": 18.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 3942213,
+          "trust": -91000,
+          "dealer": 154440,
+          "inst": 3851213
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 9663924,
+        "margin_change": -79,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 69.8,
+      "final_phase": "B級：觀察"
+    },
+    {
+      "symbol": "2382",
+      "name": "廣達",
+      "market": "TWSE",
+      "price": 335.0,
+      "change_pct": 0.4497751124437781,
+      "score": 66,
+      "latent_score": 63,
+      "phase": "B級：觀察",
+      "close_strength": 0.5,
+      "range_pct": 1.5,
+      "volume": 9426.0,
+      "value": 3155208500.0,
+      "a": 332.5,
+      "b": 340.02,
+      "c": 324.95,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "RANGE_TIGHT"
+      ],
+      "industry_code": "25",
+      "is_electronic": true,
+      "structure_score": 58.0,
+      "structure_flags": [
+        "MA_CONVERGENCE_PRIME",
+        "VOL_DRYUP",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "NOT_EXTENDED_10D"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 1.13,
+        "vol5_vs_20": 0.84,
+        "near_20d_high": 0.96,
+        "range20_pct": 6.27,
+        "return10_pct": -2.76,
+        "up_down_vol_ratio": 1.1,
+        "higher_low": false
+      },
+      "refined_score": 72.2,
+      "refined_phase": "A級：潛伏",
+      "chip_score": 14.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_2D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 1441121,
+          "trust": -17474,
+          "dealer": 40781,
+          "inst": 1423647
+        },
+        "foreign_consecutive_buy_days": 2,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -4543529,
+        "margin_change": -157,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 67.6,
+      "final_phase": "B級：觀察"
+    },
+    {
+      "symbol": "2359",
+      "name": "所羅門",
+      "market": "TWSE",
+      "price": 127.5,
+      "change_pct": 1.1904761904761905,
+      "score": 69,
+      "latent_score": 92,
+      "phase": "A+級：預備發動",
+      "close_strength": 1.0,
+      "range_pct": 1.19,
+      "volume": 818.0,
+      "value": 103651000.0,
+      "a": 126.0,
+      "b": 129.41,
+      "c": 123.67,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_NEAR_HIGH",
+        "RANGE_TIGHT",
+        "COIL_PROXY"
+      ],
+      "industry_code": "31",
+      "is_electronic": true,
+      "structure_score": 38.0,
+      "structure_flags": [
+        "MA_CONVERGENCE_PRIME",
+        "VOL_DRYUP_PRIME",
+        "RANGE_COMPRESSION"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 1.27,
+        "vol5_vs_20": 0.63,
+        "near_20d_high": 0.895,
+        "range20_pct": 13.73,
+        "return10_pct": -3.41,
+        "up_down_vol_ratio": 0.71,
+        "higher_low": false
+      },
+      "refined_score": 77.0,
+      "refined_phase": "A級：潛伏",
+      "chip_score": 5.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 76477,
+          "trust": 0,
+          "dealer": -9829,
+          "inst": 76477
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -999723,
+        "margin_change": -15,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 66.1,
+      "final_phase": "B級：觀察"
+    },
+    {
+      "symbol": "3596",
+      "name": "智易",
+      "market": "TWSE",
+      "price": 157.0,
+      "change_pct": 0.641025641025641,
+      "score": 60,
+      "latent_score": 65,
+      "phase": "A級：潛伏",
+      "close_strength": 0.6666666666666666,
+      "range_pct": 0.96,
+      "volume": 841.0,
+      "value": 131807000.0,
+      "a": 156.0,
+      "b": 159.35,
+      "c": 152.29,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "RANGE_TIGHT"
+      ],
+      "industry_code": "27",
+      "is_electronic": true,
+      "structure_score": 62.0,
+      "structure_flags": [
+        "MA_CONVERGENCE_PRIME",
+        "HIGHER_LOW",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "NOT_EXTENDED_10D"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 0.61,
+        "vol5_vs_20": 1.21,
+        "near_20d_high": 0.981,
+        "range20_pct": 5.41,
+        "return10_pct": 1.29,
+        "up_down_vol_ratio": 1.07,
+        "higher_low": true
+      },
+      "refined_score": 80.0,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 0.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 5457,
+          "trust": 0,
+          "dealer": 6775,
+          "inst": 5457
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -604050,
+        "margin_change": 118,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 65.6,
+      "final_phase": "B級：觀察"
+    },
+    {
+      "symbol": "2330",
+      "name": "台積電",
+      "market": "TWSE",
+      "price": 2585.0,
+      "change_pct": 0.0,
+      "score": 85,
+      "latent_score": 100,
+      "phase": "A+級：預備發動",
+      "close_strength": 1.0,
+      "range_pct": 0.97,
+      "volume": 14381.0,
+      "value": 37035635000.0,
+      "a": 2560.0,
+      "b": 2623.77,
+      "c": 2507.45,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_NEAR_HIGH",
+        "RANGE_TIGHT",
+        "COIL_PROXY"
+      ],
+      "industry_code": "24",
+      "is_electronic": true,
+      "structure_score": 57.0,
+      "structure_flags": [
+        "MA_CONVERGENCE",
+        "HIGHER_LOW",
+        "AT_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "NOT_EXTENDED_10D",
+        "MA20_RISING",
+        "UPVOL_DOMINANT"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 3.12,
+        "vol5_vs_20": 0.9,
+        "near_20d_high": 0.998,
+        "range20_pct": 8.39,
+        "return10_pct": 4.23,
+        "up_down_vol_ratio": 1.23,
+        "higher_low": true
+      },
+      "refined_score": 74.6,
+      "refined_phase": "A級：潛伏",
+      "chip_score": 6.0,
+      "chip_flags": [
+        "INST_SELL_TODAY",
+        "INST_CONSEC_5D",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": -1163351,
+          "trust": 72763,
+          "dealer": 447067,
+          "inst": -1090588
+        },
+        "foreign_consecutive_buy_days": 0,
+        "trust_consecutive_buy_days": 5,
+        "inst_cumul_5d": 5778279,
+        "margin_change": 365,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 64.8,
+      "final_phase": "B級：觀察"
+    },
+    {
+      "symbol": "4966",
+      "name": "譜瑞-KY",
+      "market": "TPEx",
+      "price": 568.0,
+      "change_pct": 0.8880994671403196,
+      "score": 65,
+      "latent_score": 92,
+      "phase": "A+級：預備發動",
+      "close_strength": 0.8888888888888888,
+      "range_pct": 1.6,
+      "volume": 276.0,
+      "value": 155961000.0,
+      "a": 560.0,
+      "b": 576.52,
+      "c": 550.96,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_NEAR_HIGH",
+        "RANGE_TIGHT",
+        "COIL_PROXY"
+      ],
+      "industry_code": "24",
+      "is_electronic": true,
+      "structure_score": 57.0,
+      "structure_flags": [
+        "MA_CONVERGENCE",
+        "VOL_DRYUP_PRIME",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "NOT_EXTENDED_10D"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 2.22,
+        "vol5_vs_20": 0.72,
+        "near_20d_high": 0.969,
+        "range20_pct": 11.44,
+        "return10_pct": 0.18,
+        "up_down_vol_ratio": 1.03,
+        "higher_low": false
+      },
+      "refined_score": 60.8,
+      "refined_phase": "B級：觀察",
+      "chip_score": 24.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 112882,
+          "trust": 9000,
+          "dealer": 3915,
+          "inst": 121882
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 5,
+        "inst_cumul_5d": 22730,
+        "margin_change": null,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 64.3,
+      "final_phase": "B級：觀察"
+    },
+    {
+      "symbol": "3680",
+      "name": "家登",
+      "market": "TPEx",
+      "price": 567.0,
+      "change_pct": 0.7104795737122558,
+      "score": 58,
+      "latent_score": 67,
+      "phase": "A級：潛伏",
+      "close_strength": 0.6428571428571429,
+      "range_pct": 2.49,
+      "volume": 909.0,
+      "value": 514865000.0,
+      "a": 558.5,
+      "b": 575.5,
+      "c": 549.99,
+      "latent_flags": [
+        "NOT_EXTENDED"
+      ],
+      "industry_code": "24",
+      "is_electronic": true,
+      "structure_score": 56.0,
+      "structure_flags": [
+        "HIGHER_LOW",
+        "VOL_DRYUP",
+        "NEAR_BREAKOUT",
+        "NOT_EXTENDED_10D",
+        "MA20_RISING",
+        "UPVOL_DOMINANT"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 3.74,
+        "vol5_vs_20": 0.75,
+        "near_20d_high": 0.955,
+        "range20_pct": 18.61,
+        "return10_pct": 3.47,
+        "up_down_vol_ratio": 1.31,
+        "higher_low": true
+      },
+      "refined_score": 62.6,
+      "refined_phase": "B級：觀察",
+      "chip_score": 21.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 90535,
+          "trust": -165,
+          "dealer": 1027,
+          "inst": 90370
+        },
+        "foreign_consecutive_buy_days": 5,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 1230377,
+        "margin_change": null,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 63.9,
+      "final_phase": "B級：觀察"
+    },
+    {
+      "symbol": "6197",
+      "name": "佳必琪",
+      "market": "TWSE",
+      "price": 371.0,
+      "change_pct": 1.643835616438356,
+      "score": 84,
+      "latent_score": 94,
+      "phase": "A+級：預備發動",
+      "close_strength": 1.0,
+      "range_pct": 2.19,
+      "volume": 3955.0,
+      "value": 1454449000.0,
+      "a": 365.44,
+      "b": 376.56,
+      "c": 359.87,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_NEAR_HIGH",
+        "COIL_PROXY"
+      ],
+      "industry_code": "28",
+      "is_electronic": true,
+      "structure_score": 19.0,
+      "structure_flags": [
+        "HIGHER_LOW",
+        "AT_BREAKOUT",
+        "EXTENDED_10D",
+        "MA20_RISING",
+        "UPVOL_DOMINANT"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 8.32,
+        "vol5_vs_20": 1.96,
+        "near_20d_high": 1.0,
+        "range20_pct": 21.29,
+        "return10_pct": 15.22,
+        "up_down_vol_ratio": 2.45,
+        "higher_low": true
+      },
+      "refined_score": 62.8,
+      "refined_phase": "B級：觀察",
+      "chip_score": 19.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_3D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 382546,
+          "trust": 0,
+          "dealer": -59705,
+          "inst": 382546
+        },
+        "foreign_consecutive_buy_days": 3,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 1018462,
+        "margin_change": 40,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 62.9,
+      "final_phase": "B級：觀察"
+    },
+    {
+      "symbol": "6415",
+      "name": "矽力*-KY",
+      "market": "TWSE",
+      "price": 456.5,
+      "change_pct": 1.557285873192436,
+      "score": 75,
+      "latent_score": 66,
+      "phase": "A級：潛伏",
+      "close_strength": 0.7631578947368421,
+      "range_pct": 4.23,
+      "volume": 2128.0,
+      "value": 965860500.0,
+      "a": 449.65,
+      "b": 463.35,
+      "c": 442.0,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_STRONG"
+      ],
+      "industry_code": "24",
+      "is_electronic": true,
+      "structure_score": 43.0,
+      "structure_flags": [
+        "MA_CONVERGENCE",
+        "VOL_DRYUP",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION",
+        "MA20_RISING"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 3.41,
+        "vol5_vs_20": 0.9,
+        "near_20d_high": 0.99,
+        "range20_pct": 16.65,
+        "return10_pct": 6.78,
+        "up_down_vol_ratio": 0.93,
+        "higher_low": false
+      },
+      "refined_score": 65.5,
+      "refined_phase": "B級：觀察",
+      "chip_score": 15.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 232565,
+          "trust": 2000,
+          "dealer": -30260,
+          "inst": 234565
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 1,
+        "inst_cumul_5d": 454092,
+        "margin_change": 132,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 62.7,
+      "final_phase": "B級：觀察"
+    },
+    {
+      "symbol": "8150",
+      "name": "南茂",
+      "market": "TWSE",
+      "price": 128.5,
+      "change_pct": 0.7843137254901961,
+      "score": 83,
+      "latent_score": 87,
+      "phase": "A+級：預備發動",
+      "close_strength": 0.875,
+      "range_pct": 3.14,
+      "volume": 34531.0,
+      "value": 4400675500.0,
+      "a": 126.57,
+      "b": 130.43,
+      "c": 124.64,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_STRONG",
+        "COIL_PROXY"
+      ],
+      "industry_code": "24",
+      "is_electronic": true,
+      "structure_score": 26.0,
+      "structure_flags": [
+        "HIGHER_LOW",
+        "NEAR_BREAKOUT",
+        "EXTENDED_10D",
+        "MA20_RISING",
+        "UPVOL_DOMINANT"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 16.45,
+        "vol5_vs_20": 1.41,
+        "near_20d_high": 0.966,
+        "range20_pct": 37.9,
+        "return10_pct": 24.76,
+        "up_down_vol_ratio": 2.21,
+        "higher_low": true
+      },
+      "refined_score": 72.0,
+      "refined_phase": "A級：潛伏",
+      "chip_score": 6.0,
+      "chip_flags": [
+        "INST_SELL_TODAY",
+        "INST_CONSEC_5D",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": -2169566,
+          "trust": 40000,
+          "dealer": -217592,
+          "inst": -2129566
+        },
+        "foreign_consecutive_buy_days": 0,
+        "trust_consecutive_buy_days": 5,
+        "inst_cumul_5d": 9762599,
+        "margin_change": 4023,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 62.6,
+      "final_phase": "B級：觀察"
+    },
+    {
+      "symbol": "3149",
+      "name": "正達",
+      "market": "TWSE",
+      "price": 77.1,
+      "change_pct": 1.715039577836408,
+      "score": 84,
+      "latent_score": 87,
+      "phase": "A+級：預備發動",
+      "close_strength": 0.8076923076923073,
+      "range_pct": 3.43,
+      "volume": 8452.0,
+      "value": 643864100.0,
+      "a": 75.94,
+      "b": 78.26,
+      "c": 74.79,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_STRONG",
+        "COIL_PROXY"
+      ],
+      "industry_code": "26",
+      "is_electronic": true,
+      "structure_score": 26.0,
+      "structure_flags": [
+        "HIGHER_LOW",
+        "NEAR_BREAKOUT",
+        "EXTENDED_10D",
+        "MA20_RISING",
+        "UPVOL_DOMINANT"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 13.05,
+        "vol5_vs_20": 2.09,
+        "near_20d_high": 0.964,
+        "range20_pct": 26.72,
+        "return10_pct": 18.43,
+        "up_down_vol_ratio": 2.25,
+        "higher_low": true
+      },
+      "refined_score": 72.0,
+      "refined_phase": "A級：潛伏",
+      "chip_score": 4.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 840383,
+          "trust": 0,
+          "dealer": -1785,
+          "inst": 840383
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -1874337,
+        "margin_change": 242,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 61.4,
+      "final_phase": "C級：暫不碰"
+    },
+    {
+      "symbol": "2404",
+      "name": "漢唐",
+      "market": "TWSE",
+      "price": 1330.0,
+      "change_pct": -0.37453183520599254,
+      "score": 58,
+      "latent_score": 67,
+      "phase": "A級：潛伏",
+      "close_strength": 0.7142857142857143,
+      "range_pct": 2.62,
+      "volume": 685.0,
+      "value": 906375000.0,
+      "a": 1310.05,
+      "b": 1349.95,
+      "c": 1290.1,
+      "latent_flags": [
+        "NOT_EXTENDED"
+      ],
+      "industry_code": "31",
+      "is_electronic": true,
+      "structure_score": 34.0,
+      "structure_flags": [
+        "HIGHER_LOW",
+        "VOL_DRYUP",
+        "NEAR_BREAKOUT",
+        "EXTENDED_10D",
+        "MA20_RISING",
+        "UPVOL_DOMINANT"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 11.11,
+        "vol5_vs_20": 0.89,
+        "near_20d_high": 0.982,
+        "range20_pct": 27.29,
+        "return10_pct": 17.7,
+        "up_down_vol_ratio": 1.44,
+        "higher_low": true
+      },
+      "refined_score": 51.1,
+      "refined_phase": "C級：暫不碰",
+      "chip_score": 28.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 163615,
+          "trust": 44904,
+          "dealer": -32953,
+          "inst": 208519
+        },
+        "foreign_consecutive_buy_days": 5,
+        "trust_consecutive_buy_days": 1,
+        "inst_cumul_5d": 1836589,
+        "margin_change": -52,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 58.7,
+      "final_phase": "C級：暫不碰"
+    }
+  ],
+  "top_electronics_final": [
+    {
+      "symbol": "3706",
+      "name": "神達",
+      "market": "TWSE",
+      "price": 80.9,
+      "change_pct": 0.7471980074719907,
+      "score": 75,
+      "latent_score": 96,
+      "phase": "A+級：預備發動",
+      "close_strength": 1.0,
+      "range_pct": 0.87,
+      "volume": 2992.0,
+      "value": 241208500.0,
+      "a": 80.2,
+      "b": 82.11,
+      "c": 78.47,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_NEAR_HIGH",
+        "RANGE_TIGHT",
+        "COIL_PROXY"
+      ],
+      "industry_code": "25",
+      "is_electronic": true,
+      "structure_score": 62.0,
+      "structure_flags": [
+        "MA_CONVERGENCE_PRIME",
+        "HIGHER_LOW",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "NOT_EXTENDED_10D"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 1.29,
+        "vol5_vs_20": 0.92,
+        "near_20d_high": 0.981,
+        "range20_pct": 6.06,
+        "return10_pct": 1.38,
+        "up_down_vol_ratio": 1.1,
+        "higher_low": true
+      },
+      "refined_score": 93.8,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 25.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_2D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 1168886,
+          "trust": 20000,
+          "dealer": -28963,
+          "inst": 1188886
+        },
+        "foreign_consecutive_buy_days": 2,
+        "trust_consecutive_buy_days": 1,
+        "inst_cumul_5d": 2146704,
+        "margin_change": -11,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 91.9,
+      "final_phase": "A+級：預備發動"
+    },
+    {
+      "symbol": "6214",
+      "name": "精誠",
+      "market": "TWSE",
+      "price": 189.5,
+      "change_pct": 0.5305039787798408,
+      "score": 53,
+      "latent_score": 65,
+      "phase": "A級：潛伏",
+      "close_strength": 0.6,
+      "range_pct": 1.33,
+      "volume": 624.0,
+      "value": 118293000.0,
+      "a": 188.0,
+      "b": 192.34,
+      "c": 183.81,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "RANGE_TIGHT"
+      ],
+      "industry_code": "30",
+      "is_electronic": true,
+      "structure_score": 82.0,
+      "structure_flags": [
+        "MA_CONVERGENCE_PRIME",
+        "HIGHER_LOW",
+        "VOL_DRYUP_PRIME",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "NOT_EXTENDED_10D",
+        "MA20_RISING"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 0.32,
+        "vol5_vs_20": 0.33,
+        "near_20d_high": 0.972,
+        "range20_pct": 6.33,
+        "return10_pct": -1.04,
+        "up_down_vol_ratio": 0.9,
+        "higher_low": true
+      },
+      "refined_score": 90.4,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 28.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_4D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 396737,
+          "trust": 12000,
+          "dealer": 1000,
+          "inst": 408737
+        },
+        "foreign_consecutive_buy_days": 3,
+        "trust_consecutive_buy_days": 4,
+        "inst_cumul_5d": 983964,
+        "margin_change": -2,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 90.9,
+      "final_phase": "A+級：預備發動"
+    },
+    {
+      "symbol": "2377",
+      "name": "微星",
+      "market": "TWSE",
+      "price": 156.0,
+      "change_pct": 0.6451612903225806,
+      "score": 69,
+      "latent_score": 73,
+      "phase": "A級：潛伏",
+      "close_strength": 0.6666666666666666,
+      "range_pct": 0.97,
+      "volume": 3913.0,
+      "value": 609194000.0,
+      "a": 155.0,
+      "b": 158.34,
+      "c": 151.32,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "RANGE_TIGHT"
+      ],
+      "industry_code": "25",
+      "is_electronic": true,
+      "structure_score": 70.0,
+      "structure_flags": [
+        "MA_CONVERGENCE_PRIME",
+        "HIGHER_LOW",
+        "VOL_DRYUP",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "NOT_EXTENDED_10D"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 1.36,
+        "vol5_vs_20": 0.77,
+        "near_20d_high": 0.981,
+        "range20_pct": 9.29,
+        "return10_pct": 1.96,
+        "up_down_vol_ratio": 0.86,
+        "higher_low": true
+      },
+      "refined_score": 89.9,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 25.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 1011911,
+          "trust": -27383,
+          "dealer": 32745,
+          "inst": 984528
+        },
+        "foreign_consecutive_buy_days": 5,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 4967887,
+        "margin_change": -31,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 88.7,
+      "final_phase": "A+級：預備發動"
+    },
+    {
+      "symbol": "2441",
+      "name": "超豐",
+      "market": "TWSE",
+      "price": 127.0,
+      "change_pct": 0.3952569169960474,
+      "score": 71,
+      "latent_score": 89,
+      "phase": "A+級：預備發動",
+      "close_strength": 0.8,
+      "range_pct": 1.98,
+      "volume": 2720.0,
+      "value": 343513500.0,
+      "a": 125.09,
+      "b": 128.91,
+      "c": 123.19,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_STRONG",
+        "RANGE_TIGHT",
+        "COIL_PROXY"
+      ],
+      "industry_code": "24",
+      "is_electronic": true,
+      "structure_score": 56.0,
+      "structure_flags": [
+        "HIGHER_LOW",
+        "VOL_DRYUP",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION",
+        "NOT_EXTENDED_10D",
+        "MA20_RISING"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 3.6,
+        "vol5_vs_20": 0.76,
+        "near_20d_high": 0.966,
+        "range20_pct": 17.32,
+        "return10_pct": -0.39,
+        "up_down_vol_ratio": 0.98,
+        "higher_low": true
+      },
+      "refined_score": 88.3,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 22.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 43441,
+          "trust": 171000,
+          "dealer": -15734,
+          "inst": 214441
+        },
+        "foreign_consecutive_buy_days": 2,
+        "trust_consecutive_buy_days": 5,
+        "inst_cumul_5d": 107969,
+        "margin_change": 116,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 85.6,
+      "final_phase": "A+級：預備發動"
+    },
+    {
+      "symbol": "2458",
+      "name": "義隆",
+      "market": "TWSE",
+      "price": 134.0,
+      "change_pct": 0.7518796992481203,
+      "score": 69,
+      "latent_score": 79,
+      "phase": "A級：潛伏",
+      "close_strength": 0.8333333333333334,
+      "range_pct": 2.26,
+      "volume": 1013.0,
+      "value": 135066500.0,
+      "a": 131.99,
+      "b": 136.01,
+      "c": 129.98,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_STRONG",
+        "COIL_PROXY"
+      ],
+      "industry_code": "24",
+      "is_electronic": true,
+      "structure_score": 59.0,
+      "structure_flags": [
+        "MA_CONVERGENCE",
+        "HIGHER_LOW",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "NOT_EXTENDED_10D",
+        "MA20_RISING"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 2.85,
+        "vol5_vs_20": 1.19,
+        "near_20d_high": 0.961,
+        "range20_pct": 11.19,
+        "return10_pct": 2.68,
+        "up_down_vol_ratio": 1.01,
+        "higher_low": true
+      },
+      "refined_score": 83.3,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 28.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 154088,
+          "trust": 80804,
+          "dealer": 15982,
+          "inst": 234892
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 5,
+        "inst_cumul_5d": 609142,
+        "margin_change": -51,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 85.1,
+      "final_phase": "A+級：預備發動"
+    },
+    {
+      "symbol": "6191",
+      "name": "精成科",
+      "market": "TWSE",
+      "price": 87.5,
+      "change_pct": 0.8064516129032291,
+      "score": 69,
+      "latent_score": 85,
+      "phase": "A+級：預備發動",
+      "close_strength": 0.8749999999999989,
+      "range_pct": 1.84,
+      "volume": 2056.0,
+      "value": 179196100.0,
+      "a": 86.19,
+      "b": 88.81,
+      "c": 84.88,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_STRONG",
+        "RANGE_TIGHT",
+        "COIL_PROXY"
+      ],
+      "industry_code": "28",
+      "is_electronic": true,
+      "structure_score": 50.0,
+      "structure_flags": [
+        "MA_CONVERGENCE",
+        "HIGHER_LOW",
+        "AT_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "MA20_RISING",
+        "UPVOL_DOMINANT"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 2.73,
+        "vol5_vs_20": 1.46,
+        "near_20d_high": 0.998,
+        "range20_pct": 8.23,
+        "return10_pct": 5.17,
+        "up_down_vol_ratio": 1.44,
+        "higher_low": true
+      },
+      "refined_score": 80.8,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 28.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 489365,
+          "trust": 20000,
+          "dealer": 14508,
+          "inst": 509365
+        },
+        "foreign_consecutive_buy_days": 5,
+        "trust_consecutive_buy_days": 2,
+        "inst_cumul_5d": 1849668,
+        "margin_change": -30,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 83.1,
+      "final_phase": "A+級：預備發動"
+    },
+    {
+      "symbol": "3702",
+      "name": "大聯大",
+      "market": "TWSE",
+      "price": 120.0,
+      "change_pct": 0.8403361344537815,
+      "score": 73,
+      "latent_score": 67,
+      "phase": "A級：潛伏",
+      "close_strength": 0.7142857142857143,
+      "range_pct": 2.94,
+      "volume": 5115.0,
+      "value": 610632500.0,
+      "a": 118.2,
+      "b": 121.8,
+      "c": 116.4,
+      "latent_flags": [
+        "NOT_EXTENDED"
+      ],
+      "industry_code": "29",
+      "is_electronic": true,
+      "structure_score": 52.0,
+      "structure_flags": [
+        "HIGHER_LOW",
+        "VOL_DRYUP_PRIME",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION",
+        "MA20_RISING"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 5.46,
+        "vol5_vs_20": 0.67,
+        "near_20d_high": 0.992,
+        "range20_pct": 15.0,
+        "return10_pct": 5.26,
+        "up_down_vol_ratio": 0.96,
+        "higher_low": true
+      },
+      "refined_score": 78.5,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 28.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_3D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 2530046,
+          "trust": 50000,
+          "dealer": -5861,
+          "inst": 2580046
+        },
+        "foreign_consecutive_buy_days": 3,
+        "trust_consecutive_buy_days": 2,
+        "inst_cumul_5d": 8907313,
+        "margin_change": -93,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 81.2,
+      "final_phase": "A級：潛伏"
+    },
+    {
+      "symbol": "2347",
+      "name": "聯強",
+      "market": "TWSE",
+      "price": 96.8,
+      "change_pct": 1.0438413361169103,
+      "score": 75,
+      "latent_score": 96,
+      "phase": "A+級：預備發動",
+      "close_strength": 1.0,
+      "range_pct": 1.67,
+      "volume": 2328.0,
+      "value": 223809300.0,
+      "a": 95.35,
+      "b": 98.25,
+      "c": 93.9,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_NEAR_HIGH",
+        "RANGE_TIGHT",
+        "COIL_PROXY"
+      ],
+      "industry_code": "29",
+      "is_electronic": true,
+      "structure_score": 41.0,
+      "structure_flags": [
+        "HIGHER_LOW",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION",
+        "MA20_RISING"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 4.43,
+        "vol5_vs_20": 1.09,
+        "near_20d_high": 0.968,
+        "range20_pct": 12.81,
+        "return10_pct": 7.8,
+        "up_down_vol_ratio": 1.09,
+        "higher_low": true
+      },
+      "refined_score": 82.9,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 19.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 1579134,
+          "trust": -668461,
+          "dealer": 52592,
+          "inst": 910673
+        },
+        "foreign_consecutive_buy_days": 5,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 8599779,
+        "margin_change": 9,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 79.4,
+      "final_phase": "A級：潛伏"
+    },
+    {
+      "symbol": "8096",
+      "name": "擎亞",
+      "market": "TPEx",
+      "price": 90.1,
+      "change_pct": 1.4639639639639608,
+      "score": 69,
+      "latent_score": 79,
+      "phase": "A級：潛伏",
+      "close_strength": 0.8333333333333314,
+      "range_pct": 2.7,
+      "volume": 1455.0,
+      "value": 129513400.0,
+      "a": 88.75,
+      "b": 91.45,
+      "c": 87.4,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_STRONG",
+        "COIL_PROXY"
+      ],
+      "industry_code": "29",
+      "is_electronic": true,
+      "structure_score": 55.0,
+      "structure_flags": [
+        "MA_CONVERGENCE_PRIME",
+        "HIGHER_LOW",
+        "VOL_DRYUP_PRIME",
+        "NOT_EXTENDED_10D"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 1.83,
+        "vol5_vs_20": 0.65,
+        "near_20d_high": 0.842,
+        "range20_pct": 28.41,
+        "return10_pct": 4.16,
+        "up_down_vol_ratio": 0.74,
+        "higher_low": true
+      },
+      "refined_score": 81.2,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 21.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_4D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 356260,
+          "trust": 0,
+          "dealer": 9843,
+          "inst": 356260
+        },
+        "foreign_consecutive_buy_days": 4,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 1755229,
+        "margin_change": null,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 79.2,
+      "final_phase": "A級：潛伏"
+    },
+    {
+      "symbol": "2393",
+      "name": "億光",
+      "market": "TWSE",
+      "price": 68.0,
+      "change_pct": 1.1904761904761862,
+      "score": 73,
+      "latent_score": 86,
+      "phase": "A+級：預備發動",
+      "close_strength": 1.0,
+      "range_pct": 2.83,
+      "volume": 2267.0,
+      "value": 152453800.0,
+      "a": 66.98,
+      "b": 69.02,
+      "c": 65.96,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_NEAR_HIGH",
+        "COIL_PROXY"
+      ],
+      "industry_code": "26",
+      "is_electronic": true,
+      "structure_score": 44.0,
+      "structure_flags": [
+        "HIGHER_LOW",
+        "AT_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "MA20_RISING",
+        "UPVOL_DOMINANT"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 3.73,
+        "vol5_vs_20": 1.44,
+        "near_20d_high": 1.0,
+        "range20_pct": 10.29,
+        "return10_pct": 5.92,
+        "up_down_vol_ratio": 1.7,
+        "higher_low": true
+      },
+      "refined_score": 78.0,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 25.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 990776,
+          "trust": -11264,
+          "dealer": -92347,
+          "inst": 979512
+        },
+        "foreign_consecutive_buy_days": 5,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 3904374,
+        "margin_change": -51,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 79.0,
+      "final_phase": "A級：潛伏"
+    },
+    {
+      "symbol": "3022",
+      "name": "威強電",
+      "market": "TWSE",
+      "price": 90.7,
+      "change_pct": -0.11013215859030212,
+      "score": 55,
+      "latent_score": 81,
+      "phase": "A+級：預備發動",
+      "close_strength": 0.8000000000000019,
+      "range_pct": 1.65,
+      "volume": 627.0,
+      "value": 56510600.0,
+      "a": 89.5,
+      "b": 92.06,
+      "c": 87.98,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_STRONG",
+        "RANGE_TIGHT",
+        "COIL_PROXY"
+      ],
+      "industry_code": "25",
+      "is_electronic": true,
+      "structure_score": 62.0,
+      "structure_flags": [
+        "MA_CONVERGENCE",
+        "VOL_DRYUP_PRIME",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION",
+        "NOT_EXTENDED_10D",
+        "MA20_RISING",
+        "UPVOL_DOMINANT"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 2.67,
+        "vol5_vs_20": 0.58,
+        "near_20d_high": 0.951,
+        "range20_pct": 14.66,
+        "return10_pct": -2.26,
+        "up_down_vol_ratio": 1.24,
+        "higher_low": false
+      },
+      "refined_score": 81.6,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 18.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 29859,
+          "trust": 0,
+          "dealer": -1621,
+          "inst": 29859
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 455584,
+        "margin_change": -200,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 77.7,
+      "final_phase": "A級：潛伏"
+    },
+    {
+      "symbol": "2312",
+      "name": "金寶",
+      "market": "TWSE",
+      "price": 31.05,
+      "change_pct": 1.1400651465798093,
+      "score": 70,
+      "latent_score": 69,
+      "phase": "A級：潛伏",
+      "close_strength": 0.6666666666666686,
+      "range_pct": 1.95,
+      "volume": 6926.0,
+      "value": 214510400.0,
+      "a": 30.65,
+      "b": 31.52,
+      "c": 30.12,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "RANGE_TIGHT"
+      ],
+      "industry_code": "31",
+      "is_electronic": true,
+      "structure_score": 62.0,
+      "structure_flags": [
+        "MA_CONVERGENCE_PRIME",
+        "HIGHER_LOW",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "NOT_EXTENDED_10D"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 0.38,
+        "vol5_vs_20": 0.94,
+        "near_20d_high": 0.96,
+        "range20_pct": 7.57,
+        "return10_pct": -0.8,
+        "up_down_vol_ratio": 1.03,
+        "higher_low": true
+      },
+      "refined_score": 84.4,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 14.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_3D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 2376254,
+          "trust": 45000,
+          "dealer": 290950,
+          "inst": 2421254
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 3,
+        "inst_cumul_5d": -2033985,
+        "margin_change": 338,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 77.6,
+      "final_phase": "A級：潛伏"
+    },
+    {
+      "symbol": "8110",
+      "name": "華東",
+      "market": "TWSE",
+      "price": 49.5,
+      "change_pct": 1.4344262295082026,
+      "score": 64,
+      "latent_score": 79,
+      "phase": "A級：潛伏",
+      "close_strength": 0.7692307692307709,
+      "range_pct": 2.66,
+      "volume": 4044.0,
+      "value": 198805900.0,
+      "a": 48.76,
+      "b": 50.24,
+      "c": 48.02,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_STRONG",
+        "COIL_PROXY"
+      ],
+      "industry_code": "24",
+      "is_electronic": true,
+      "structure_score": 49.0,
+      "structure_flags": [
+        "HIGHER_LOW",
+        "VOL_DRYUP_PRIME",
+        "NEAR_BREAKOUT",
+        "MA20_RISING",
+        "UPVOL_DOMINANT"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 5.53,
+        "vol5_vs_20": 0.62,
+        "near_20d_high": 0.932,
+        "range20_pct": 25.45,
+        "return10_pct": -4.99,
+        "up_down_vol_ratio": 1.66,
+        "higher_low": true
+      },
+      "refined_score": 78.1,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 22.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_2D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 880100,
+          "trust": 0,
+          "dealer": -5728,
+          "inst": 880100
+        },
+        "foreign_consecutive_buy_days": 2,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 1233487,
+        "margin_change": -250,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 77.2,
+      "final_phase": "A級：潛伏"
+    },
+    {
+      "symbol": "4938",
+      "name": "和碩",
+      "market": "TWSE",
+      "price": 90.0,
+      "change_pct": 0.0,
+      "score": 71,
+      "latent_score": 89,
+      "phase": "A+級：預備發動",
+      "close_strength": 0.8750000000000067,
+      "range_pct": 0.89,
+      "volume": 3324.0,
+      "value": 298577100.0,
+      "a": 89.3,
+      "b": 91.35,
+      "c": 87.3,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_STRONG",
+        "RANGE_TIGHT",
+        "COIL_PROXY"
+      ],
+      "industry_code": "25",
+      "is_electronic": true,
+      "structure_score": 65.0,
+      "structure_flags": [
+        "MA_CONVERGENCE_PRIME",
+        "VOL_DRYUP_PRIME",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "NOT_EXTENDED_10D"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 0.71,
+        "vol5_vs_20": 0.69,
+        "near_20d_high": 0.947,
+        "range20_pct": 7.44,
+        "return10_pct": -0.88,
+        "up_down_vol_ratio": 0.89,
+        "higher_low": false
+      },
+      "refined_score": 93.0,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 0.0,
+      "chip_flags": [
+        "INST_SELL_TODAY",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": -674692,
+          "trust": -144217,
+          "dealer": 66587,
+          "inst": -818909
+        },
+        "foreign_consecutive_buy_days": 0,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -2712507,
+        "margin_change": -126,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 76.3,
+      "final_phase": "A級：潛伏"
+    },
+    {
+      "symbol": "6166",
+      "name": "凌華",
+      "market": "TWSE",
+      "price": 131.0,
+      "change_pct": 0.7692307692307693,
+      "score": 73,
+      "latent_score": 86,
+      "phase": "A+級：預備發動",
+      "close_strength": 1.0,
+      "range_pct": 2.69,
+      "volume": 1159.0,
+      "value": 149929500.0,
+      "a": 129.03,
+      "b": 132.96,
+      "c": 127.07,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_NEAR_HIGH",
+        "COIL_PROXY"
+      ],
+      "industry_code": "25",
+      "is_electronic": true,
+      "structure_score": 47.0,
+      "structure_flags": [
+        "HIGHER_LOW",
+        "VOL_DRYUP_PRIME",
+        "NOT_EXTENDED_10D",
+        "MA20_RISING",
+        "UPVOL_DOMINANT"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 6.41,
+        "vol5_vs_20": 0.62,
+        "near_20d_high": 0.913,
+        "range20_pct": 27.48,
+        "return10_pct": 4.38,
+        "up_down_vol_ratio": 1.21,
+        "higher_low": true
+      },
+      "refined_score": 79.5,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 18.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 149188,
+          "trust": 0,
+          "dealer": 982,
+          "inst": 149188
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 3218,
+        "margin_change": -59,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 76.0,
+      "final_phase": "A級：潛伏"
+    },
+    {
+      "symbol": "6282",
+      "name": "康舒",
+      "market": "TWSE",
+      "price": 44.05,
+      "change_pct": 0.5707762557077626,
+      "score": 59,
+      "latent_score": 69,
+      "phase": "A級：潛伏",
+      "close_strength": 0.5882352941176461,
+      "range_pct": 1.94,
+      "volume": 4647.0,
+      "value": 204722950.0,
+      "a": 43.55,
+      "b": 44.71,
+      "c": 42.73,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "RANGE_TIGHT"
+      ],
+      "industry_code": "28",
+      "is_electronic": true,
+      "structure_score": 67.0,
+      "structure_flags": [
+        "MA_CONVERGENCE_PRIME",
+        "HIGHER_LOW",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "NOT_EXTENDED_10D",
+        "UPVOL_DOMINANT"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 1.76,
+        "vol5_vs_20": 1.24,
+        "near_20d_high": 0.977,
+        "range20_pct": 8.06,
+        "return10_pct": 1.61,
+        "up_down_vol_ratio": 1.29,
+        "higher_low": true
+      },
+      "refined_score": 87.0,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 7.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 882379,
+          "trust": -41000,
+          "dealer": -82934,
+          "inst": 841379
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 271047,
+        "margin_change": 45,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 75.5,
+      "final_phase": "A級：潛伏"
+    },
+    {
+      "symbol": "2353",
+      "name": "宏碁",
+      "market": "TWSE",
+      "price": 31.3,
+      "change_pct": 0.8051529790660225,
+      "score": 63,
+      "latent_score": 69,
+      "phase": "A級：潛伏",
+      "close_strength": 0.6250000000000022,
+      "range_pct": 1.29,
+      "volume": 7666.0,
+      "value": 239772400.0,
+      "a": 31.05,
+      "b": 31.77,
+      "c": 30.36,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "RANGE_TIGHT"
+      ],
+      "industry_code": "25",
+      "is_electronic": true,
+      "structure_score": 58.0,
+      "structure_flags": [
+        "MA_CONVERGENCE_PRIME",
+        "VOL_DRYUP",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "NOT_EXTENDED_10D"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 0.48,
+        "vol5_vs_20": 0.89,
+        "near_20d_high": 0.954,
+        "range20_pct": 6.55,
+        "return10_pct": -2.64,
+        "up_down_vol_ratio": 0.98,
+        "higher_low": false
+      },
+      "refined_score": 82.3,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 10.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 557014,
+          "trust": -35000,
+          "dealer": -2231,
+          "inst": 522014
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -3104401,
+        "margin_change": -3136,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 73.5,
+      "final_phase": "A級：潛伏"
+    },
+    {
+      "symbol": "3010",
+      "name": "華立",
+      "market": "TWSE",
+      "price": 132.0,
+      "change_pct": 0.7633587786259541,
+      "score": 66,
+      "latent_score": 88,
+      "phase": "A+級：預備發動",
+      "close_strength": 1.0,
+      "range_pct": 1.15,
+      "volume": 602.0,
+      "value": 79062000.0,
+      "a": 130.5,
+      "b": 133.98,
+      "c": 128.04,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_NEAR_HIGH",
+        "RANGE_TIGHT",
+        "COIL_PROXY"
+      ],
+      "industry_code": "29",
+      "is_electronic": true,
+      "structure_score": 45.0,
+      "structure_flags": [
+        "MA_CONVERGENCE",
+        "HIGHER_LOW",
+        "AT_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "MA20_RISING"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 2.63,
+        "vol5_vs_20": 1.47,
+        "near_20d_high": 1.0,
+        "range20_pct": 7.2,
+        "return10_pct": 5.6,
+        "up_down_vol_ratio": 0.81,
+        "higher_low": true
+      },
+      "refined_score": 75.2,
+      "refined_phase": "A級：潛伏",
+      "chip_score": 19.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 267599,
+          "trust": 0,
+          "dealer": 11241,
+          "inst": 267599
+        },
+        "foreign_consecutive_buy_days": 5,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 1190738,
+        "margin_change": 44,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 73.1,
+      "final_phase": "A級：潛伏"
+    },
+    {
+      "symbol": "2481",
+      "name": "強茂",
+      "market": "TWSE",
+      "price": 178.5,
+      "change_pct": 1.4204545454545454,
+      "score": 81,
+      "latent_score": 66,
+      "phase": "A級：潛伏",
+      "close_strength": 0.8,
+      "range_pct": 4.26,
+      "volume": 18038.0,
+      "value": 3187016500.0,
+      "a": 175.82,
+      "b": 181.18,
+      "c": 172.5,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_STRONG"
+      ],
+      "industry_code": "24",
+      "is_electronic": true,
+      "structure_score": 40.0,
+      "structure_flags": [
+        "HIGHER_LOW",
+        "VOL_DRYUP",
+        "NEAR_BREAKOUT",
+        "MA20_RISING"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 5.76,
+        "vol5_vs_20": 0.84,
+        "near_20d_high": 0.932,
+        "range20_pct": 25.49,
+        "return10_pct": 6.25,
+        "up_down_vol_ratio": 1.12,
+        "higher_low": true
+      },
+      "refined_score": 71.9,
+      "refined_phase": "A級：潛伏",
+      "chip_score": 18.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 3942213,
+          "trust": -91000,
+          "dealer": 154440,
+          "inst": 3851213
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 9663924,
+        "margin_change": -79,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 69.8,
+      "final_phase": "B級：觀察"
+    },
+    {
+      "symbol": "2382",
+      "name": "廣達",
+      "market": "TWSE",
+      "price": 335.0,
+      "change_pct": 0.4497751124437781,
+      "score": 66,
+      "latent_score": 63,
+      "phase": "B級：觀察",
+      "close_strength": 0.5,
+      "range_pct": 1.5,
+      "volume": 9426.0,
+      "value": 3155208500.0,
+      "a": 332.5,
+      "b": 340.02,
+      "c": 324.95,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "RANGE_TIGHT"
+      ],
+      "industry_code": "25",
+      "is_electronic": true,
+      "structure_score": 58.0,
+      "structure_flags": [
+        "MA_CONVERGENCE_PRIME",
+        "VOL_DRYUP",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "NOT_EXTENDED_10D"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 1.13,
+        "vol5_vs_20": 0.84,
+        "near_20d_high": 0.96,
+        "range20_pct": 6.27,
+        "return10_pct": -2.76,
+        "up_down_vol_ratio": 1.1,
+        "higher_low": false
+      },
+      "refined_score": 72.2,
+      "refined_phase": "A級：潛伏",
+      "chip_score": 14.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_2D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 1441121,
+          "trust": -17474,
+          "dealer": 40781,
+          "inst": 1423647
+        },
+        "foreign_consecutive_buy_days": 2,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -4543529,
+        "margin_change": -157,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 67.6,
+      "final_phase": "B級：觀察"
+    },
+    {
+      "symbol": "2359",
+      "name": "所羅門",
+      "market": "TWSE",
+      "price": 127.5,
+      "change_pct": 1.1904761904761905,
+      "score": 69,
+      "latent_score": 92,
+      "phase": "A+級：預備發動",
+      "close_strength": 1.0,
+      "range_pct": 1.19,
+      "volume": 818.0,
+      "value": 103651000.0,
+      "a": 126.0,
+      "b": 129.41,
+      "c": 123.67,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_NEAR_HIGH",
+        "RANGE_TIGHT",
+        "COIL_PROXY"
+      ],
+      "industry_code": "31",
+      "is_electronic": true,
+      "structure_score": 38.0,
+      "structure_flags": [
+        "MA_CONVERGENCE_PRIME",
+        "VOL_DRYUP_PRIME",
+        "RANGE_COMPRESSION"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 1.27,
+        "vol5_vs_20": 0.63,
+        "near_20d_high": 0.895,
+        "range20_pct": 13.73,
+        "return10_pct": -3.41,
+        "up_down_vol_ratio": 0.71,
+        "higher_low": false
+      },
+      "refined_score": 77.0,
+      "refined_phase": "A級：潛伏",
+      "chip_score": 5.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 76477,
+          "trust": 0,
+          "dealer": -9829,
+          "inst": 76477
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -999723,
+        "margin_change": -15,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 66.1,
+      "final_phase": "B級：觀察"
+    },
+    {
+      "symbol": "3596",
+      "name": "智易",
+      "market": "TWSE",
+      "price": 157.0,
+      "change_pct": 0.641025641025641,
+      "score": 60,
+      "latent_score": 65,
+      "phase": "A級：潛伏",
+      "close_strength": 0.6666666666666666,
+      "range_pct": 0.96,
+      "volume": 841.0,
+      "value": 131807000.0,
+      "a": 156.0,
+      "b": 159.35,
+      "c": 152.29,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "RANGE_TIGHT"
+      ],
+      "industry_code": "27",
+      "is_electronic": true,
+      "structure_score": 62.0,
+      "structure_flags": [
+        "MA_CONVERGENCE_PRIME",
+        "HIGHER_LOW",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "NOT_EXTENDED_10D"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 0.61,
+        "vol5_vs_20": 1.21,
+        "near_20d_high": 0.981,
+        "range20_pct": 5.41,
+        "return10_pct": 1.29,
+        "up_down_vol_ratio": 1.07,
+        "higher_low": true
+      },
+      "refined_score": 80.0,
+      "refined_phase": "A+級：預備發動",
+      "chip_score": 0.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 5457,
+          "trust": 0,
+          "dealer": 6775,
+          "inst": 5457
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -604050,
+        "margin_change": 118,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 65.6,
+      "final_phase": "B級：觀察"
+    },
+    {
+      "symbol": "2330",
+      "name": "台積電",
+      "market": "TWSE",
+      "price": 2585.0,
+      "change_pct": 0.0,
+      "score": 85,
+      "latent_score": 100,
+      "phase": "A+級：預備發動",
+      "close_strength": 1.0,
+      "range_pct": 0.97,
+      "volume": 14381.0,
+      "value": 37035635000.0,
+      "a": 2560.0,
+      "b": 2623.77,
+      "c": 2507.45,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_NEAR_HIGH",
+        "RANGE_TIGHT",
+        "COIL_PROXY"
+      ],
+      "industry_code": "24",
+      "is_electronic": true,
+      "structure_score": 57.0,
+      "structure_flags": [
+        "MA_CONVERGENCE",
+        "HIGHER_LOW",
+        "AT_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "NOT_EXTENDED_10D",
+        "MA20_RISING",
+        "UPVOL_DOMINANT"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 3.12,
+        "vol5_vs_20": 0.9,
+        "near_20d_high": 0.998,
+        "range20_pct": 8.39,
+        "return10_pct": 4.23,
+        "up_down_vol_ratio": 1.23,
+        "higher_low": true
+      },
+      "refined_score": 74.6,
+      "refined_phase": "A級：潛伏",
+      "chip_score": 6.0,
+      "chip_flags": [
+        "INST_SELL_TODAY",
+        "INST_CONSEC_5D",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": -1163351,
+          "trust": 72763,
+          "dealer": 447067,
+          "inst": -1090588
+        },
+        "foreign_consecutive_buy_days": 0,
+        "trust_consecutive_buy_days": 5,
+        "inst_cumul_5d": 5778279,
+        "margin_change": 365,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 64.8,
+      "final_phase": "B級：觀察"
+    },
+    {
+      "symbol": "4966",
+      "name": "譜瑞-KY",
+      "market": "TPEx",
+      "price": 568.0,
+      "change_pct": 0.8880994671403196,
+      "score": 65,
+      "latent_score": 92,
+      "phase": "A+級：預備發動",
+      "close_strength": 0.8888888888888888,
+      "range_pct": 1.6,
+      "volume": 276.0,
+      "value": 155961000.0,
+      "a": 560.0,
+      "b": 576.52,
+      "c": 550.96,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_NEAR_HIGH",
+        "RANGE_TIGHT",
+        "COIL_PROXY"
+      ],
+      "industry_code": "24",
+      "is_electronic": true,
+      "structure_score": 57.0,
+      "structure_flags": [
+        "MA_CONVERGENCE",
+        "VOL_DRYUP_PRIME",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION_PRIME",
+        "NOT_EXTENDED_10D"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 2.22,
+        "vol5_vs_20": 0.72,
+        "near_20d_high": 0.969,
+        "range20_pct": 11.44,
+        "return10_pct": 0.18,
+        "up_down_vol_ratio": 1.03,
+        "higher_low": false
+      },
+      "refined_score": 60.8,
+      "refined_phase": "B級：觀察",
+      "chip_score": 24.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 112882,
+          "trust": 9000,
+          "dealer": 3915,
+          "inst": 121882
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 5,
+        "inst_cumul_5d": 22730,
+        "margin_change": null,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 64.3,
+      "final_phase": "B級：觀察"
+    },
+    {
+      "symbol": "3680",
+      "name": "家登",
+      "market": "TPEx",
+      "price": 567.0,
+      "change_pct": 0.7104795737122558,
+      "score": 58,
+      "latent_score": 67,
+      "phase": "A級：潛伏",
+      "close_strength": 0.6428571428571429,
+      "range_pct": 2.49,
+      "volume": 909.0,
+      "value": 514865000.0,
+      "a": 558.5,
+      "b": 575.5,
+      "c": 549.99,
+      "latent_flags": [
+        "NOT_EXTENDED"
+      ],
+      "industry_code": "24",
+      "is_electronic": true,
+      "structure_score": 56.0,
+      "structure_flags": [
+        "HIGHER_LOW",
+        "VOL_DRYUP",
+        "NEAR_BREAKOUT",
+        "NOT_EXTENDED_10D",
+        "MA20_RISING",
+        "UPVOL_DOMINANT"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 3.74,
+        "vol5_vs_20": 0.75,
+        "near_20d_high": 0.955,
+        "range20_pct": 18.61,
+        "return10_pct": 3.47,
+        "up_down_vol_ratio": 1.31,
+        "higher_low": true
+      },
+      "refined_score": 62.6,
+      "refined_phase": "B級：觀察",
+      "chip_score": 21.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 90535,
+          "trust": -165,
+          "dealer": 1027,
+          "inst": 90370
+        },
+        "foreign_consecutive_buy_days": 5,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 1230377,
+        "margin_change": null,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 63.9,
+      "final_phase": "B級：觀察"
+    },
+    {
+      "symbol": "6197",
+      "name": "佳必琪",
+      "market": "TWSE",
+      "price": 371.0,
+      "change_pct": 1.643835616438356,
+      "score": 84,
+      "latent_score": 94,
+      "phase": "A+級：預備發動",
+      "close_strength": 1.0,
+      "range_pct": 2.19,
+      "volume": 3955.0,
+      "value": 1454449000.0,
+      "a": 365.44,
+      "b": 376.56,
+      "c": 359.87,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_NEAR_HIGH",
+        "COIL_PROXY"
+      ],
+      "industry_code": "28",
+      "is_electronic": true,
+      "structure_score": 19.0,
+      "structure_flags": [
+        "HIGHER_LOW",
+        "AT_BREAKOUT",
+        "EXTENDED_10D",
+        "MA20_RISING",
+        "UPVOL_DOMINANT"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 8.32,
+        "vol5_vs_20": 1.96,
+        "near_20d_high": 1.0,
+        "range20_pct": 21.29,
+        "return10_pct": 15.22,
+        "up_down_vol_ratio": 2.45,
+        "higher_low": true
+      },
+      "refined_score": 62.8,
+      "refined_phase": "B級：觀察",
+      "chip_score": 19.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_CONSEC_3D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 382546,
+          "trust": 0,
+          "dealer": -59705,
+          "inst": 382546
+        },
+        "foreign_consecutive_buy_days": 3,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": 1018462,
+        "margin_change": 40,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 62.9,
+      "final_phase": "B級：觀察"
+    },
+    {
+      "symbol": "6415",
+      "name": "矽力*-KY",
+      "market": "TWSE",
+      "price": 456.5,
+      "change_pct": 1.557285873192436,
+      "score": 75,
+      "latent_score": 66,
+      "phase": "A級：潛伏",
+      "close_strength": 0.7631578947368421,
+      "range_pct": 4.23,
+      "volume": 2128.0,
+      "value": 965860500.0,
+      "a": 449.65,
+      "b": 463.35,
+      "c": 442.0,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_STRONG"
+      ],
+      "industry_code": "24",
+      "is_electronic": true,
+      "structure_score": 43.0,
+      "structure_flags": [
+        "MA_CONVERGENCE",
+        "VOL_DRYUP",
+        "NEAR_BREAKOUT",
+        "RANGE_COMPRESSION",
+        "MA20_RISING"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 3.41,
+        "vol5_vs_20": 0.9,
+        "near_20d_high": 0.99,
+        "range20_pct": 16.65,
+        "return10_pct": 6.78,
+        "up_down_vol_ratio": 0.93,
+        "higher_low": false
+      },
+      "refined_score": 65.5,
+      "refined_phase": "B級：觀察",
+      "chip_score": 15.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 232565,
+          "trust": 2000,
+          "dealer": -30260,
+          "inst": 234565
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 1,
+        "inst_cumul_5d": 454092,
+        "margin_change": 132,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 62.7,
+      "final_phase": "B級：觀察"
+    },
+    {
+      "symbol": "8150",
+      "name": "南茂",
+      "market": "TWSE",
+      "price": 128.5,
+      "change_pct": 0.7843137254901961,
+      "score": 83,
+      "latent_score": 87,
+      "phase": "A+級：預備發動",
+      "close_strength": 0.875,
+      "range_pct": 3.14,
+      "volume": 34531.0,
+      "value": 4400675500.0,
+      "a": 126.57,
+      "b": 130.43,
+      "c": 124.64,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_STRONG",
+        "COIL_PROXY"
+      ],
+      "industry_code": "24",
+      "is_electronic": true,
+      "structure_score": 26.0,
+      "structure_flags": [
+        "HIGHER_LOW",
+        "NEAR_BREAKOUT",
+        "EXTENDED_10D",
+        "MA20_RISING",
+        "UPVOL_DOMINANT"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 16.45,
+        "vol5_vs_20": 1.41,
+        "near_20d_high": 0.966,
+        "range20_pct": 37.9,
+        "return10_pct": 24.76,
+        "up_down_vol_ratio": 2.21,
+        "higher_low": true
+      },
+      "refined_score": 72.0,
+      "refined_phase": "A級：潛伏",
+      "chip_score": 6.0,
+      "chip_flags": [
+        "INST_SELL_TODAY",
+        "INST_CONSEC_5D",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": -2169566,
+          "trust": 40000,
+          "dealer": -217592,
+          "inst": -2129566
+        },
+        "foreign_consecutive_buy_days": 0,
+        "trust_consecutive_buy_days": 5,
+        "inst_cumul_5d": 9762599,
+        "margin_change": 4023,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 62.6,
+      "final_phase": "B級：觀察"
+    },
+    {
+      "symbol": "3149",
+      "name": "正達",
+      "market": "TWSE",
+      "price": 77.1,
+      "change_pct": 1.715039577836408,
+      "score": 84,
+      "latent_score": 87,
+      "phase": "A+級：預備發動",
+      "close_strength": 0.8076923076923073,
+      "range_pct": 3.43,
+      "volume": 8452.0,
+      "value": 643864100.0,
+      "a": 75.94,
+      "b": 78.26,
+      "c": 74.79,
+      "latent_flags": [
+        "NOT_EXTENDED",
+        "CLOSE_STRONG",
+        "COIL_PROXY"
+      ],
+      "industry_code": "26",
+      "is_electronic": true,
+      "structure_score": 26.0,
+      "structure_flags": [
+        "HIGHER_LOW",
+        "NEAR_BREAKOUT",
+        "EXTENDED_10D",
+        "MA20_RISING",
+        "UPVOL_DOMINANT"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 13.05,
+        "vol5_vs_20": 2.09,
+        "near_20d_high": 0.964,
+        "range20_pct": 26.72,
+        "return10_pct": 18.43,
+        "up_down_vol_ratio": 2.25,
+        "higher_low": true
+      },
+      "refined_score": 72.0,
+      "refined_phase": "A級：潛伏",
+      "chip_score": 4.0,
+      "chip_flags": [
+        "INST_BUY_TODAY",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_NEG",
+        "MARGIN_INCREASING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 840383,
+          "trust": 0,
+          "dealer": -1785,
+          "inst": 840383
+        },
+        "foreign_consecutive_buy_days": 1,
+        "trust_consecutive_buy_days": 0,
+        "inst_cumul_5d": -1874337,
+        "margin_change": 242,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 61.4,
+      "final_phase": "C級：暫不碰"
+    },
+    {
+      "symbol": "2404",
+      "name": "漢唐",
+      "market": "TWSE",
+      "price": 1330.0,
+      "change_pct": -0.37453183520599254,
+      "score": 58,
+      "latent_score": 67,
+      "phase": "A級：潛伏",
+      "close_strength": 0.7142857142857143,
+      "range_pct": 2.62,
+      "volume": 685.0,
+      "value": 906375000.0,
+      "a": 1310.05,
+      "b": 1349.95,
+      "c": 1290.1,
+      "latent_flags": [
+        "NOT_EXTENDED"
+      ],
+      "industry_code": "31",
+      "is_electronic": true,
+      "structure_score": 34.0,
+      "structure_flags": [
+        "HIGHER_LOW",
+        "VOL_DRYUP",
+        "NEAR_BREAKOUT",
+        "EXTENDED_10D",
+        "MA20_RISING",
+        "UPVOL_DOMINANT"
+      ],
+      "structure_metrics": {
+        "ma_spread_pct": 11.11,
+        "vol5_vs_20": 0.89,
+        "near_20d_high": 0.982,
+        "range20_pct": 27.29,
+        "return10_pct": 17.7,
+        "up_down_vol_ratio": 1.44,
+        "higher_low": true
+      },
+      "refined_score": 51.1,
+      "refined_phase": "C級：暫不碰",
+      "chip_score": 28.0,
+      "chip_flags": [
+        "FOREIGN_TRUST_BOTH_BUY",
+        "INST_CONSEC_5D",
+        "INST_BUY_2_OF_3",
+        "INST_CUMUL_5D_POS",
+        "MARGIN_DECLINING"
+      ],
+      "chip_metrics": {
+        "latest": {
+          "date": "2026-10-07",
+          "foreign": 163615,
+          "trust": 44904,
+          "dealer": -32953,
+          "inst": 208519
+        },
+        "foreign_consecutive_buy_days": 5,
+        "trust_consecutive_buy_days": 1,
+        "inst_cumul_5d": 1836589,
+        "margin_change": -52,
+        "large_holder_chg_pct": null,
+        "retail_holder_chg_pct": null,
+        "tdcc_age_days": null,
+        "available": true
+      },
+      "final_score": 58.7,
+      "final_phase": "C級：暫不碰"
     }
   ]
 }
