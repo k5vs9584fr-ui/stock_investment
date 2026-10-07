@@ -1,406 +1,397 @@
 import json
-import sys
-from datetime import datetime
+import time
+import urllib.parse
+import urllib.request
+from datetime import datetime, timedelta
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
-
-from taiwan_stock_agent.infrastructure.twse_client import ChipProxyFetcher  # noqa: E402
-
 WATCHLIST = Path("data/electronic_watchlist.json")
-OUT = Path("data/final_signal_report.json")
-CACHE_DIR = Path("data/chip_cache")
+OUT = Path("data/final_rankings.json")
+
+TWSE_INST = "https://www.twse.com.tw/rwd/zh/fund/T86"
+TWSE_MARGIN = "https://www.twse.com.tw/exchangeReport/MI_MARGN"
+TPEX_INST = "https://www.tpex.org.tw/web/stock/3insti/daily_trade/3itrade_hedge_result.php"
+TPEX_MARGIN = "https://www.tpex.org.tw/web/stock/margin_trading/margin_balance/margin_bal_result.php"
 
 
-def safe_num(v, default=0.0):
+def num(v):
+    if v is None:
+        return 0.0
+    s = str(v).replace(",", "").replace("%", "").strip()
+    if s in {"", "--", "---", "N/A"}:
+        return 0.0
     try:
-        return float(v) if v is not None else default
-    except (TypeError, ValueError):
-        return default
+        return float(s)
+    except Exception:
+        return 0.0
 
 
-def chip_score(proxy):
-    if not getattr(proxy, "is_available", False):
-        return 0.0, ["CHIP_DATA_UNAVAILABLE"]
+def fetch_json(url, params):
+    q = urllib.parse.urlencode(params)
+    req = urllib.request.Request(
+        f"{url}?{q}",
+        headers={
+            "User-Agent": "Mozilla/5.0",
+            "Accept": "application/json,text/plain,*/*",
+            "X-Requested-With": "XMLHttpRequest",
+        },
+    )
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        return json.loads(resp.read().decode("utf-8-sig"))
 
-    pts = 0.0
+
+def roc_date(d):
+    return f"{d.year - 1911}/{d.month:02d}/{d.day:02d}"
+
+
+def ymd(d):
+    return d.strftime("%Y%m%d")
+
+
+def parse_twse_inst(payload):
+    out = {}
+    rows = payload.get("data") or []
+    for r in rows:
+        if len(r) < 19:
+            continue
+        symbol = str(r[0]).strip()
+        if len(symbol) != 4 or not symbol.isdigit():
+            continue
+        out[symbol] = {
+            "foreign": num(r[4]) + num(r[7]),
+            "trust": num(r[10]),
+            "dealer": num(r[11]),
+            "total": num(r[18]),
+        }
+    return out
+
+
+def parse_tpex_inst(payload):
+    out = {}
+    rows = payload.get("aaData") or []
+    for r in rows:
+        if len(r) < 24:
+            continue
+        symbol = str(r[0]).strip()
+        if len(symbol) != 4 or not symbol.isdigit():
+            continue
+        out[symbol] = {
+            "foreign": num(r[10]),
+            "trust": num(r[13]),
+            "dealer": num(r[22]),
+            "total": num(r[23]),
+        }
+    return out
+
+
+def parse_twse_margin(payload):
+    rows = []
+    if payload.get("data"):
+        rows = payload["data"]
+    else:
+        for t in payload.get("tables") or []:
+            if t.get("data"):
+                rows.extend(t.get("data") or [])
+
+    out = {}
+    for r in rows:
+        if len(r) < 8:
+            continue
+        symbol = str(r[0]).strip()
+        if len(symbol) != 4 or not symbol.isdigit():
+            continue
+
+        # 官方 open-data 欄位：
+        # 代號, 名稱, 融資買進, 融資賣出, 現償, 前日餘額, 今日餘額, 限額, ...
+        if len(r) >= 16:
+            out[symbol] = {
+                "margin_prev": num(r[5]),
+                "margin_now": num(r[6]),
+                "margin_buy": num(r[2]),
+                "margin_sell": num(r[3]),
+            }
+    return out
+
+
+def parse_tpex_margin(payload):
+    out = {}
+    rows = payload.get("aaData") or []
+    for r in rows:
+        if len(r) < 19:
+            continue
+        symbol = str(r[0]).strip()
+        if len(symbol) != 4 or not symbol.isdigit():
+            continue
+
+        # TPEx aaData 對齊：
+        # r[2]=前資餘額, r[3]=資買, r[4]=資賣, r[5]=現償, r[6]=資餘額
+        out[symbol] = {
+            "margin_prev": num(r[2]),
+            "margin_now": num(r[6]),
+            "margin_buy": num(r[3]),
+            "margin_sell": num(r[4]),
+        }
+    return out
+
+
+def fetch_day(d):
+    result = {"TWSE": {}, "TPEx": {}, "margin_TWSE": {}, "margin_TPEx": {}}
+
+    try:
+        p = fetch_json(TWSE_INST, {
+            "date": ymd(d),
+            "selectType": "ALLBUT0999",
+            "response": "json",
+        })
+        result["TWSE"] = parse_twse_inst(p)
+    except Exception as e:
+        print(f"TWSE inst {d}: {type(e).__name__}: {e}")
+
+    time.sleep(0.8)
+
+    try:
+        p = fetch_json(TPEX_INST, {
+            "l": "zh-tw",
+            "o": "json",
+            "se": "EW",
+            "t": "D",
+            "d": roc_date(d),
+            "s": "0,asc",
+        })
+        result["TPEx"] = parse_tpex_inst(p)
+    except Exception as e:
+        print(f"TPEx inst {d}: {type(e).__name__}: {e}")
+
+    time.sleep(0.8)
+
+    try:
+        p = fetch_json(TWSE_MARGIN, {
+            "response": "json",
+            "date": ymd(d),
+            "selectType": "ALL",
+        })
+        result["margin_TWSE"] = parse_twse_margin(p)
+    except Exception as e:
+        print(f"TWSE margin {d}: {type(e).__name__}: {e}")
+
+    time.sleep(0.8)
+
+    try:
+        p = fetch_json(TPEX_MARGIN, {
+            "l": "zh-tw",
+            "o": "json",
+            "d": roc_date(d),
+            "s": "0,asc",
+        })
+        result["margin_TPEx"] = parse_tpex_margin(p)
+    except Exception as e:
+        print(f"TPEx margin {d}: {type(e).__name__}: {e}")
+
+    return result
+
+
+def chip_score(inst_days, margin):
+    score = 50.0
     flags = []
 
-    foreign = safe_num(getattr(proxy, "foreign_net_buy", 0))
-    trust = safe_num(getattr(proxy, "trust_net_buy", 0))
-    dealer = safe_num(getattr(proxy, "dealer_net_buy", 0))
+    foreign = [x.get("foreign", 0) for x in inst_days]
+    trust = [x.get("trust", 0) for x in inst_days]
+    dealer = [x.get("dealer", 0) for x in inst_days]
+    total = [x.get("total", 0) for x in inst_days]
 
-    foreign_days = int(getattr(proxy, "foreign_consecutive_buy_days", 0) or 0)
-    trust_days = int(getattr(proxy, "trust_consecutive_buy_days", 0) or 0)
-    dealer_days = int(getattr(proxy, "dealer_consecutive_buy_days", 0) or 0)
+    def pos_days(xs):
+        return sum(1 for x in xs if x > 0)
 
-    if foreign > 0:
-        pts += 4
+    fsum = sum(foreign)
+    tsum = sum(trust)
+    dsum = sum(dealer)
+    allsum = sum(total)
+
+    fp = pos_days(foreign)
+    tp = pos_days(trust)
+    ap = pos_days(total)
+
+    if fp >= 4 and fsum > 0:
+        score += 16
+        flags.append("FOREIGN_CONTINUOUS_BUY")
+    elif fp >= 3 and fsum > 0:
+        score += 10
         flags.append("FOREIGN_BUY")
-    if trust > 0:
-        pts += 4
+    elif fsum < 0 and fp <= 1:
+        score -= 10
+        flags.append("FOREIGN_SELL")
+
+    if tp >= 3 and tsum > 0:
+        score += 18
+        flags.append("TRUST_CONTINUOUS_BUY")
+    elif tp >= 1 and tsum > 0:
+        score += 8
         flags.append("TRUST_BUY")
-    if dealer > 0:
-        pts += 1
+    elif tsum < 0 and tp == 0:
+        score -= 8
+        flags.append("TRUST_SELL")
 
-    if foreign > 0 and trust > 0:
-        pts += 6
-        flags.append("FOREIGN_TRUST_BOTH_BUY")
+    if dsum > 0:
+        score += 5
+        flags.append("DEALER_BUY")
 
-    if getattr(proxy, "institution_buy_2_of_3", False):
-        pts += 4
-        flags.append("INST_2_OF_3")
+    if ap >= 4 and allsum > 0:
+        score += 10
+        flags.append("INST_CONSENSUS")
+    elif allsum < 0 and ap <= 1:
+        score -= 8
+        flags.append("INST_NET_SELL")
 
-    if foreign_days >= 5:
-        pts += 7
-        flags.append("FOREIGN_CONTINUE_5D")
-    elif foreign_days >= 3:
-        pts += 5
-        flags.append("FOREIGN_CONTINUE_3D")
-    elif foreign_days >= 2:
-        pts += 2
+    margin_prev = float((margin or {}).get("margin_prev") or 0)
+    margin_now = float((margin or {}).get("margin_now") or 0)
+    margin_change_pct = 0.0
 
-    if trust_days >= 3:
-        pts += 6
-        flags.append("TRUST_CONTINUE_3D")
-    elif trust_days >= 2:
-        pts += 3
+    if margin_prev > 0:
+        margin_change_pct = (margin_now - margin_prev) / margin_prev * 100
 
-    if dealer_days >= 3:
-        pts += 1
+        if margin_change_pct <= -2:
+            score += 16
+            flags.append("MARGIN_SHARP_DROP")
+        elif margin_change_pct <= -0.5:
+            score += 10
+            flags.append("MARGIN_DROP")
+        elif margin_change_pct <= 0:
+            score += 4
+            flags.append("MARGIN_FLAT_DOWN")
+        elif margin_change_pct >= 3:
+            score -= 18
+            flags.append("MARGIN_CHASING")
+        elif margin_change_pct >= 1:
+            score -= 9
+            flags.append("MARGIN_RISING")
 
-    inst_buy_pct = getattr(proxy, "inst_buy_pct", None)
-    if inst_buy_pct is not None:
-        inst_buy_pct = safe_num(inst_buy_pct)
-        if inst_buy_pct >= 0.08:
-            pts += 7
-            flags.append("INST_BUY_INTENSE")
-        elif inst_buy_pct >= 0.04:
-            pts += 5
-            flags.append("INST_BUY_STRONG")
-        elif inst_buy_pct >= 0.015:
-            pts += 2
+    if allsum > 0 and margin_change_pct < 0:
+        score += 8
+        flags.append("INST_BUY_MARGIN_DOWN")
 
-    cf20 = safe_num(getattr(proxy, "cumul_foreign_20d", 0))
-    ct20 = safe_num(getattr(proxy, "cumul_trust_20d", 0))
-    if cf20 > 0:
-        pts += 3
-        flags.append("FOREIGN_20D_POS")
-    if ct20 > 0:
-        pts += 3
-        flags.append("TRUST_20D_POS")
-    if cf20 > 0 and ct20 > 0:
-        pts += 3
-        flags.append("DUAL_INST_20D")
+    score = max(0.0, min(100.0, score))
 
-    buy_days_ratio = safe_num(getattr(proxy, "inst_buy_days_ratio", 0))
-    if buy_days_ratio >= 0.65:
-        pts += 5
-        flags.append("INST_BUY_DAYS_PRIME")
-    elif buy_days_ratio >= 0.5:
-        pts += 3
-
-    accel = safe_num(getattr(proxy, "inst_flow_accel", 0))
-    if accel > 0:
-        pts += 3
-        flags.append("INST_FLOW_ACCEL")
-
-    accel3 = safe_num(getattr(proxy, "inst_accel_3d_10d", 0))
-    if accel3 >= 1.5:
-        pts += 4
-        flags.append("INST_3D_ACCEL")
-    elif accel3 > 1:
-        pts += 2
-
-    margin_chg = safe_num(getattr(proxy, "margin_balance_change", 0))
-    margin_streak = int(getattr(proxy, "margin_decline_streak", 0) or 0)
-    if margin_chg < 0:
-        pts += 5
-        flags.append("MARGIN_DECLINE")
-    elif margin_chg > 0 and foreign + trust <= 0:
-        pts -= 4
-        flags.append("MARGIN_RETAIL_CHASE")
-
-    if margin_streak >= 5:
-        pts += 5
-        flags.append("MARGIN_DECLINE_5D")
-    elif margin_streak >= 3:
-        pts += 3
-        flags.append("MARGIN_DECLINE_3D")
-
-    large = safe_num(getattr(proxy, "large_holder_chg_pct", 0))
-    retail = safe_num(getattr(proxy, "retail_holder_chg_pct", 0))
-    super_large = safe_num(getattr(proxy, "super_large_holder_chg_pct", 0))
-    large2w = safe_num(getattr(proxy, "large_holder_2w_trend", 0))
-
-    if large > 0 and retail < 0:
-        pts += 10
-        flags.append("LARGE_UP_RETAIL_DOWN")
-    elif large > 0:
-        pts += 5
-        flags.append("LARGE_HOLDER_UP")
-    elif large < 0 and retail > 0:
-        pts -= 8
-        flags.append("LARGE_DOWN_RETAIL_UP")
-
-    if super_large > 0:
-        pts += 4
-        flags.append("SUPER_LARGE_UP")
-    elif super_large < 0:
-        pts -= 3
-
-    if large2w > 0:
-        pts += 4
-        flags.append("LARGE_2W_UP")
-    elif large2w < 0:
-        pts -= 4
-
-    holder_count_chg = safe_num(getattr(proxy, "holder_count_chg_weekly", 0))
-    holder_decline_weeks = int(getattr(proxy, "holder_count_decline_weeks", 0) or 0)
-    if holder_count_chg < 0:
-        pts += 3
-        flags.append("HOLDER_COUNT_DOWN")
-    if holder_decline_weeks >= 2:
-        pts += 3
-        flags.append("HOLDER_COUNT_DOWN_2W")
-
-    margin_util = getattr(proxy, "margin_utilization_rate", None)
-    if margin_util is not None:
-        margin_util = safe_num(margin_util)
-        if 0 < margin_util < 0.20:
-            pts += 3
-            flags.append("MARGIN_UTIL_LOW")
-        elif margin_util > 0.70:
-            pts -= 4
-            flags.append("MARGIN_UTIL_HIGH")
-
-    daytrade = getattr(proxy, "daytrade_ratio", None)
-    if daytrade is not None:
-        daytrade = safe_num(daytrade)
-        if daytrade > 0.45:
-            pts -= 8
-            flags.append("DAYTRADE_OVERHEAT")
-        elif daytrade > 0.35:
-            pts -= 4
-
-    sbl = safe_num(getattr(proxy, "sbl_ratio", 0))
-    if sbl > 0.10:
-        pts -= 6
-        flags.append("SBL_HIGH")
-    elif sbl > 0.05:
-        pts -= 3
-
-    short_cover = safe_num(getattr(proxy, "short_cover_rate", 0))
-    if short_cover >= 0.15:
-        pts += 4
-        flags.append("SHORT_COVER_STRONG")
-    elif short_cover >= 0.08:
-        pts += 2
-
-    return round(max(-20.0, min(100.0, pts)), 1), flags
+    metrics = {
+        "days": len(inst_days),
+        "foreign_5d": round(fsum, 0),
+        "foreign_buy_days": fp,
+        "trust_5d": round(tsum, 0),
+        "trust_buy_days": tp,
+        "dealer_5d": round(dsum, 0),
+        "inst_total_5d": round(allsum, 0),
+        "inst_buy_days": ap,
+        "margin_prev": round(margin_prev, 0),
+        "margin_now": round(margin_now, 0),
+        "margin_change_pct": round(margin_change_pct, 2),
+    }
+    return round(score, 1), flags, metrics
 
 
-def classify(score, chip_score, coverage, dual_inst_sell=False, already_launched=False):
-    if already_launched:
-        return "S級：已發動/不追價"
-
-    if coverage == "unavailable":
-        if score >= 72:
-            return "A級：型態強但籌碼未確認"
-        if score >= 60:
-            return "B級：觀察"
-        return "C級：暫不碰"
-
-    # 當日外資＋投信同賣，禁止列為 A+，避免純技術面漂亮卻籌碼轉弱。
-    if dual_inst_sell:
-        if score >= 68:
-            return "B級：型態佳但法人偏空"
-        return "C級：暫不碰"
-
-    if score >= 88 and chip_score >= 50:
-        return "S級：高信心預備發動"
-    if score >= 80 and chip_score >= 35:
-        return "A+級：型態＋籌碼確認"
-    if score >= 70 and chip_score >= 15:
+def final_phase(score):
+    if score >= 82:
+        return "A+級：籌碼確認/預備發動"
+    if score >= 72:
         return "A級：潛伏"
-    if score >= 58:
+    if score >= 62:
         return "B級：觀察"
     return "C級：暫不碰"
 
 
-def proxy_to_dict(proxy):
-    fields = [
-        "foreign_net_buy",
-        "trust_net_buy",
-        "dealer_net_buy",
-        "foreign_consecutive_buy_days",
-        "trust_consecutive_buy_days",
-        "dealer_consecutive_buy_days",
-        "margin_balance_change",
-        "margin_decline_streak",
-        "margin_utilization_rate",
-        "institution_buy_2_of_3",
-        "inst_buy_pct",
-        "foreign_and_trust_both_buy",
-        "cumul_foreign_20d",
-        "cumul_trust_20d",
-        "inst_buy_days_ratio",
-        "inst_flow_accel",
-        "inst_accel_3d_10d",
-        "large_holder_chg_pct",
-        "retail_holder_chg_pct",
-        "super_large_holder_chg_pct",
-        "large_holder_2w_trend",
-        "holder_count_chg_weekly",
-        "holder_count_decline_weeks",
-        "daytrade_ratio",
-        "sbl_ratio",
-        "short_cover_rate",
-        "short_margin_ratio",
-        "is_available",
-        "data_quality_flags",
-    ]
-    return {k: getattr(proxy, k, None) for k in fields}
-
-
 def main():
     with WATCHLIST.open("r", encoding="utf-8") as f:
-        payload = json.load(f)
+        watch = json.load(f)
 
-    scan_date = payload.get("scan_date")
-    trade_date = datetime.strptime(scan_date, "%Y-%m-%d").date()
+    scan_date = datetime.strptime(watch["scan_date"], "%Y-%m-%d").date()
+    stocks = watch.get("stocks") or []
 
-    # Heavy chip history is only needed for the actionable front rank.
-    # Keep this aligned with the fast confirmation layer to cut runtime materially.
-    rows = (payload.get("stocks") or [])[:12]
-    CACHE_DIR.mkdir(parents=True, exist_ok=True)
-    fetcher = ChipProxyFetcher(cache_dir=CACHE_DIR)
+    target_days = []
+    all_daily = {}
 
-    output = []
+    # 往回找最多 14 個曆日，收集最近 5 個「有法人資料」交易日
+    d = scan_date
+    for _ in range(14):
+        daily = fetch_day(d)
+        all_daily[d.isoformat()] = daily
 
-    for i, row in enumerate(rows, 1):
-        symbol = row["symbol"]
-        volume_lots = safe_num(row.get("volume"), 0)
-        today_volume_shares = int(volume_lots * 1000)
+        has_market_data = bool(daily["TWSE"] or daily["TPEx"])
+        if has_market_data:
+            target_days.append(d)
 
-        try:
-            proxy = fetcher.fetch(
-                ticker=symbol,
-                trade_date=trade_date,
-                today_volume=today_volume_shares,
-            )
-            c_score, c_flags = chip_score(proxy)
-        except Exception as exc:
-            proxy = None
-            c_score = 0.0
-            c_flags = [f"CHIP_FETCH_ERROR:{type(exc).__name__}"]
-            print(
-                f"[{i:02d}/{len(rows)}] {symbol} "
-                f"chip fetch failed: {type(exc).__name__}: {exc}"
-            )
+        if len(target_days) >= 5:
+            break
 
-        refined = safe_num(row.get("refined_score"), 0)
+        d -= timedelta(days=1)
+        time.sleep(0.5)
 
-        chip_data = proxy_to_dict(proxy) if proxy is not None else {}
+    target_days = sorted(target_days)
+    print("chip trading days:", [x.isoformat() for x in target_days])
 
-        if proxy is None or not getattr(proxy, "is_available", False):
-            coverage = "unavailable"
-            chip_component = 50.0
-            final = refined * 0.92
-        else:
-            has_ownership = (
-                chip_data.get("large_holder_chg_pct") is not None
-                or chip_data.get("retail_holder_chg_pct") is not None
-            )
-            coverage = "full" if has_ownership else "institutional_partial"
+    rows = []
 
-            # 籌碼原始分不是 0~100 機率，轉成中性 45 起跳的確認分，
-            # 避免單日法人買超把整體分數灌太高。
-            chip_component = max(0.0, min(100.0, 45.0 + c_score * 0.55))
-            final = refined * 0.68 + chip_component * 0.32
+    for stock in stocks:
+        symbol = str(stock.get("symbol") or "")
+        market = stock.get("market")
+        inst_days = []
 
-        # 最愛條件：大戶增 + 散戶減
-        if "LARGE_UP_RETAIL_DOWN" in c_flags:
-            final += 3
+        for d in target_days:
+            daily = all_daily[d.isoformat()]
+            bucket = daily["TWSE"] if market == "TWSE" else daily["TPEx"]
+            if symbol in bucket:
+                inst_days.append(bucket[symbol])
 
-        foreign_now = safe_num(chip_data.get("foreign_net_buy"), 0)
-        trust_now = safe_num(chip_data.get("trust_net_buy"), 0)
-        dual_inst_sell = foreign_now < 0 and trust_now < 0
-        if dual_inst_sell:
-            c_flags.append("FOREIGN_TRUST_BOTH_SELL")
-            final = min(final, 74)
+        margin = {}
+        # 從最新交易日往回找最近可用融資資料
+        for d in reversed(target_days):
+            daily = all_daily[d.isoformat()]
+            bucket = daily["margin_TWSE"] if market == "TWSE" else daily["margin_TPEx"]
+            if symbol in bucket:
+                margin = bucket[symbol]
+                break
 
-        # 已經進入主升/強勢發動的，不再放進「預備發動」名單。
-        surge_score = safe_num(row.get("surge_score"), 0)
-        surge_stage = str(row.get("surge_stage") or "")
-        already_launched = surge_score >= 80 or surge_stage.startswith("S級")
-        if already_launched:
-            c_flags.append("ALREADY_LAUNCHED")
-            final = min(final, 79)
+        cscore, cflags, cmetrics = chip_score(inst_days, margin)
+        refined = float(stock.get("refined_score") or 0)
 
-        # 籌碼極差則限縮上限，避免純技術漂亮硬上榜
-        if "LARGE_DOWN_RETAIL_UP" in c_flags:
-            final = min(final, 58)
+        completeness = 1.0 if len(inst_days) >= 4 else (0.75 if len(inst_days) >= 2 else 0.5)
+        adjusted_chip = 50 + (cscore - 50) * completeness
+        final = refined * 0.68 + adjusted_chip * 0.32
 
-        row2 = dict(row)
-        row2.update(
-            {
-                "chip_score": c_score,
-                "chip_component": round(chip_component, 1),
-                "chip_flags": c_flags,
-                "chip_data": chip_data,
-                "chip_coverage": coverage,
-                "final_score": round(max(0, min(100, final)), 1),
-            }
-        )
-        row2["final_phase"] = classify(
-            row2["final_score"],
-            c_score,
-            coverage,
-            dual_inst_sell=dual_inst_sell,
-            already_launched=already_launched,
-        )
-        output.append(row2)
+        row = dict(stock)
+        row["chip_score"] = round(cscore, 1)
+        row["chip_flags"] = cflags
+        row["chip_metrics"] = cmetrics
+        row["chip_data_completeness"] = round(completeness, 2)
+        row["final_score"] = round(max(0, min(100, final)), 1)
+        row["final_phase"] = final_phase(row["final_score"])
+        rows.append(row)
 
-        print(
-            f"[{i:02d}/{len(rows)}] {symbol} {row.get('name','')} "
-            f"refined={refined:.1f} chip={c_score:+.1f} "
-            f"final={row2['final_score']:.1f} {row2['final_phase']}"
-        )
+    rows.sort(key=lambda x: x.get("final_score", 0), reverse=True)
 
-    output.sort(key=lambda x: x.get("final_score", 0), reverse=True)
+    aplus = [x for x in rows if x.get("final_phase", "").startswith("A+")]
+    a = [x for x in rows if x.get("final_phase", "").startswith("A級")]
+    b = [x for x in rows if x.get("final_phase", "").startswith("B級")]
+
+    out = {
+        "scan_date": watch.get("scan_date"),
+        "chip_days": [x.isoformat() for x in target_days],
+        "count": len(rows),
+        "A_plus": aplus[:20],
+        "A": a[:20],
+        "B": b[:20],
+        "all_ranked": rows[:60],
+    }
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with OUT.open("w", encoding="utf-8") as f:
-        json.dump(
-            {
-                "scan_date": scan_date,
-                "count": len(output),
-                "stocks": output,
-            },
-            f,
-            ensure_ascii=False,
-            indent=2,
-            default=str,
-        )
+        json.dump(out, f, ensure_ascii=False, indent=2)
 
     print("\n=== FINAL TOP 20 ===")
-    for i, r in enumerate(output[:20], 1):
+    for i, r in enumerate(rows[:20], 1):
         print(
-            f"{i:02d}. {r['symbol']} {r['name']} | "
-            f"final={r['final_score']:.1f} | "
-            f"refined={r.get('refined_score',0):.1f} | "
-            f"chip={r.get('chip_score',0):+.1f} | "
-            f"{r['final_phase']}"
+            f"{i:02d}. {r.get('symbol')} {r.get('name')} | "
+            f"refined={r.get('refined_score')} chip={r.get('chip_score')} "
+            f"final={r.get('final_score')} {r.get('final_phase')}"
         )
 
 
 if __name__ == "__main__":
     main()
-
-# trigger: chip refine validation
-
-# trigger: unified chip pipeline v2
-
-# trigger: chip pipeline v2 concurrency
