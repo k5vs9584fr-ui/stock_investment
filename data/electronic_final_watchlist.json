@@ -1,6 +1,7 @@
 {
   "scan_date": "2026-10-07",
-  "model_version": "complete-v2",
+  "model_version": "complete-v3",
+  "source": "final_rankings.json",
   "count": 19,
   "stocks": [
     {
