@@ -86,3 +86,25 @@ jobs:
           git add data/market_scan_results.json
           git diff --cached --quiet || git commit -m "Retry missing market quotes"
           git push
+
+      - name: Build final chip-confirmed ranking
+        env:
+          FUGLE_API_KEY: ${{ secrets.FUGLE_API_KEY }}
+          FINMIND_API_KEY: ${{ secrets.FINMIND_API_KEY }}
+          FINMIND_TOKEN: ${{ secrets.FINMIND_TOKEN }}
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+          python scripts/analyze_scan_results.py
+          python scripts/chip_confirm.py
+          python scripts/chip_refine.py
+
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add data/scan_report.json data/electronic_watchlist.json data/electronic_chip_results.json data/final_signal_report.json
+          git diff --cached --quiet || git commit -m "Update final chip-confirmed ranking"
+
+          git pull --rebase origin main
+          git push
