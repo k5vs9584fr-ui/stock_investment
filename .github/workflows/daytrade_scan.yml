@@ -2,6 +2,8 @@ name: Day Trade Scan
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "5 1-5 * * 1-5"
   push:
     paths:
       - "scripts/daytrade_scan.py"
