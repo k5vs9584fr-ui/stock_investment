@@ -76,6 +76,7 @@
       },
       "final_score": 86.1,
       "final_phase": "A+級：型態＋籌碼確認",
+      "trade_style": "隔日沖",
       "chip_component": 69.8,
       "chip_data": {
         "foreign_net_buy": 1168886,
@@ -189,6 +190,7 @@
       },
       "final_score": 86.1,
       "final_phase": "A+級：型態＋籌碼確認",
+      "trade_style": "波段",
       "chip_component": 76.9,
       "chip_data": {
         "foreign_net_buy": 396737,
@@ -299,6 +301,7 @@
       },
       "final_score": 84.7,
       "final_phase": "A+級：型態＋籌碼確認",
+      "trade_style": "波段",
       "chip_component": 73.6,
       "chip_data": {
         "foreign_net_buy": 1011911,
@@ -409,6 +412,7 @@
       },
       "final_score": 82.4,
       "final_phase": "A+級：型態＋籌碼確認",
+      "trade_style": "波段",
       "chip_component": 69.8,
       "chip_data": {
         "foreign_net_buy": 43441,
@@ -513,6 +517,7 @@
       },
       "final_score": 81.5,
       "final_phase": "A+級：型態＋籌碼確認",
+      "trade_style": "波段",
       "chip_component": 57.1,
       "chip_data": {
         "foreign_net_buy": -674692,
@@ -623,6 +628,7 @@
       },
       "final_score": 80.2,
       "final_phase": "A+級：型態＋籌碼確認",
+      "trade_style": "波段",
       "chip_component": 73.6,
       "chip_data": {
         "foreign_net_buy": 154088,
@@ -734,6 +740,7 @@
       },
       "final_score": 79.6,
       "final_phase": "A+級：型態＋籌碼確認",
+      "trade_style": "隔日沖",
       "chip_component": 76.9,
       "chip_data": {
         "foreign_net_buy": 489365,
@@ -840,6 +847,7 @@
       },
       "final_score": 79.4,
       "final_phase": "A+級：型態＋籌碼確認",
+      "trade_style": "短波段",
       "chip_component": 68.7,
       "chip_data": {
         "foreign_net_buy": 2376254,
@@ -949,6 +957,7 @@
       },
       "final_score": 78.3,
       "final_phase": "A+級：型態＋籌碼確認",
+      "trade_style": "波段",
       "chip_component": 78.0,
       "chip_data": {
         "foreign_net_buy": 2530046,
@@ -1057,6 +1066,7 @@
       },
       "final_score": 78.3,
       "final_phase": "A+級：型態＋籌碼確認",
+      "trade_style": "短波段",
       "chip_component": 68.7,
       "chip_data": {
         "foreign_net_buy": 1579134,
@@ -1160,6 +1170,7 @@
       },
       "final_score": 77.1,
       "final_phase": "A級：潛伏",
+      "trade_style": "短波段",
       "chip_component": 56.0,
       "chip_data": {
         "foreign_net_buy": 882379,
@@ -1271,6 +1282,7 @@
       },
       "final_score": 76.6,
       "final_phase": "A級：潛伏",
+      "trade_style": "波段",
       "chip_component": 65.9,
       "chip_data": {
         "foreign_net_buy": 29859,
@@ -1376,6 +1388,7 @@
       },
       "final_score": 76.0,
       "final_phase": "A級：潛伏",
+      "trade_style": "波段",
       "chip_component": 64.8,
       "chip_data": {
         "foreign_net_buy": 356260,
@@ -1483,6 +1496,7 @@
       },
       "final_score": 75.5,
       "final_phase": "A級：潛伏",
+      "trade_style": "波段",
       "chip_component": 61.0,
       "chip_data": {
         "foreign_net_buy": 557014,
@@ -1591,6 +1605,7 @@
       },
       "final_score": 75.4,
       "final_phase": "A級：潛伏",
+      "trade_style": "隔日沖",
       "chip_component": 69.8,
       "chip_data": {
         "foreign_net_buy": 990776,
@@ -1696,6 +1711,7 @@
       },
       "final_score": 74.3,
       "final_phase": "A級：潛伏",
+      "trade_style": "波段",
       "chip_component": 63.2,
       "chip_data": {
         "foreign_net_buy": 149188,
@@ -1800,6 +1816,7 @@
       },
       "final_score": 72.4,
       "final_phase": "A級：潛伏",
+      "trade_style": "波段",
       "chip_component": 60.4,
       "chip_data": {
         "foreign_net_buy": 880100,
@@ -1907,6 +1924,7 @@
       },
       "final_score": 71.9,
       "final_phase": "A級：潛伏",
+      "trade_style": "波段",
       "chip_component": 64.8,
       "chip_data": {
         "foreign_net_buy": 267599,
@@ -2008,6 +2026,7 @@
       },
       "final_score": 71.6,
       "final_phase": "A級：潛伏",
+      "trade_style": "短波段",
       "chip_component": 53.8,
       "chip_data": {
         "foreign_net_buy": 5457,
@@ -2110,6 +2129,7 @@
       },
       "final_score": 70.6,
       "final_phase": "A級：潛伏",
+      "trade_style": "短波段",
       "chip_component": 57.1,
       "chip_data": {
         "foreign_net_buy": 76477,
@@ -2215,6 +2235,7 @@
       },
       "final_score": 70.4,
       "final_phase": "A級：潛伏",
+      "trade_style": "短波段",
       "chip_component": 66.5,
       "chip_data": {
         "foreign_net_buy": 1441121,
@@ -2310,13 +2331,13 @@
         "latest": {
           "date": "2026-10-07",
           "foreign": -1163351,
-          "trust": 72763,
+          "trust": 66926,
           "dealer": 447067,
-          "inst": -1090588
+          "inst": -1096425
         },
         "foreign_consecutive_buy_days": 0,
         "trust_consecutive_buy_days": 5,
-        "inst_cumul_5d": 5778279,
+        "inst_cumul_5d": 5772442,
         "margin_change": 365,
         "large_holder_chg_pct": null,
         "retail_holder_chg_pct": null,
@@ -2325,10 +2346,11 @@
       },
       "final_score": 70.4,
       "final_phase": "A級：潛伏",
+      "trade_style": "短波段",
       "chip_component": 61.5,
       "chip_data": {
         "foreign_net_buy": -1163351,
-        "trust_net_buy": 72763,
+        "trust_net_buy": 66926,
         "dealer_net_buy": 447067,
         "foreign_consecutive_buy_days": 0,
         "trust_consecutive_buy_days": 7,
@@ -2337,10 +2359,10 @@
         "margin_decline_streak": 0,
         "margin_utilization_rate": 0.004704545300298068,
         "institution_buy_2_of_3": true,
-        "inst_buy_pct": -0.07583533829358181,
+        "inst_buy_pct": -0.07624122105555942,
         "foreign_and_trust_both_buy": false,
         "cumul_foreign_20d": -18692723,
-        "cumul_trust_20d": 2431742,
+        "cumul_trust_20d": 2425905,
         "inst_buy_days_ratio": 0.7,
         "inst_flow_accel": 2.0,
         "inst_accel_3d_10d": 2.0,
@@ -2430,6 +2452,7 @@
       },
       "final_score": 70.2,
       "final_phase": "A級：潛伏",
+      "trade_style": "短波段",
       "chip_component": 66.5,
       "chip_data": {
         "foreign_net_buy": 3942213,
@@ -2538,6 +2561,7 @@
       },
       "final_score": 68.6,
       "final_phase": "A級：潛伏",
+      "trade_style": "短波段",
       "chip_component": 61.5,
       "chip_data": {
         "foreign_net_buy": -2169566,
@@ -2639,6 +2663,7 @@
       },
       "final_score": 66.9,
       "final_phase": "B級：觀察",
+      "trade_style": "短波段",
       "chip_component": 56.0,
       "chip_data": {
         "foreign_net_buy": 840383,
@@ -2744,6 +2769,7 @@
       },
       "final_score": 65.6,
       "final_phase": "B級：觀察",
+      "trade_style": "短波段",
       "chip_component": 65.9,
       "chip_data": {
         "foreign_net_buy": 232565,
@@ -2851,6 +2877,7 @@
       },
       "final_score": 64.7,
       "final_phase": "B級：觀察",
+      "trade_style": "短波段",
       "chip_component": 69.2,
       "chip_data": {
         "foreign_net_buy": 90535,
@@ -2961,6 +2988,7 @@
       },
       "final_score": 64.3,
       "final_phase": "B級：觀察",
+      "trade_style": "短波段",
       "chip_component": 67.5,
       "chip_data": {
         "foreign_net_buy": 382546,
@@ -3069,6 +3097,7 @@
       },
       "final_score": 63.7,
       "final_phase": "B級：觀察",
+      "trade_style": "短波段",
       "chip_component": 69.8,
       "chip_data": {
         "foreign_net_buy": 112882,
@@ -3181,6 +3210,7 @@
       },
       "final_score": 59.2,
       "final_phase": "B級：觀察",
+      "trade_style": "短波段",
       "chip_component": 76.3,
       "chip_data": {
         "foreign_net_buy": 163615,
