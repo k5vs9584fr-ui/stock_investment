@@ -6,23 +6,20 @@ on:
     paths:
       - "data/electronic_watchlist.json"
       - "scripts/chip_refine.py"
+      - "scripts/chip_finalize.py"
       - ".github/workflows/chip_refine.yml"
 
 permissions:
   contents: write
 
 concurrency:
-  group: chip-refine-v2
+  group: chip-refine-v3
   cancel-in-progress: true
 
 jobs:
   refine:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
-    env:
-      FUGLE_API_KEY: ${{ secrets.FUGLE_API_KEY }}
-      FINMIND_API_KEY: ${{ secrets.FINMIND_API_KEY }}
-      FINMIND_TOKEN: ${{ secrets.FINMIND_TOKEN }}
+    timeout-minutes: 12
 
     steps:
       - name: Checkout
@@ -33,30 +30,91 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install project dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -e .
-
-      - name: Run fast chip confirmation
-        run: python scripts/chip_confirm.py
-
       - name: Run full chip refinement
         run: python scripts/chip_refine.py
+
+      - name: Promote rankings to current canonical signal
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          watch_path = Path("data/electronic_watchlist.json")
+          rank_path = Path("data/final_rankings.json")
+          signal_path = Path("data/final_signal_report.json")
+
+          with watch_path.open("r", encoding="utf-8") as f:
+              watch = json.load(f)
+          with rank_path.open("r", encoding="utf-8") as f:
+              rankings = json.load(f)
+
+          expected = watch.get("scan_date")
+          actual = rankings.get("scan_date")
+          if not expected or actual != expected:
+              raise SystemExit(
+                  f"stale chip result: watchlist={expected}, rankings={actual}"
+              )
+
+          rows = rankings.get("all_ranked") or []
+          if not rows:
+              raise SystemExit("final_rankings.json has no all_ranked rows")
+
+          rows.sort(key=lambda x: x.get("final_score", 0), reverse=True)
+          signal = {
+              "scan_date": actual,
+              "model_version": "complete-v3",
+              "source": "final_rankings.json",
+              "chip_days": rankings.get("chip_days") or [],
+              "count": len(rows),
+              "stocks": rows,
+          }
+          with signal_path.open("w", encoding="utf-8") as f:
+              json.dump(signal, f, ensure_ascii=False, indent=2)
+
+          print(f"canonical signal ready: {len(rows)} stocks, {actual}")
+          PY
 
       - name: Run final ranking
         run: python scripts/chip_finalize.py
 
-      - name: Save final signal report
+      - name: Verify final output freshness
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          files = [
+              Path("data/electronic_watchlist.json"),
+              Path("data/final_rankings.json"),
+              Path("data/final_signal_report.json"),
+              Path("data/final_scan_results.json"),
+              Path("data/electronic_final_watchlist.json"),
+          ]
+          payloads = []
+          for p in files:
+              with p.open("r", encoding="utf-8") as f:
+                  payloads.append((p.name, json.load(f)))
+
+          expected = payloads[0][1].get("scan_date")
+          stale = [
+              (name, data.get("scan_date"))
+              for name, data in payloads
+              if data.get("scan_date") != expected
+          ]
+          if stale:
+              raise SystemExit(f"stale final outputs: expected={expected}, stale={stale}")
+
+          print(f"freshness verified: {expected}")
+          PY
+
+      - name: Save canonical final signals
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          git add data/final_signal_report.json data/electronic_chip_results.json data/final_scan_results.json data/electronic_final_watchlist.json
-          git diff --cached --quiet || git commit -m "Update final chip-refined signals"
+          git add data/final_rankings.json data/final_signal_report.json data/final_scan_results.json data/electronic_final_watchlist.json
+          git diff --cached --quiet || git commit -m "Update canonical final stock signals"
 
-          # 其他分析 workflow 可能同時更新 main；先把最新遠端變更 rebase 進來，
-          # 再推送，避免 non-fast-forward 導致整條籌碼流程判定失敗。
           for attempt in 1 2 3
           do
             git pull --rebase origin main || {
