@@ -19,6 +19,9 @@ jobs:
   refine:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    env:
+      FINMIND_API_KEY: ${{ secrets.FINMIND_API_KEY }}
+      FINMIND_TOKEN: ${{ secrets.FINMIND_TOKEN }}
 
     steps:
       - name: Checkout
