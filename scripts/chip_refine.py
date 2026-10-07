@@ -256,6 +256,7 @@ def main():
     trade_date = datetime.strptime(scan_date, "%Y-%m-%d").date()
 
     rows = (payload.get("stocks") or [])[:30]
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)
     fetcher = ChipProxyFetcher(cache_dir=CACHE_DIR)
 
     output = []
