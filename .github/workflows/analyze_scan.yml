@@ -11,6 +11,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: analyze-scan-main
+  cancel-in-progress: true
+
 jobs:
   analyze:
     runs-on: ubuntu-latest
