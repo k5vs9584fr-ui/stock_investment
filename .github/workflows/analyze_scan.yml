@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "scripts/analyze_scan_results.py"
+      - "scripts/chip_confirm.py"
       - "data/market_scan_results.json"
   workflow_dispatch:
 
@@ -22,15 +23,23 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Install chip dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install "pydantic>=2" pandas pyarrow requests
+
       - name: Analyze latest scan
         env:
           FUGLE_API_KEY: ${{ secrets.FUGLE_API_KEY }}
         run: python scripts/analyze_scan_results.py
 
+      - name: Run chip confirmation
+        run: python scripts/chip_confirm.py
+
       - name: Save report
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add data/scan_report.json data/electronic_watchlist.json
+          git add data/scan_report.json data/electronic_watchlist.json data/electronic_chip_results.json
           git diff --cached --quiet || git commit -m "Update scan analysis report"
           git push
