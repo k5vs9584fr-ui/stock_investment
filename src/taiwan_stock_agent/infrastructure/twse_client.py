@@ -1145,7 +1145,7 @@ class ChipProxyFetcher:
         散戶定義: < 100,000 shares (100張)
         """
         import os as _os
-        api_key = _os.environ.get("FINMIND_API_KEY", "")
+        api_key = (_os.environ.get("FINMIND_API_KEY", "") or _os.environ.get("FINMIND_TOKEN", ""))
         if not api_key:
             return None, None, None, None, None, None, 0
 
