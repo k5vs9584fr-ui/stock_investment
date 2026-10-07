@@ -5,6 +5,7 @@ from pathlib import Path
 from realtime_scan import get_quote, score_stock, calc_abc
 
 WATCHLIST = Path("data/electronic_watchlist.json")
+FINAL_WATCHLIST = Path("data/electronic_final_watchlist.json")
 CHIP_RESULTS = Path("data/electronic_chip_results.json")
 FINAL_SIGNAL = Path("data/final_signal_report.json")
 FINAL_RESULTS = Path("data/final_scan_results.json")
@@ -17,10 +18,13 @@ def main():
             "data/electronic_watchlist.json 不存在，請先完成盤後分析"
         )
 
-    with WATCHLIST.open("r", encoding="utf-8") as f:
+    watchlist_source = FINAL_WATCHLIST if FINAL_WATCHLIST.exists() else WATCHLIST
+
+    with watchlist_source.open("r", encoding="utf-8") as f:
         payload = json.load(f)
 
     watchlist = payload.get("stocks") or []
+    print(f"watchlist source: {watchlist_source}")
 
     chip_map = {}
     chip_source = (
