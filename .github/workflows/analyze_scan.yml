@@ -6,6 +6,7 @@ on:
       - "scripts/analyze_scan_results.py"
       - "scripts/chip_confirm.py"
       - "scripts/chip_refine.py"
+      - "scripts/chip_finalize.py"
       - ".github/workflows/analyze_scan.yml"
   workflow_dispatch:
 
@@ -49,10 +50,7 @@ jobs:
           FINMIND_TOKEN: ${{ secrets.FINMIND_TOKEN }}
         run: python scripts/chip_refine.py
 
-      - name: Finalize with chip confirmation
-        env:
-          PYTHONPATH: src
-          FUGLE_API_KEY: ${{ secrets.FUGLE_API_KEY }}
+      - name: Build complete final report
         run: python scripts/chip_finalize.py
 
       - name: Save report
