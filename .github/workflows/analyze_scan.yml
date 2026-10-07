@@ -23,6 +23,8 @@ jobs:
           python-version: "3.12"
 
       - name: Analyze latest scan
+        env:
+          FUGLE_API_KEY: ${{ secrets.FUGLE_API_KEY }}
         run: python scripts/analyze_scan_results.py
 
       - name: Save report
