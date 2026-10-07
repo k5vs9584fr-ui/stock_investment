@@ -5,6 +5,7 @@ from pathlib import Path
 from realtime_scan import get_quote, score_stock, calc_abc
 
 WATCHLIST = Path("data/electronic_watchlist.json")
+CHIP_RESULTS = Path("data/electronic_chip_results.json")
 OUT = Path("data/electronic_fast_results.json")
 
 
@@ -18,6 +19,20 @@ def main():
         payload = json.load(f)
 
     watchlist = payload.get("stocks") or []
+
+    chip_map = {}
+    if CHIP_RESULTS.exists():
+        try:
+            with CHIP_RESULTS.open("r", encoding="utf-8") as f:
+                chip_payload = json.load(f)
+            chip_map = {
+                x.get("symbol"): x
+                for x in (chip_payload.get("stocks") or [])
+                if x.get("symbol")
+            }
+        except Exception as e:
+            print(f"chip results load error: {e}")
+
     results = []
 
     for i, stock in enumerate(watchlist, 1):
@@ -34,6 +49,11 @@ def main():
                 scored["low"],
             )
 
+            chip = chip_map.get(symbol, {})
+            base_final = chip.get("final_score")
+            if base_final is None:
+                base_final = stock.get("refined_score", 0)
+
             row = {
                 "symbol": symbol,
                 "name": stock.get("name", ""),
@@ -41,6 +61,11 @@ def main():
                 "refined_score": stock.get("refined_score", 0),
                 "refined_phase": stock.get("refined_phase", ""),
                 "structure_score": stock.get("structure_score", 0),
+                "chip_score": chip.get("chip_score"),
+                "chip_flags": chip.get("chip_flags", []),
+                "chip_available": chip.get("chip_available", False),
+                "base_final_score": base_final,
+                "base_final_phase": chip.get("final_phase", stock.get("refined_phase", "")),
                 "a": a,
                 "b": b,
                 "c": c,
@@ -57,11 +82,15 @@ def main():
 
         time.sleep(1.05)
 
+    for row in results:
+        row["fast_score"] = round(
+            row.get("latent_score", 0) * 0.40
+            + float(row.get("base_final_score") or 0) * 0.60,
+            1,
+        )
+
     results.sort(
-        key=lambda x: (
-            x.get("latent_score", 0) * 0.45
-            + x.get("refined_score", 0) * 0.55
-        ),
+        key=lambda x: x.get("fast_score", 0),
         reverse=True,
     )
 
@@ -83,6 +112,8 @@ def main():
             f"漲跌 {r['change_pct']:+.2f}% | "
             f"latent {r['latent_score']:.1f} | "
             f"refined {r['refined_score']:.1f} | "
+            f"chip {r.get('chip_score')} | "
+            f"fast {r.get('fast_score',0):.1f} | "
             f"A {r['a']:.2f} B {r['b']:.2f} C {r['c']:.2f}"
         )
 
