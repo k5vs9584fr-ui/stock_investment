@@ -18,7 +18,7 @@ concurrency:
 jobs:
   analyze:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 12
 
     steps:
       - name: Checkout
@@ -34,16 +34,13 @@ jobs:
           FUGLE_API_KEY: ${{ secrets.FUGLE_API_KEY }}
         run: python scripts/analyze_scan_results.py
 
-      - name: Run chip refinement
-        run: python scripts/chip_refine.py
-
-      - name: Save structure report and chip watchlist
+      - name: Save structure report and electronic watchlist
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          git add data/scan_report.json data/electronic_watchlist.json data/final_rankings.json
-          git diff --cached --quiet || git commit -m "Update scan analysis report"
+          git add data/scan_report.json data/electronic_watchlist.json
+          git diff --cached --quiet || git commit -m "Update structure scan and electronic watchlist"
 
           git pull --rebase origin main
           git push
