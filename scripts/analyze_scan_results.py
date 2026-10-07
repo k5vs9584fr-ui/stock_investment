@@ -28,6 +28,10 @@ ELECTRONIC_INDUSTRY_CODES = {
     "31",  # 其他電子
 }
 
+# Telecom carriers are officially communication-network industry,
+# but excluded from the short-term electronic setup radar.
+ELECTRONIC_EXCLUDES = {"2412", "3045", "4904"}
+
 
 def _decode_csv_bytes(raw):
     for enc in ("utf-8-sig", "utf-8", "cp950", "big5"):
@@ -79,8 +83,12 @@ def load_industry_map():
 
 
 def is_electronic(symbol, industry_map):
-    code = str(industry_map.get(str(symbol), "")).strip().zfill(2)
-    return code in ELECTRONIC_INDUSTRY_CODES
+    s = str(symbol or "")
+    code = str(industry_map.get(s, "")).strip().zfill(2)
+    return (
+        code in ELECTRONIC_INDUSTRY_CODES
+        and s not in ELECTRONIC_EXCLUDES
+    )
 
 
 def avg(xs):
