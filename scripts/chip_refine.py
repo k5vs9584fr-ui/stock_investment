@@ -370,3 +370,5 @@ if __name__ == "__main__":
     main()
 
 # trigger: chip refine validation
+
+# trigger: unified chip pipeline v2
