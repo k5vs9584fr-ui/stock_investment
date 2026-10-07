@@ -6,12 +6,13 @@ on:
     paths:
       - "data/electronic_watchlist.json"
       - "scripts/chip_refine.py"
+      - ".github/workflows/chip_refine.yml"
 
 permissions:
   contents: write
 
 concurrency:
-  group: chip-refine-main
+  group: chip-refine-v2
   cancel-in-progress: true
 
 jobs:
