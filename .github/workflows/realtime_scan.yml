@@ -22,11 +22,39 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Scan entire Taiwan market
+      - name: Refresh stock universe once
+        env:
+          FUGLE_API_KEY: ${{ secrets.FUGLE_API_KEY }}
+          REFRESH_UNIVERSE: "1"
+          SCAN_BATCH: "1"
+        run: |
+          python scripts/realtime_scan.py
+
+      - name: Save first batch
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add data/market_scan_results.json data/stock_universe.json
+          git diff --cached --quiet || git commit -m "Update market scan batch 1"
+          git push
+
+      - name: Scan remaining batches
         env:
           FUGLE_API_KEY: ${{ secrets.FUGLE_API_KEY }}
         run: |
-          for batch in $(seq 1 50)
+          TOTAL_BATCHES=$(python - <<'PY'
+          import json
+          with open("data/stock_universe.json", "r", encoding="utf-8") as f:
+              data = json.load(f)
+          count = len(data["stocks"])
+          print((count + 49) // 50)
+          PY
+          )
+
+          echo "TOTAL_BATCHES=$TOTAL_BATCHES"
+
+          for batch in $(seq 2 "$TOTAL_BATCHES")
           do
             echo "======================================"
             echo "START BATCH $batch"
@@ -34,16 +62,14 @@ jobs:
 
             SCAN_BATCH=$batch python scripts/realtime_scan.py
 
+            git config user.name "github-actions"
+            git config user.email "github-actions@github.com"
+
+            git add data/market_scan_results.json
+            git diff --cached --quiet || git commit -m "Update market scan batch $batch"
+
+            # 每批就推一次，避免後面中斷造成前面結果全部丟失
+            git push
+
             echo "FINISH BATCH $batch"
           done
-
-      - name: Save scan results
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-
-          git add data/market_scan_results.json
-
-          git diff --cached --quiet || git commit -m "Update full market scan"
-
-          git push
