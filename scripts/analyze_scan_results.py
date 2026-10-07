@@ -460,6 +460,51 @@ def classify_final(score):
     return "C級：暫不碰"
 
 
+def classify_trade_style(r):
+    flags = set(r.get("structure_flags") or [])
+    metrics = r.get("structure_metrics") or {}
+    final_score = float(r.get("final_score") or 0)
+    value = float(r.get("value") or 0)
+    close_strength = float(r.get("close_strength") or 0)
+    change_pct = float(r.get("change_pct") or 0)
+    near_high = float(metrics.get("near_20d_high") or 0)
+    vol_ratio = float(metrics.get("vol5_vs_20") or 0)
+
+    # 隔日沖：接近突破、收盤強、流動性夠，偏事件/動能型
+    if (
+        final_score >= 74
+        and value >= 150_000_000
+        and close_strength >= 0.80
+        and near_high >= 0.97
+        and (
+            "AT_BREAKOUT" in flags
+            or "NEAR_BREAKOUT" in flags
+        )
+        and change_pct >= -0.5
+    ):
+        return "隔日沖"
+
+    # 波段：盤整壓縮、量縮、低點墊高/均線上彎，適合等發動
+    swing_points = 0
+    if "MA_CONVERGENCE_PRIME" in flags or "MA_CONVERGENCE" in flags:
+        swing_points += 1
+    if "VOL_DRYUP_PRIME" in flags or "VOL_DRYUP" in flags:
+        swing_points += 1
+    if "HIGHER_LOW" in flags:
+        swing_points += 1
+    if "RANGE_COMPRESSION_PRIME" in flags or "RANGE_COMPRESSION" in flags:
+        swing_points += 1
+    if "MA20_RISING" in flags:
+        swing_points += 1
+    if vol_ratio and vol_ratio <= 0.90:
+        swing_points += 1
+
+    if final_score >= 72 and swing_points >= 4:
+        return "波段"
+
+    return "短波段"
+
+
 def avg(xs):
     return sum(xs) / len(xs) if xs else 0.0
 
@@ -624,7 +669,8 @@ def slim(r):
         "phase","close_strength","range_pct","volume","value","a","b","c",
         "latent_flags","industry_code","is_electronic","structure_score","structure_flags",
         "structure_metrics","refined_score","refined_phase",
-        "chip_score","chip_flags","chip_metrics","final_score","final_phase"
+        "chip_score","chip_flags","chip_metrics","final_score","final_phase",
+        "trade_style"
     ]
     return {k: r.get(k) for k in keys}
 
@@ -727,6 +773,7 @@ for idx, r in enumerate(candidates, 1):
 
     r["final_score"] = round(max(0, min(100, final_score)), 1)
     r["final_phase"] = classify_final(r["final_score"])
+    r["trade_style"] = classify_trade_style(r)
 
     print(
         f"[{idx:03d}/{len(candidates)}] {r.get('symbol')} {r.get('name')} "
