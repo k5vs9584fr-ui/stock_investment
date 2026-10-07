@@ -318,7 +318,7 @@ def calc_latent_score(change_pct, close_strength, value, high, low, reference):
 
 def classify_phase(latent_score, change_pct):
     if change_pct >= 5:
-        return "S級：已發動/不追價"
+        return "S級：已發動/待歷史確認"
     if latent_score >= 80:
         return "A+級：預備發動"
     if latent_score >= 65:
