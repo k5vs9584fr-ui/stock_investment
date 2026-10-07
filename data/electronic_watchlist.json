@@ -1567,7 +1567,7 @@
       ],
       "structure_metrics": {
         "ma_spread_pct": 3.12,
-        "vol5_vs_20": 0.9,
+        "vol5_vs_20": 0.91,
         "near_20d_high": 0.998,
         "range20_pct": 8.39,
         "return10_pct": 4.23,
