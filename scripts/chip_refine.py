@@ -201,7 +201,10 @@ def chip_score(proxy):
     return round(max(-20.0, min(100.0, pts)), 1), flags
 
 
-def classify(score, chip_score, coverage):
+def classify(score, chip_score, coverage, dual_inst_sell=False, already_launched=False):
+    if already_launched:
+        return "S級：已發動/不追價"
+
     if coverage == "unavailable":
         if score >= 72:
             return "A級：型態強但籌碼未確認"
@@ -209,11 +212,17 @@ def classify(score, chip_score, coverage):
             return "B級：觀察"
         return "C級：暫不碰"
 
-    if score >= 88 and chip_score >= 35:
+    # 當日外資＋投信同賣，禁止列為 A+，避免純技術面漂亮卻籌碼轉弱。
+    if dual_inst_sell:
+        if score >= 68:
+            return "B級：型態佳但法人偏空"
+        return "C級：暫不碰"
+
+    if score >= 88 and chip_score >= 50:
         return "S級：高信心預備發動"
-    if score >= 78 and chip_score >= 20:
+    if score >= 80 and chip_score >= 35:
         return "A+級：型態＋籌碼確認"
-    if score >= 68:
+    if score >= 70 and chip_score >= 15:
         return "A級：潛伏"
     if score >= 58:
         return "B級：觀察"
@@ -313,6 +322,21 @@ def main():
         if "LARGE_UP_RETAIL_DOWN" in c_flags:
             final += 3
 
+        foreign_now = safe_num(chip_data.get("foreign_net_buy"), 0)
+        trust_now = safe_num(chip_data.get("trust_net_buy"), 0)
+        dual_inst_sell = foreign_now < 0 and trust_now < 0
+        if dual_inst_sell:
+            c_flags.append("FOREIGN_TRUST_BOTH_SELL")
+            final = min(final, 74)
+
+        # 已經進入主升/強勢發動的，不再放進「預備發動」名單。
+        surge_score = safe_num(row.get("surge_score"), 0)
+        surge_stage = str(row.get("surge_stage") or "")
+        already_launched = surge_score >= 80 or surge_stage.startswith("S級")
+        if already_launched:
+            c_flags.append("ALREADY_LAUNCHED")
+            final = min(final, 79)
+
         # 籌碼極差則限縮上限，避免純技術漂亮硬上榜
         if "LARGE_DOWN_RETAIL_UP" in c_flags:
             final = min(final, 58)
@@ -329,7 +353,11 @@ def main():
             }
         )
         row2["final_phase"] = classify(
-            row2["final_score"], c_score, coverage
+            row2["final_score"],
+            c_score,
+            coverage,
+            dual_inst_sell=dual_inst_sell,
+            already_launched=already_launched,
         )
         output.append(row2)
 
