@@ -271,7 +271,9 @@ def main():
     scan_date = payload.get("scan_date")
     trade_date = datetime.strptime(scan_date, "%Y-%m-%d").date()
 
-    rows = (payload.get("stocks") or [])[:30]
+    # Heavy chip history is only needed for the actionable front rank.
+    # Keep this aligned with the fast confirmation layer to cut runtime materially.
+    rows = (payload.get("stocks") or [])[:12]
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
     fetcher = ChipProxyFetcher(cache_dir=CACHE_DIR)
 
