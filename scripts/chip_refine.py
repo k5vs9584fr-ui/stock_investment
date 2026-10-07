@@ -201,14 +201,21 @@ def chip_score(proxy):
     return round(max(-20.0, min(100.0, pts)), 1), flags
 
 
-def classify(score):
-    if score >= 82:
+def classify(score, chip_score, coverage):
+    if coverage == "unavailable":
+        if score >= 72:
+            return "A級：型態強但籌碼未確認"
+        if score >= 60:
+            return "B級：觀察"
+        return "C級：暫不碰"
+
+    if score >= 88 and chip_score >= 35:
         return "S級：高信心預備發動"
-    if score >= 74:
-        return "A+級：預備發動"
-    if score >= 64:
+    if score >= 78 and chip_score >= 20:
+        return "A+級：型態＋籌碼確認"
+    if score >= 68:
         return "A級：潛伏"
-    if score >= 54:
+    if score >= 58:
         return "B級：觀察"
     return "C級：暫不碰"
 
@@ -284,13 +291,27 @@ def main():
 
         refined = safe_num(row.get("refined_score"), 0)
 
-        # 技術/結構 70%，籌碼 30%；籌碼負分可有效把散戶接刀型態打下去
-        normalized_chip = max(0.0, min(100.0, 50.0 + c_score))
-        final = refined * 0.70 + normalized_chip * 0.30
+        chip_data = proxy_to_dict(proxy) if proxy is not None else {}
 
-        # 最愛條件：大戶增 + 散戶減 + 量縮盤整，額外加成
+        if proxy is None or not getattr(proxy, "is_available", False):
+            coverage = "unavailable"
+            chip_component = 50.0
+            final = refined * 0.92
+        else:
+            has_ownership = (
+                chip_data.get("large_holder_chg_pct") is not None
+                or chip_data.get("retail_holder_chg_pct") is not None
+            )
+            coverage = "full" if has_ownership else "institutional_partial"
+
+            # 籌碼原始分不是 0~100 機率，轉成中性 45 起跳的確認分，
+            # 避免單日法人買超把整體分數灌太高。
+            chip_component = max(0.0, min(100.0, 45.0 + c_score * 0.55))
+            final = refined * 0.68 + chip_component * 0.32
+
+        # 最愛條件：大戶增 + 散戶減
         if "LARGE_UP_RETAIL_DOWN" in c_flags:
-            final += 4
+            final += 3
 
         # 籌碼極差則限縮上限，避免純技術漂亮硬上榜
         if "LARGE_DOWN_RETAIL_UP" in c_flags:
@@ -300,12 +321,16 @@ def main():
         row2.update(
             {
                 "chip_score": c_score,
+                "chip_component": round(chip_component, 1),
                 "chip_flags": c_flags,
-                "chip_data": proxy_to_dict(proxy) if proxy is not None else {},
+                "chip_data": chip_data,
+                "chip_coverage": coverage,
                 "final_score": round(max(0, min(100, final)), 1),
             }
         )
-        row2["final_phase"] = classify(row2["final_score"])
+        row2["final_phase"] = classify(
+            row2["final_score"], c_score, coverage
+        )
         output.append(row2)
 
         print(
