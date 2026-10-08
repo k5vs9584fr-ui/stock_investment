@@ -88,7 +88,12 @@ def main():
                     stock.get("final_phase", stock.get("refined_phase", "")),
                 ),
                 "chip_flags": chip.get("chip_flags", []),
-                "chip_available": chip.get("chip_available", False),
+                "chip_available": chip.get(
+                    "chip_available",
+                    bool(chip.get("chip_flags"))
+                    or float(chip.get("chip_data_completeness") or 0) > 0
+                    or bool((chip.get("chip_metrics") or {}).get("available")),
+                ),
                 "base_final_score": base_final,
                 "base_final_phase": chip.get("final_phase", stock.get("refined_phase", "")),
                 "a": a,
