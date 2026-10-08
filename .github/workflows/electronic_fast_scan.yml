@@ -2,6 +2,9 @@ name: Electronic Fast Scan
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/electronic_fast_scan.yml"
 
 permissions:
   contents: write
