@@ -106,3 +106,44 @@ def test_keep_never_upgrades_from_cost_adjustment():
         cost_pct=0.0,
     )
     assert out["action_after_cost"] == "KEEP_CURRENT"
+
+
+def test_same_sector_rotation_is_penalized():
+    from taiwan_stock_agent.domain.rotation_risk import rotation_risk_adjustment
+    held = {"industry_code":"24"}
+    challenger = {"industry_code":"24"}
+    out = rotation_risk_adjustment(
+        held,
+        challenger,
+        {"net_edge":9.0,"action_after_cost":"ROTATE"},
+    )
+    assert out["risk_adjustment"] < 0
+    assert "ROTATION_SAME_SECTOR" in out["rotation_risk_reasons"]
+    assert out["action_after_risk"] != "ROTATE"
+
+
+def test_cross_sector_rotation_gets_diversification_bonus():
+    from taiwan_stock_agent.domain.rotation_risk import rotation_risk_adjustment
+    held = {"industry_code":"24"}
+    challenger = {"industry_code":"27"}
+    out = rotation_risk_adjustment(
+        held,
+        challenger,
+        {"net_edge":6.5,"action_after_cost":"WATCH_ROTATION"},
+    )
+    assert out["risk_adjustment"] > 0
+    assert "ROTATION_DIVERSIFICATION_BONUS" in out["rotation_risk_reasons"]
+    assert out["risk_adjusted_edge"] > 6.5
+
+
+def test_theme_overlap_penalizes_rotation():
+    from taiwan_stock_agent.domain.rotation_risk import rotation_risk_adjustment
+    held = {"industry_code":"24","hot_concepts":["AI","HBM"]}
+    challenger = {"industry_code":"27","hot_concepts":["AI"]}
+    out = rotation_risk_adjustment(
+        held,
+        challenger,
+        {"net_edge":8.5,"action_after_cost":"ROTATE"},
+    )
+    assert "ROTATION_THEME_OVERLAP" in out["rotation_risk_reasons"]
+    assert out["risk_adjustment"] == 0.0
