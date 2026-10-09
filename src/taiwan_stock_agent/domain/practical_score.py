@@ -74,6 +74,9 @@ def calculate_practical_score(row: dict) -> tuple[float, list[str]]:
     )
     if stagnant:
         score -= 18.0
+        # A structurally strong but motionless name should never occupy the
+        # main action list until price/volume proves otherwise.
+        score = min(score, 59.0)
         flags.append("MODEL_ONLY_STAGNATION_PENALTY")
 
     # Very weak realized movement gets a smaller efficiency penalty even if the
@@ -84,6 +87,9 @@ def calculate_practical_score(row: dict) -> tuple[float, list[str]]:
 
     if overextended or str(row.get("surge_stage", "")).startswith("X"):
         score -= 25.0
+        # Hard gate: an already overextended name can stay on the audit list,
+        # but cannot rank as an actionable Practical A/B candidate.
+        score = min(score, 59.0)
         flags.append("OVEREXTENDED_PENALTY")
 
     return round(_clip(score), 1), flags
