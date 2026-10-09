@@ -85,3 +85,62 @@ def build_rotation_table(
 
     rows.sort(key=lambda x: float(x.get("edge") or 0.0), reverse=True)
     return rows
+
+
+def rotation_position_plan(
+    holding: dict,
+    challenger: dict,
+    rotation_decision: dict,
+    *,
+    current_weight: float,
+    max_new_weight: float = 0.40,
+    watch_fraction: float = 0.35,
+    cash_buffer: float = 0.10,
+) -> dict:
+    """Translate a live rotation decision into concrete portfolio weights.
+
+    KEEP_CURRENT leaves the holding untouched.
+    WATCH_ROTATION trims a fraction and deploys only part of the released capital.
+    ROTATE exits the holding weight and reallocates to the challenger, while
+    respecting a cash buffer and maximum new-position weight.
+    """
+    action = str(rotation_decision.get("final_action") or "KEEP_CURRENT")
+    current_weight = max(0.0, min(1.0, float(current_weight)))
+    max_new_weight = max(0.0, min(1.0, float(max_new_weight)))
+    cash_buffer = max(0.0, min(0.9, float(cash_buffer)))
+    watch_fraction = max(0.0, min(1.0, float(watch_fraction)))
+
+    if action == "ROTATE":
+        sell_weight = current_weight
+        deployable = max(0.0, sell_weight * (1.0 - cash_buffer))
+        buy_weight = min(deployable, max_new_weight)
+        remaining_held = max(0.0, current_weight - sell_weight)
+        residual_cash = max(0.0, sell_weight - buy_weight)
+        mode = "FULL_ROTATION"
+    elif action == "WATCH_ROTATION":
+        sell_weight = current_weight * watch_fraction
+        deployable = max(0.0, sell_weight * (1.0 - cash_buffer))
+        buy_weight = min(deployable, max_new_weight)
+        remaining_held = max(0.0, current_weight - sell_weight)
+        residual_cash = max(0.0, sell_weight - buy_weight)
+        mode = "PARTIAL_ROTATION"
+    else:
+        sell_weight = 0.0
+        buy_weight = 0.0
+        remaining_held = current_weight
+        residual_cash = 0.0
+        mode = "KEEP"
+
+    return {
+        "mode": mode,
+        "action": action,
+        "held_symbol": holding.get("symbol"),
+        "challenger_symbol": challenger.get("symbol"),
+        "current_weight": round(current_weight, 4),
+        "sell_weight": round(sell_weight, 4),
+        "remaining_held_weight": round(remaining_held, 4),
+        "buy_weight": round(buy_weight, 4),
+        "cash_from_rotation": round(residual_cash, 4),
+        "max_new_weight": round(max_new_weight, 4),
+        "cash_buffer": round(cash_buffer, 4),
+    }
