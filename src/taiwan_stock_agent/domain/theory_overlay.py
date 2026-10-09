@@ -32,7 +32,7 @@ def calculate_theory_overlay(row: dict) -> tuple[float, list[str]]:
         and chip >= 65
     )
     if oneil:
-        bonus += 5.0
+        bonus += 6.0
         flags.append("ONEIL_LEADER_BREAKOUT")
 
     # Minervini: volatility contraction / tight base near highs with drying volume.
@@ -44,8 +44,8 @@ def calculate_theory_overlay(row: dict) -> tuple[float, list[str]]:
         and "NOT_EXTENDED_10D" in sflags
     )
     if vcp:
-        bonus += 6.0
-        flags.append("MINERVINI_VCP_LIKE")
+        bonus += 2.0
+        flags.append("MINERVINI_VCP_LIKE_UNCONFIRMED")
 
     # Livermore: pivotal point confirmed by trend + breakout; no anticipation.
     pivot = (
@@ -54,7 +54,7 @@ def calculate_theory_overlay(row: dict) -> tuple[float, list[str]]:
         and ret3 > 0
     )
     if pivot:
-        bonus += 4.0
+        bonus += 6.0
         flags.append("LIVERMORE_PIVOT_CONFIRM")
 
     # Weinstein Stage 2 proxy: rising trend, bullish alignment, close near highs.
