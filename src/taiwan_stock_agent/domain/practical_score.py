@@ -8,6 +8,8 @@ The goal is ranking, not replacing the underlying signal model.
 """
 from __future__ import annotations
 
+from taiwan_stock_agent.domain.theory_overlay import calculate_theory_overlay
+
 
 def _clip(value: float, low: float = 0.0, high: float = 100.0) -> float:
     return max(low, min(high, value))
@@ -64,6 +66,10 @@ def calculate_practical_score(row: dict) -> tuple[float, list[str]]:
     if "VOLUME_EXPANSION" in surge_flags:
         score += 4.0
         flags.append("VOLUME_EXPANSION_BONUS")
+
+    theory_bonus, theory_flags = calculate_theory_overlay(row)
+    score += theory_bonus
+    flags.extend(theory_flags)
 
     # "High education, no work experience": strong base model but little realized movement.
     stagnant = (
