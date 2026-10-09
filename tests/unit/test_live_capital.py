@@ -78,3 +78,31 @@ def test_unmatched_holding_is_never_fabricated():
     )
     assert out[0]["matched"] is False
     assert out[0]["position_decision"]["action"] == "NO_CURRENT_SIGNAL"
+
+
+def test_rotation_cost_only_downgrades_marginal_edge():
+    from taiwan_stock_agent.domain.rotation_cost import cost_adjusted_rotation
+    out = cost_adjusted_rotation(
+        {"edge": 8.5, "action": "ROTATE"},
+        cost_pct=0.785,
+    )
+    assert out["net_edge"] < 8.5
+    assert out["action_after_cost"] in {"WATCH_ROTATION", "KEEP_CURRENT"}
+
+
+def test_strong_rotation_survives_cost():
+    from taiwan_stock_agent.domain.rotation_cost import cost_adjusted_rotation
+    out = cost_adjusted_rotation(
+        {"edge": 15.0, "action": "ROTATE"},
+        cost_pct=0.785,
+    )
+    assert out["action_after_cost"] == "ROTATE"
+
+
+def test_keep_never_upgrades_from_cost_adjustment():
+    from taiwan_stock_agent.domain.rotation_cost import cost_adjusted_rotation
+    out = cost_adjusted_rotation(
+        {"edge": 1.0, "action": "KEEP_CURRENT"},
+        cost_pct=0.0,
+    )
+    assert out["action_after_cost"] == "KEEP_CURRENT"
