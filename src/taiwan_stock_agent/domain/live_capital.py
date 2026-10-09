@@ -144,3 +144,54 @@ def rotation_position_plan(
         "max_new_weight": round(max_new_weight, 4),
         "cash_buffer": round(cash_buffer, 4),
     }
+
+
+def build_live_rotation_table(
+    holdings: list[dict],
+    challengers: list[dict],
+    *,
+    phase_minutes: int = 15,
+    cost_pct: float | None = None,
+    min_edge: float = 8.0,
+    watch_edge: float = 3.0,
+) -> list[dict]:
+    """Cross-compare holdings with challengers using the integrated live engine.
+
+    Results are ordered by actionable priority first (ROTATE, WATCH, KEEP), then
+    by live rotation edge. This is the table the intraday decision layer should
+    consume when deciding which existing position deserves replacement first.
+    """
+    from taiwan_stock_agent.domain.live_rotation import live_rotation_decision
+
+    priority = {"ROTATE": 2, "WATCH_ROTATION": 1, "KEEP_CURRENT": 0}
+    rows: list[dict] = []
+
+    for held in holdings:
+        for challenger in challengers:
+            if str(held.get("symbol")) == str(challenger.get("symbol")):
+                continue
+
+            decision = live_rotation_decision(
+                held,
+                challenger,
+                phase_minutes=phase_minutes,
+                cost_pct=cost_pct,
+                min_edge=min_edge,
+                watch_edge=watch_edge,
+            )
+            rows.append({
+                "held_symbol": held.get("symbol"),
+                "held_name": held.get("name"),
+                "challenger_symbol": challenger.get("symbol"),
+                "challenger_name": challenger.get("name"),
+                **decision,
+            })
+
+    rows.sort(
+        key=lambda x: (
+            priority.get(str(x.get("final_action")), 0),
+            float(x.get("live_rotation_edge") or 0.0),
+        ),
+        reverse=True,
+    )
+    return rows
