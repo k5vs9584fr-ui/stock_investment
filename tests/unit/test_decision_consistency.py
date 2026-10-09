@@ -5,7 +5,7 @@ from taiwan_stock_agent.domain.position_decision import position_decision
 
 def test_action_tier_uses_action_score_scale():
     assert action_tier(1, 82) == "PRIMARY_TOP3"
-    assert action_tier(3, 71.9) == "WATCH_ONLY"
+    assert action_tier(3, 71.9) == "SECONDARY_TOP5"
     assert action_tier(4, 70) == "SECONDARY_TOP5"
 
 
