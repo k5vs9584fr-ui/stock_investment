@@ -10,6 +10,7 @@ from taiwan_stock_agent.domain.action_tier import action_tier, allocation_weight
 from taiwan_stock_agent.domain.regime_v2 import classify_regime_v2
 from taiwan_stock_agent.domain.entry_exit import entry_exit_plan
 from taiwan_stock_agent.domain.top3_quality import top3_quality
+from taiwan_stock_agent.domain.hybrid_action_score import hybrid_action_score
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "data" / "final_signal_report.json"
@@ -101,12 +102,16 @@ def main():
         qscore, qflags = top3_quality(row)
         row["top3_quality_score"] = qscore
         row["top3_quality_flags"] = qflags
+        row["hybrid_action_score"] = hybrid_action_score(
+            float(row.get("final_score") or 0),
+            qscore,
+        )
 
     rows.sort(
         key=lambda x: (
+            x.get("hybrid_action_score", 0),
             x.get("top3_quality_score", 0),
             x.get("practical_score", 0),
-            x.get("final_score", 0),
         ),
         reverse=True,
     )
