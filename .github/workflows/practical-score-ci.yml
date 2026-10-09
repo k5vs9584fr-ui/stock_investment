@@ -1,0 +1,71 @@
+name: Practical Score CI
+
+on:
+  push:
+    branches:
+      - upgrade/practical-score-v1
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  practical-score:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install test dependency
+        run: python -m pip install --upgrade pip pytest
+
+      - name: Run Practical Score unit tests
+        env:
+          PYTHONPATH: src
+        run: |
+          pytest -q             tests/unit/test_practical_score.py             tests/unit/test_regime_darvas.py             tests/unit/test_theory_overlay.py             tests/unit/test_rs_divergence_risk.py             tests/unit/test_action_tier.py             tests/unit/test_regime_v2_entry_top3.py             tests/unit/test_chip_hybrid.py             tests/unit/test_confidence_sector.py             tests/unit/test_catalyst_review.py             tests/unit/test_failure_risk.py             tests/unit/test_segmented_risk.py             tests/unit/test_current_schema_compat.py
+
+      - name: Run final ranking end-to-end
+        env:
+          PYTHONPATH: src
+        run: python scripts/chip_finalize.py
+
+      - name: Validate ranking output
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          p = Path("data/final_scan_results.json")
+          assert p.exists(), "final_scan_results.json missing"
+          d = json.loads(p.read_text(encoding="utf-8"))
+          rows = d.get("top_practical") or []
+          top3 = d.get("primary_top3") or []
+
+          assert rows, "top_practical is empty"
+          assert len(top3) <= 3, "primary_top3 has more than 3 candidates"
+          assert d.get("ranking_version") == "practical-v1"
+          assert "segment_stats_source" in d
+          assert "segment_stats_sample_n" in d
+
+          for row in rows:
+              for key in (
+                  "practical_score",
+                  "top3_quality_score",
+                  "hybrid_action_score",
+                  "score_confidence",
+                  "risk_policy",
+                  "entry_exit_plan",
+              ):
+                  assert key in row, f"{row.get('symbol')}: missing {key}"
+
+          scores = [float(x.get("hybrid_action_score") or 0) for x in rows]
+          assert scores == sorted(scores, reverse=True), "hybrid ranking is not sorted"
+
+          print("E2E OK")
+          print("Top3:", [(x.get("symbol"), x.get("hybrid_action_score")) for x in top3])
+          print("Segment stats:", d.get("segment_stats_source"), d.get("segment_stats_sample_n"))
+          PY
