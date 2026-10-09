@@ -11,11 +11,29 @@ SOURCE = ROOT / "data" / "final_signal_report.json"
 STRUCTURE_WATCHLIST = ROOT / "data" / "electronic_watchlist.json"
 WATCHLIST = ROOT / "data" / "electronic_final_watchlist.json"
 OUT = ROOT / "data" / "final_scan_results.json"
+HEAT_DIR = ROOT / "data" / "market_heat"
 
 
 def load_json(path):
     with path.open("r", encoding="utf-8") as f:
         return json.load(f)
+
+
+def load_market_context(scan_date):
+    if not HEAT_DIR.exists():
+        return None
+    files = sorted(HEAT_DIR.glob("heat_*.json"))
+    eligible = [p for p in files if p.stem.replace("heat_", "") <= str(scan_date)]
+    if not eligible:
+        return None
+    try:
+        data = load_json(eligible[-1])
+        return {
+            "market_state": data.get("market_state", "mixed"),
+            "market_breadth": data.get("market_breadth", 50),
+        }
+    except Exception:
+        return None
 
 
 def main():
@@ -38,11 +56,13 @@ def main():
     if not rows:
         raise RuntimeError("final_signal_report.json 沒有 stocks")
 
+    market_context = load_market_context(actual_date)
+
     # Preserve the original model score, then add a second ranking layer that
     # rewards realized momentum/ignition and penalizes stagnant or overextended
     # candidates. This makes the ranking auditable and easy to A/B test.
     for row in rows:
-        pscore, pflags = calculate_practical_score(row)
+        pscore, pflags = calculate_practical_score(row, market_context=market_context)
         row["practical_score"] = pscore
         row["practical_phase"] = practical_phase(pscore)
         row["practical_flags"] = pflags
@@ -61,6 +81,7 @@ def main():
         "model_version": "complete-v3",
         "ranking_version": "practical-v1",
         "source": payload.get("source", "final_signal_report.json"),
+        "market_context": market_context,
         "pipeline": [
             "intraday_latent",
             "multi_day_structure",
