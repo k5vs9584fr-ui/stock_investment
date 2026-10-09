@@ -66,3 +66,63 @@ def test_top3_quality_penalizes_danger_flags():
         ],
     })
     assert score < 80
+
+
+def test_top3_quality_prefers_explosive_early_move():
+    slow_score, _ = top3_quality({
+        "practical_score": 82,
+        "surge_score": 35,
+        "surge_stage": "B級：非飆股型",
+        "surge_metrics": {
+            "return3_pct": 0.4,
+            "return5_pct": 1.0,
+            "fresh_ignition": False,
+            "early_main_move": False,
+            "trend_accelerator": False,
+            "overextended": False,
+            "volume3_vs_20": 0.9,
+        },
+        "practical_flags": [],
+        "surge_flags": [],
+    })
+    explosive_score, reasons = top3_quality({
+        "practical_score": 78,
+        "surge_score": 72,
+        "surge_stage": "A級：剛發動",
+        "surge_metrics": {
+            "return3_pct": 2.8,
+            "return5_pct": 5.2,
+            "fresh_ignition": True,
+            "early_main_move": True,
+            "trend_accelerator": True,
+            "overextended": False,
+            "volume3_vs_20": 1.8,
+        },
+        "practical_flags": [],
+        "surge_flags": ["VOLUME_EXPANSION"],
+    })
+    assert explosive_score > slow_score
+    assert "EXPLOSIVE_FRESH_IGNITION" in reasons
+    assert "EXPLOSIVE_EARLY_MAIN_MOVE" in reasons
+    assert "EXPLOSIVE_VOLUME_CONFIRM" in reasons
+
+
+def test_top3_quality_never_rewards_overextended_explosive_name():
+    score, reasons = top3_quality({
+        "practical_score": 90,
+        "surge_score": 98,
+        "surge_stage": "X級：延伸過熱/不追",
+        "surge_metrics": {
+            "return3_pct": 8.0,
+            "return5_pct": 14.0,
+            "fresh_ignition": True,
+            "early_main_move": True,
+            "trend_accelerator": True,
+            "overextended": True,
+            "volume3_vs_20": 2.5,
+        },
+        "practical_flags": [],
+        "surge_flags": ["VOLUME_EXPANSION"],
+    })
+    assert score <= 59
+    assert "EXPLOSIVE_OVEREXTENDED_NO_CHASE" in reasons
