@@ -94,6 +94,7 @@ def main():
     for row in rows:
         row["segment_stats"] = segment_stats
         pscore, pflags = calculate_practical_score(row, market_context=market_context)
+        row.pop("segment_stats", None)
         row["practical_score"] = pscore
         row["practical_phase"] = practical_phase(pscore)
         row["practical_flags"] = pflags
