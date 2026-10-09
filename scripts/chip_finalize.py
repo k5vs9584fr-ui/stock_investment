@@ -139,8 +139,9 @@ def main():
 
     for rank, row in enumerate(rows, 1):
         row["practical_rank"] = rank
-        row["action_tier"] = action_tier(rank, float(row.get("practical_score") or 0))
-        row["allocation_weight"] = allocation_weight(rank, float(row.get("practical_score") or 0))
+        action_score = float(row.get("hybrid_action_score") or 0)
+        row["action_tier"] = action_tier(rank, action_score)
+        row["allocation_weight"] = allocation_weight(rank, action_score)
         row["entry_exit_plan"] = entry_exit_plan(row, market_context=market_context)
 
     primary_top3 = [x for x in rows if x.get("action_tier") == "PRIMARY_TOP3"]
