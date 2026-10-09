@@ -301,3 +301,26 @@ def test_build_live_rotation_table_prioritizes_actionable_switches():
     assert table
     assert table[0]["final_action"] in {"ROTATE", "WATCH_ROTATION"}
     assert table[0]["live_rotation_edge"] >= table[-1]["live_rotation_edge"]
+
+
+def test_opportunity_cost_prefers_higher_explosiveness_when_hybrid_is_close():
+    from taiwan_stock_agent.domain.opportunity_cost import opportunity_cost_score
+    slow = {
+        "hybrid_action_score": 84,
+        "practical_score": 88,
+        "surge_score": 30,
+        "score_confidence": {"level": "HIGH"},
+        "risk_policy": {"max_position_pct": 20},
+        "practical_flags": [],
+    }
+    explosive = {
+        "hybrid_action_score": 82,
+        "practical_score": 80,
+        "surge_score": 78,
+        "score_confidence": {"level": "HIGH"},
+        "risk_policy": {"max_position_pct": 20},
+        "practical_flags": [],
+    }
+    slow_score, _ = opportunity_cost_score(slow)
+    explosive_score, _ = opportunity_cost_score(explosive)
+    assert explosive_score > slow_score
