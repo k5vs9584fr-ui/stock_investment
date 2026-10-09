@@ -8,6 +8,9 @@ def opening_reorder_score(row: dict) -> tuple[float, list[str]]:
     flags: list[str] = []
     score = base
 
+    if not m:
+        return round(base, 1), []
+
     vol_accel = float(m.get("volume_accel_5m") or 1.0)
     ret15 = float(m.get("return_15m_pct") or 0.0)
     vwap_gap = float(m.get("vwap_gap_pct") or 0.0)
