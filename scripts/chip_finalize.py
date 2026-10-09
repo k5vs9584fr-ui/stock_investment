@@ -11,6 +11,8 @@ from taiwan_stock_agent.domain.regime_v2 import classify_regime_v2
 from taiwan_stock_agent.domain.entry_exit import entry_exit_plan
 from taiwan_stock_agent.domain.top3_quality import top3_quality
 from taiwan_stock_agent.domain.hybrid_action_score import hybrid_action_score
+from taiwan_stock_agent.domain.score_confidence import score_confidence
+from taiwan_stock_agent.domain.sector_concentration import apply_sector_concentration
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "data" / "final_signal_report.json"
@@ -106,6 +108,7 @@ def main():
             float(row.get("final_score") or 0),
             qscore,
         )
+        row["score_confidence"] = score_confidence(row)
 
     rows.sort(
         key=lambda x: (
@@ -121,6 +124,9 @@ def main():
         row["action_tier"] = action_tier(rank, float(row.get("practical_score") or 0))
         row["allocation_weight"] = allocation_weight(rank, float(row.get("practical_score") or 0))
         row["entry_exit_plan"] = entry_exit_plan(row, market_context=market_context)
+
+    primary_top3 = [x for x in rows if x.get("action_tier") == "PRIMARY_TOP3"]
+    primary_top3 = apply_sector_concentration(primary_top3)
 
     report = {
         "scan_date": actual_date,
@@ -150,7 +156,7 @@ def main():
         "a_plus": [x for x in rows if str(x.get("final_phase", "")).startswith("A+")],
         "a": [x for x in rows if str(x.get("final_phase", "")).startswith("A級")],
         "b": [x for x in rows if str(x.get("final_phase", "")).startswith("B級")],
-        "primary_top3": [x for x in rows if x.get("action_tier") == "PRIMARY_TOP3"],
+        "primary_top3": primary_top3,
         "secondary_top5": [x for x in rows if x.get("action_tier") == "SECONDARY_TOP5"],
         "top_practical": rows,
         "top_model_score": model_ranked,
