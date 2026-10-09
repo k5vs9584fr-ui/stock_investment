@@ -10,8 +10,11 @@ SUMMARY = ROOT / "data" / "hybrid_walkforward_summary.csv"
 
 WEIGHTS = (0.0, 0.25, 0.50, 0.75, 1.0)
 WARMUP_DAYS = 20
+MIN_ADAPT_DAYS = 30
 REBALANCE_DAYS = 5
 TOP_N = 3
+ADAPT_EDGE_THRESHOLD = 0.50
+DEFAULT_OLD_WEIGHT = 0.50
 
 
 def num(s):
@@ -95,8 +98,13 @@ def main():
         train_dates = dates[:i]
         test_dates = dates[i:i + REBALANCE_DAYS]
 
-        scores = {w: evaluate_history(df, train_dates, w) for w in WEIGHTS}
-        chosen = max(scores, key=scores.get)
+        chosen = DEFAULT_OLD_WEIGHT
+        if len(train_dates) >= MIN_ADAPT_DAYS:
+            scores = {w: evaluate_history(df, train_dates, w) for w in WEIGHTS}
+            baseline = scores[DEFAULT_OLD_WEIGHT]
+            best_weight = max(scores, key=scores.get)
+            if scores[best_weight] >= baseline + ADAPT_EDGE_THRESHOLD:
+                chosen = best_weight
 
         for d in test_dates:
             day = df[df["signal_date"] == d]
