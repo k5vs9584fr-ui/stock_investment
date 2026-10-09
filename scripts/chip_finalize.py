@@ -19,6 +19,7 @@ from taiwan_stock_agent.domain.oos_guard import oos_adaptation_guard
 from taiwan_stock_agent.domain.opportunity_cost import opportunity_cost_score
 from taiwan_stock_agent.domain.opening_reorder import opening_reorder_score
 from taiwan_stock_agent.domain.opening_gate import promote_opening_candidates
+from taiwan_stock_agent.domain.live_capital import live_capital_plan
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "data" / "final_signal_report.json"
@@ -157,6 +158,11 @@ def main():
     primary_top3 = [x for x in rows if x.get("action_tier") == "PRIMARY_TOP3"]
     primary_top3 = apply_sector_concentration(primary_top3)
     opening_live_top3, opening_rejected = promote_opening_candidates(rows, target_n=3)
+    opening_capital_plan = live_capital_plan(
+        opening_live_top3,
+        oos_guard=oos_guard,
+        max_sector_weight=0.50,
+    )
     for row in primary_top3:
         raw = float(row.get("allocation_weight_sector_capped") or 0.0)
         row["allocation_weight_oos_adjusted"] = round(
@@ -198,6 +204,7 @@ def main():
         "primary_top3": primary_top3,
         "opening_live_top3": opening_live_top3,
         "opening_rejected": opening_rejected,
+        "opening_capital_plan": opening_capital_plan,
         "secondary_top5": [x for x in rows if x.get("action_tier") == "SECONDARY_TOP5"],
         "top_practical": rows,
         "top_model_score": model_ranked,
