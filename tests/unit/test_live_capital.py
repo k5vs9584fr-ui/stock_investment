@@ -265,3 +265,39 @@ def test_rotation_position_plan_keep_does_nothing():
     assert out["sell_weight"] == 0.0
     assert out["buy_weight"] == 0.0
     assert out["remaining_held_weight"] == 0.40
+
+
+def test_build_live_rotation_table_prioritizes_actionable_switches():
+    from taiwan_stock_agent.domain.live_capital import build_live_rotation_table
+    holdings = [
+        _rotation_row("H1", "24", 70, 68, 55, {
+            "vwap_gap_pct": -0.4,
+            "return_15m_pct": -0.2,
+            "volume_accel_5m": 0.9,
+            "near_intraday_high": 0.97,
+        }),
+        _rotation_row("H2", "25", 82, 80, 72, {
+            "vwap_gap_pct": 0.3,
+            "return_15m_pct": 0.5,
+            "volume_accel_5m": 1.2,
+            "near_intraday_high": 0.985,
+        }),
+    ]
+    challengers = [
+        _rotation_row("C1", "27", 91, 89, 84, {
+            "vwap_gap_pct": 0.8,
+            "return_15m_pct": 1.2,
+            "volume_accel_5m": 1.8,
+            "near_intraday_high": 0.995,
+        }),
+        _rotation_row("C2", "24", 80, 78, 68, {
+            "vwap_gap_pct": 0.5,
+            "return_15m_pct": 0.7,
+            "volume_accel_5m": 1.3,
+            "near_intraday_high": 0.99,
+        }),
+    ]
+    table = build_live_rotation_table(holdings, challengers, cost_pct=0.5)
+    assert table
+    assert table[0]["final_action"] in {"ROTATE", "WATCH_ROTATION"}
+    assert table[0]["live_rotation_edge"] >= table[-1]["live_rotation_edge"]
