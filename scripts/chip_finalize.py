@@ -7,6 +7,9 @@ from taiwan_stock_agent.domain.practical_score import (
 )
 from taiwan_stock_agent.domain.risk_policy import risk_policy
 from taiwan_stock_agent.domain.action_tier import action_tier, allocation_weight
+from taiwan_stock_agent.domain.regime_v2 import classify_regime_v2
+from taiwan_stock_agent.domain.entry_exit import entry_exit_plan
+from taiwan_stock_agent.domain.top3_quality import top3_quality
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "data" / "final_signal_report.json"
@@ -70,6 +73,10 @@ def main():
         raise RuntimeError("final_signal_report.json 沒有 stocks")
 
     market_context = load_market_context(actual_date)
+    regime_v2 = classify_regime_v2(market_context)
+    if market_context is None:
+        market_context = {}
+    market_context = {**market_context, **regime_v2}
 
     # Preserve the original model score, then add a second ranking layer that
     # rewards realized momentum/ignition and penalizes stagnant or overextended
@@ -90,10 +97,25 @@ def main():
         reverse=True,
     )
 
+    for row in rows:
+        qscore, qflags = top3_quality(row)
+        row["top3_quality_score"] = qscore
+        row["top3_quality_flags"] = qflags
+
+    rows.sort(
+        key=lambda x: (
+            x.get("top3_quality_score", 0),
+            x.get("practical_score", 0),
+            x.get("final_score", 0),
+        ),
+        reverse=True,
+    )
+
     for rank, row in enumerate(rows, 1):
         row["practical_rank"] = rank
         row["action_tier"] = action_tier(rank, float(row.get("practical_score") or 0))
         row["allocation_weight"] = allocation_weight(rank, float(row.get("practical_score") or 0))
+        row["entry_exit_plan"] = entry_exit_plan(row, market_context=market_context)
 
     report = {
         "scan_date": actual_date,
@@ -101,6 +123,7 @@ def main():
         "ranking_version": "practical-v1",
         "source": payload.get("source", "final_signal_report.json"),
         "market_context": market_context,
+        "regime_v2": regime_v2,
         "pipeline": [
             "intraday_latent",
             "multi_day_structure",
