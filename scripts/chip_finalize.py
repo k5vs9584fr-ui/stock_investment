@@ -29,9 +29,20 @@ def load_market_context(scan_date):
         return None
     try:
         data = load_json(eligible[-1])
+        industries = list((data.get("industries") or {}).values())
+        ret5_values = [
+            float(x.get("ret_5d_pct"))
+            for x in industries
+            if x.get("ret_5d_pct") is not None
+        ]
+        market_return_5d = (
+            sum(ret5_values) / len(ret5_values)
+            if ret5_values else None
+        )
         return {
             "market_state": data.get("market_state", "mixed"),
             "market_breadth": data.get("market_breadth", 50),
+            "market_return_5d": market_return_5d,
         }
     except Exception:
         return None
