@@ -5,6 +5,7 @@ from taiwan_stock_agent.domain.practical_score import (
     calculate_practical_score,
     practical_phase,
 )
+from taiwan_stock_agent.domain.risk_policy import risk_policy
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "data" / "final_signal_report.json"
@@ -66,6 +67,7 @@ def main():
         row["practical_score"] = pscore
         row["practical_phase"] = practical_phase(pscore)
         row["practical_flags"] = pflags
+        row["risk_policy"] = risk_policy(pscore, market_context=market_context)
 
     model_ranked = sorted(rows, key=lambda x: x.get("final_score", 0), reverse=True)
     rows.sort(
