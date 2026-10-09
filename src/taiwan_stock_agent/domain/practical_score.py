@@ -61,19 +61,37 @@ def calculate_practical_score(row: dict, market_context: dict | None = None) -> 
     )
 
     surge_flags = set(row.get("surge_flags") or [])
+    volume_confirmed = "VOLUME_EXPANSION" in surge_flags
 
+    # Fresh ignition must be confirmed by either strong closing location or
+    # expanding volume. This prevents a quick intraday spike from receiving the
+    # same reward as a breakout that actually held into the close.
     if fresh_ignition:
-        score += 10.0
-        flags.append("FRESH_IGNITION_BONUS")
+        if volume_confirmed or close_strength >= 0.68:
+            score += 10.0
+            flags.append("FRESH_IGNITION_BONUS")
+        else:
+            score += 2.0
+            score -= 8.0
+            flags.append("WEAK_IGNITION_CONFIRMATION")
+            flags.append("FALSE_BREAKOUT_RISK_PENALTY")
+
     if early_main_move:
         score += 8.0
         flags.append("EARLY_MAIN_MOVE_BONUS")
     if trend_accelerator:
         score += 5.0
         flags.append("TREND_ACCELERATOR_BONUS")
-    if "VOLUME_EXPANSION" in surge_flags:
+    if volume_confirmed:
         score += 4.0
         flags.append("VOLUME_EXPANSION_BONUS")
+
+    # A fast recent move that closes poorly is another common false-breakout
+    # signature. Keep it as a soft penalty so a strong chip/catalyst backdrop can
+    # still survive, but it should no longer dominate the actionable list.
+    if ret3 >= 4.0 and close_strength < 0.55 and not volume_confirmed:
+        score -= 7.0
+        flags.append("LATE_REJECTION_PENALTY")
 
     theory_bonus, theory_flags = calculate_theory_overlay(row)
     score += theory_bonus
