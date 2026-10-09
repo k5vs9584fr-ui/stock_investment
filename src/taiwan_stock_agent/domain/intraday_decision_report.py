@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from taiwan_stock_agent.domain.entry_exit import entry_exit_plan
+from taiwan_stock_agent.domain.explosive_lifecycle import classify_explosive_lifecycle
 from taiwan_stock_agent.domain.live_capital import (
     build_live_rotation_table,
     live_capital_plan,
@@ -19,6 +20,7 @@ def _name(row: dict) -> str:
 
 def _candidate_view(row: dict) -> dict:
     plan = row.get("entry_exit_plan") or entry_exit_plan(row)
+    lifecycle = classify_explosive_lifecycle(row)
     return {
         "symbol": _symbol(row),
         "name": _name(row),
@@ -26,6 +28,11 @@ def _candidate_view(row: dict) -> dict:
         "opening_score": row.get("opening_confirmation_score"),
         "hybrid_score": row.get("hybrid_action_score"),
         "practical_score": row.get("practical_score"),
+        "explosive_phase": lifecycle.get("phase"),
+        "explosive_label": lifecycle.get("label"),
+        "explosive_priority": lifecycle.get("priority"),
+        "explosive_lifecycle_score": lifecycle.get("score"),
+        "explosive_action": lifecycle.get("action"),
         "entry_mode": plan.get("entry_mode"),
         "entry_trigger": plan.get("entry_trigger"),
         "hard_stop": (plan.get("exit_rules") or {}).get("hard_stop"),
