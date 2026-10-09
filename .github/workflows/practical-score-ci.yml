@@ -32,7 +32,8 @@ jobs:
             tests/unit/test_oos_settlement.py \
             tests/unit/test_market_universe.py \
             tests/unit/test_decision_consistency.py \
-            tests/unit/test_opportunity_opening.py
+            tests/unit/test_opportunity_opening.py \
+            tests/unit/test_opening_gate.py
 
       - name: Compile expanded scanners
         env:
@@ -62,6 +63,8 @@ jobs:
           assert "segment_stats_source" in d
           assert "segment_stats_sample_n" in d
           assert "oos_guard" in d
+          assert "opening_live_top3" in d
+          assert "opening_rejected" in d
           assert d["oos_guard"]["stage"] in {"WARMUP","EVALUATE","TRUSTED","DEGRADED"}
 
           for row in rows:
