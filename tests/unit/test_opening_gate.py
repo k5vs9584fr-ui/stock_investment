@@ -84,3 +84,63 @@ def test_phase_is_written_to_selected_rows():
     }]
     selected, _ = promote_opening_candidates(rows, target_n=1, phase_minutes=5)
     assert selected[0]["opening_phase_minutes"] == 5
+
+
+def test_failed_fresh_ignition_drops_below_confirmed_candidate_at_30m():
+    rows = [
+        {
+            "symbol":"HOT",
+            "industry_code":"24",
+            "hybrid_action_score":96,
+            "surge_score":84,
+            "surge_stage":"S級：首發動可追",
+            "surge_flags":["FRESH_IGNITION_CHASABLE","VOLUME_EXPANSION"],
+            "surge_metrics":{
+                "return3_pct":2.6,
+                "return5_pct":4.1,
+                "return10_pct":5.0,
+                "fresh_ignition":True,
+                "early_main_move":False,
+                "trend_accelerator":False,
+                "overextended":False,
+                "chaseable":True,
+                "volume3_vs_20":1.8,
+            },
+            "dt_metrics":{
+                "vwap_gap_pct":-0.7,
+                "return_15m_pct":-0.4,
+                "return_30m_pct":-0.3,
+                "volume_accel_5m":0.6,
+                "near_intraday_high":0.93,
+            },
+        },
+        {
+            "symbol":"GOOD",
+            "industry_code":"27",
+            "hybrid_action_score":88,
+            "surge_score":65,
+            "surge_stage":"A級：剛發動",
+            "surge_flags":["VOLUME_EXPANSION"],
+            "surge_metrics":{
+                "return3_pct":1.8,
+                "return5_pct":3.2,
+                "return10_pct":4.0,
+                "fresh_ignition":False,
+                "early_main_move":False,
+                "trend_accelerator":True,
+                "overextended":False,
+                "chaseable":True,
+                "volume3_vs_20":1.6,
+            },
+            "dt_metrics":{
+                "vwap_gap_pct":0.6,
+                "return_15m_pct":1.0,
+                "return_30m_pct":1.5,
+                "volume_accel_5m":1.5,
+                "near_intraday_high":0.99,
+            },
+        },
+    ]
+    selected, _ = promote_opening_candidates(rows, target_n=2, phase_minutes=30)
+    assert [x["symbol"] for x in selected] == ["GOOD","HOT"]
+    assert selected[1]["opening_confirmation_score"] <= 59
