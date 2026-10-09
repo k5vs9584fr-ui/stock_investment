@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from taiwan_stock_agent.domain.leadership_overlay import leadership_overlay
+
 
 def top3_quality(row: dict) -> tuple[float, list[str]]:
     p = float(row.get("practical_score") or 0.0)
@@ -19,6 +21,10 @@ def top3_quality(row: dict) -> tuple[float, list[str]]:
     if "DARVAS_BOX_BREAKOUT" in flags:
         score += 2.0
         reasons.append("BOX_BREAKOUT")
+
+    leader_bonus, leader_flags = leadership_overlay(row)
+    score += leader_bonus
+    reasons.extend(leader_flags)
 
     danger = {
         "OVEREXTENDED_PENALTY",
