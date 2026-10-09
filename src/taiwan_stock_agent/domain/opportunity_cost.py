@@ -16,7 +16,7 @@ def opportunity_cost_score(row: dict) -> tuple[float, list[str]]:
     max_pos = float(risk.get("max_position_pct") or 10.0)
     flags = set(row.get("practical_flags") or [])
 
-    score = hybrid * 0.55 + practical * 0.20 + surge * 0.20
+    # Explosiveness-first capital efficiency: Hybrid remains the anchor, but\n    # surge gets more weight than slow practical quality so scarce capital is\n    # directed toward names with near-term acceleration potential.\n    score = hybrid * 0.50 + practical * 0.15 + surge * 0.30
     flags_out: list[str] = []
 
     if confidence == "HIGH":
