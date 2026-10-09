@@ -1,6 +1,11 @@
 import json
 from pathlib import Path
 
+from taiwan_stock_agent.domain.practical_score import (
+    calculate_practical_score,
+    practical_phase,
+)
+
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "data" / "final_signal_report.json"
 STRUCTURE_WATCHLIST = ROOT / "data" / "electronic_watchlist.json"
@@ -33,23 +38,52 @@ def main():
     if not rows:
         raise RuntimeError("final_signal_report.json 沒有 stocks")
 
-    rows.sort(key=lambda x: x.get("final_score", 0), reverse=True)
+    # Preserve the original model score, then add a second ranking layer that
+    # rewards realized momentum/ignition and penalizes stagnant or overextended
+    # candidates. This makes the ranking auditable and easy to A/B test.
+    for row in rows:
+        pscore, pflags = calculate_practical_score(row)
+        row["practical_score"] = pscore
+        row["practical_phase"] = practical_phase(pscore)
+        row["practical_flags"] = pflags
+
+    model_ranked = sorted(rows, key=lambda x: x.get("final_score", 0), reverse=True)
+    rows.sort(
+        key=lambda x: (
+            x.get("practical_score", 0),
+            x.get("final_score", 0),
+        ),
+        reverse=True,
+    )
 
     report = {
         "scan_date": actual_date,
         "model_version": "complete-v3",
+        "ranking_version": "practical-v1",
         "source": payload.get("source", "final_signal_report.json"),
         "pipeline": [
             "intraday_latent",
             "multi_day_structure",
             "chip_refinement",
             "freshness_guard",
+            "practical_momentum_overlay",
             "final_ranking",
         ],
         "count": len(rows),
+        "practical_a_plus": [
+            x for x in rows if str(x.get("practical_phase", "")).startswith("P-A+")
+        ],
+        "practical_a": [
+            x for x in rows if str(x.get("practical_phase", "")).startswith("P-A：")
+        ],
+        "practical_b": [
+            x for x in rows if str(x.get("practical_phase", "")).startswith("P-B")
+        ],
         "a_plus": [x for x in rows if str(x.get("final_phase", "")).startswith("A+")],
         "a": [x for x in rows if str(x.get("final_phase", "")).startswith("A級")],
         "b": [x for x in rows if str(x.get("final_phase", "")).startswith("B級")],
+        "top_practical": rows,
+        "top_model_score": model_ranked,
         "top_final": rows,
     }
 
@@ -62,6 +96,7 @@ def main():
             {
                 "scan_date": actual_date,
                 "model_version": "complete-v3",
+                "ranking_version": "practical-v1",
                 "source": payload.get("source", "final_signal_report.json"),
                 "count": len(rows),
                 "stocks": rows,
@@ -72,14 +107,15 @@ def main():
             default=str,
         )
 
-    print("\n=== COMPLETE V3 FINAL TOP 20 ===")
+    print("\n=== PRACTICAL V1 TOP 20 ===")
     for i, r in enumerate(rows[:20], 1):
         print(
             f"{i:02d}. {r.get('symbol')} {r.get('name','')} | "
+            f"practical={float(r.get('practical_score') or 0):.1f} | "
             f"final={float(r.get('final_score') or 0):.1f} | "
-            f"refined={float(r.get('refined_score') or 0):.1f} | "
+            f"surge={float(r.get('surge_score') or 0):.1f} | "
             f"chip={float(r.get('chip_score') or 0):+.1f} | "
-            f"{r.get('final_phase','')}"
+            f"{r.get('practical_phase','')}"
         )
 
 
