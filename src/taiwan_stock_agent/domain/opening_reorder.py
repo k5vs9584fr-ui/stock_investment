@@ -102,7 +102,11 @@ def opening_reorder_score(row: dict, phase_minutes: int = 15) -> tuple[float, li
             score += 5
             flags.append("OPEN30_HOLDING_HIGH")
         elif near_high < 0.95 and ret30 <= 0:
-            score -= 6
+            # A 30-minute failure to reclaim the early high is materially worse
+            # than a normal pullback: by this point the candidate has had enough
+            # time to prove persistence. Keep the penalty strong enough to push
+            # a borderline 75-point setup out of the actionable tier.
+            score -= 7
             flags.append("OPEN30_FAILED_SPIKE")
 
     else:
