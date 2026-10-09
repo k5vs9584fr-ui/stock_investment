@@ -15,6 +15,7 @@ from taiwan_stock_agent.domain.score_confidence import score_confidence
 from taiwan_stock_agent.domain.sector_concentration import apply_sector_concentration
 from taiwan_stock_agent.domain.segment_stats_loader import load_or_build_segment_stats
 from taiwan_stock_agent.domain.oos_tracker import append_signal_snapshot
+from taiwan_stock_agent.domain.oos_guard import oos_adaptation_guard
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "data" / "final_signal_report.json"
@@ -24,6 +25,7 @@ OUT = ROOT / "data" / "final_scan_results.json"
 HEAT_DIR = ROOT / "data" / "market_heat"
 SEGMENT_STATS = ROOT / "data" / "segmented_failure_review.json"
 BACKTEST_CSV = ROOT / "data" / "ai_backtest.csv"
+OOS_SUMMARY = ROOT / "data" / "oos_top3_summary.json"
 
 
 def load_json(path):
@@ -80,6 +82,12 @@ def main():
         raise RuntimeError("final_signal_report.json 沒有 stocks")
 
     market_context = load_market_context(actual_date)
+    try:
+        oos_summary = load_json(OOS_SUMMARY) if OOS_SUMMARY.exists() else {}
+    except Exception:
+        oos_summary = {}
+    oos_guard = oos_adaptation_guard(oos_summary)
+
     segment_stats, segment_stats_source = load_or_build_segment_stats(
         SEGMENT_STATS,
         BACKTEST_CSV,
@@ -137,6 +145,12 @@ def main():
 
     primary_top3 = [x for x in rows if x.get("action_tier") == "PRIMARY_TOP3"]
     primary_top3 = apply_sector_concentration(primary_top3)
+    for row in primary_top3:
+        raw = float(row.get("allocation_weight_sector_capped") or 0.0)
+        row["allocation_weight_oos_adjusted"] = round(
+            raw * float(oos_guard.get("position_multiplier") or 1.0),
+            4,
+        )
 
     report = {
         "scan_date": actual_date,
@@ -147,6 +161,7 @@ def main():
         "regime_v2": regime_v2,
         "segment_stats_source": segment_stats_source,
         "segment_stats_sample_n": int(segment_stats.get("sample_n") or 0),
+        "oos_guard": oos_guard,
         "pipeline": [
             "intraday_latent",
             "multi_day_structure",
