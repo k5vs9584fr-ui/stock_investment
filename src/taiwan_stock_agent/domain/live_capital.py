@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from taiwan_stock_agent.domain.rotation_cost import estimate_rotation_cost_pct, cost_adjusted_rotation
+from taiwan_stock_agent.domain.rotation_risk import rotation_risk_adjustment
 
 
 BASE_WEIGHTS = {1: 0.40, 2: 0.33, 3: 0.27}
@@ -73,6 +74,7 @@ def build_rotation_table(
             dec = replacement_fn(held, challenger, min_edge=min_edge)
             friction = estimate_rotation_cost_pct()
             dec = cost_adjusted_rotation(dec, friction)
+            dec = rotation_risk_adjustment(held, challenger, dec)
             rows.append({
                 "held_symbol": held.get("symbol"),
                 "held_name": held.get("name"),
