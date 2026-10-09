@@ -13,6 +13,7 @@ from taiwan_stock_agent.domain.top3_quality import top3_quality
 from taiwan_stock_agent.domain.hybrid_action_score import hybrid_action_score
 from taiwan_stock_agent.domain.score_confidence import score_confidence
 from taiwan_stock_agent.domain.sector_concentration import apply_sector_concentration
+from taiwan_stock_agent.domain.segment_stats_loader import load_or_build_segment_stats
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "data" / "final_signal_report.json"
@@ -20,6 +21,8 @@ STRUCTURE_WATCHLIST = ROOT / "data" / "electronic_watchlist.json"
 WATCHLIST = ROOT / "data" / "electronic_final_watchlist.json"
 OUT = ROOT / "data" / "final_scan_results.json"
 HEAT_DIR = ROOT / "data" / "market_heat"
+SEGMENT_STATS = ROOT / "data" / "segmented_failure_review.json"
+BACKTEST_CSV = ROOT / "data" / "ai_backtest.csv"
 
 
 def load_json(path):
@@ -76,6 +79,10 @@ def main():
         raise RuntimeError("final_signal_report.json 沒有 stocks")
 
     market_context = load_market_context(actual_date)
+    segment_stats, segment_stats_source = load_or_build_segment_stats(
+        SEGMENT_STATS,
+        BACKTEST_CSV,
+    )
     regime_v2 = classify_regime_v2(market_context)
     if market_context is None:
         market_context = {}
@@ -85,6 +92,7 @@ def main():
     # rewards realized momentum/ignition and penalizes stagnant or overextended
     # candidates. This makes the ranking auditable and easy to A/B test.
     for row in rows:
+        row["segment_stats"] = segment_stats
         pscore, pflags = calculate_practical_score(row, market_context=market_context)
         row["practical_score"] = pscore
         row["practical_phase"] = practical_phase(pscore)
@@ -135,6 +143,8 @@ def main():
         "source": payload.get("source", "final_signal_report.json"),
         "market_context": market_context,
         "regime_v2": regime_v2,
+        "segment_stats_source": segment_stats_source,
+        "segment_stats_sample_n": int(segment_stats.get("sample_n") or 0),
         "pipeline": [
             "intraday_latent",
             "multi_day_structure",
