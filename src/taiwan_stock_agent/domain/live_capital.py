@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from taiwan_stock_agent.domain.rotation_cost import estimate_rotation_cost_pct, cost_adjusted_rotation
+
 
 BASE_WEIGHTS = {1: 0.40, 2: 0.33, 3: 0.27}
 
@@ -69,6 +71,8 @@ def build_rotation_table(
             if str(held.get("symbol")) == str(challenger.get("symbol")):
                 continue
             dec = replacement_fn(held, challenger, min_edge=min_edge)
+            friction = estimate_rotation_cost_pct()
+            dec = cost_adjusted_rotation(dec, friction)
             rows.append({
                 "held_symbol": held.get("symbol"),
                 "held_name": held.get("name"),
