@@ -16,6 +16,8 @@ from taiwan_stock_agent.domain.sector_concentration import apply_sector_concentr
 from taiwan_stock_agent.domain.segment_stats_loader import load_or_build_segment_stats
 from taiwan_stock_agent.domain.oos_tracker import append_signal_snapshot
 from taiwan_stock_agent.domain.oos_guard import oos_adaptation_guard
+from taiwan_stock_agent.domain.opportunity_cost import opportunity_cost_score
+from taiwan_stock_agent.domain.opening_reorder import opening_reorder_score
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "data" / "final_signal_report.json"
@@ -127,10 +129,17 @@ def main():
             qscore,
         )
         row["score_confidence"] = score_confidence(row)
+        oc_score, oc_flags = opportunity_cost_score(row)
+        row["opportunity_cost_score"] = oc_score
+        row["opportunity_cost_flags"] = oc_flags
+        open_score, open_flags = opening_reorder_score(row)
+        row["opening_reorder_score"] = open_score
+        row["opening_reorder_flags"] = open_flags
 
     rows.sort(
         key=lambda x: (
             x.get("hybrid_action_score", 0),
+            x.get("opportunity_cost_score", 0),
             x.get("top3_quality_score", 0),
             x.get("practical_score", 0),
         ),
