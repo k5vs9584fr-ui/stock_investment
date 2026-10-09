@@ -147,3 +147,75 @@ def test_theme_overlap_penalizes_rotation():
     )
     assert "ROTATION_THEME_OVERLAP" in out["rotation_risk_reasons"]
     assert out["risk_adjustment"] == 0.0
+
+
+def _rotation_row(symbol, sector, hybrid, practical, surge, dt):
+    return {
+        "symbol": symbol,
+        "industry_code": sector,
+        "hybrid_action_score": hybrid,
+        "practical_score": practical,
+        "surge_score": surge,
+        "score_confidence": {"level": "HIGH"},
+        "risk_policy": {"max_position_pct": 20},
+        "dt_metrics": dt,
+    }
+
+
+def test_live_rotation_switches_only_when_edge_survives_all_layers():
+    from taiwan_stock_agent.domain.live_rotation import live_rotation_decision
+    held = _rotation_row("H", "24", 70, 68, 55, {
+        "vwap_gap_pct": -0.4,
+        "return_15m_pct": -0.2,
+        "volume_accel_5m": 0.9,
+        "near_intraday_high": 0.97,
+    })
+    challenger = _rotation_row("C", "27", 90, 88, 82, {
+        "vwap_gap_pct": 0.8,
+        "return_15m_pct": 1.2,
+        "volume_accel_5m": 1.8,
+        "near_intraday_high": 0.995,
+    })
+    out = live_rotation_decision(held, challenger, cost_pct=0.5)
+    assert out["final_action"] == "ROTATE"
+    assert out["live_rotation_edge"] >= 8
+
+
+def test_live_rotation_forbids_chasing_missed_entry():
+    from taiwan_stock_agent.domain.live_rotation import live_rotation_decision
+    held = _rotation_row("H", "24", 72, 70, 60, {
+        "vwap_gap_pct": 0.1,
+        "return_15m_pct": 0.2,
+        "volume_accel_5m": 1.0,
+        "near_intraday_high": 0.98,
+    })
+    challenger = _rotation_row("C", "27", 95, 92, 90, {
+        "vwap_gap_pct": 4.6,
+        "planned_entry_gap_pct": 4.0,
+        "return_15m_pct": 5.2,
+        "volume_accel_5m": 1.8,
+        "near_intraday_high": 0.998,
+    })
+    out = live_rotation_decision(held, challenger, cost_pct=0.0)
+    assert out["final_action"] == "KEEP_CURRENT"
+    assert "ROTATION_NO_CHASE" in out["live_rotation_reasons"]
+    assert out["chase_flags"]
+
+
+def test_live_rotation_rejects_failed_open_even_with_high_model_score():
+    from taiwan_stock_agent.domain.live_rotation import live_rotation_decision
+    held = _rotation_row("H", "24", 75, 74, 62, {
+        "vwap_gap_pct": 0.2,
+        "return_15m_pct": 0.3,
+        "volume_accel_5m": 1.1,
+        "near_intraday_high": 0.98,
+    })
+    challenger = _rotation_row("C", "27", 96, 94, 90, {
+        "vwap_gap_pct": -1.2,
+        "return_15m_pct": -1.5,
+        "volume_accel_5m": 0.5,
+        "near_intraday_high": 0.92,
+    })
+    out = live_rotation_decision(held, challenger, cost_pct=0.0)
+    assert out["final_action"] == "KEEP_CURRENT"
+    assert "ROTATION_CHALLENGER_OPEN_FAIL" in out["live_rotation_reasons"]
