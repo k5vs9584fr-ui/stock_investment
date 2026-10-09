@@ -19,7 +19,9 @@ from taiwan_stock_agent.domain.oos_guard import oos_adaptation_guard
 from taiwan_stock_agent.domain.opportunity_cost import opportunity_cost_score
 from taiwan_stock_agent.domain.opening_reorder import opening_reorder_score
 from taiwan_stock_agent.domain.opening_gate import promote_opening_candidates
-from taiwan_stock_agent.domain.live_capital import live_capital_plan
+from taiwan_stock_agent.domain.live_capital import live_capital_plan, build_rotation_table
+from taiwan_stock_agent.domain.opportunity_cost import replacement_decision
+from taiwan_stock_agent.domain.holdings import load_holdings, enrich_holdings
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "data" / "final_signal_report.json"
@@ -30,6 +32,7 @@ HEAT_DIR = ROOT / "data" / "market_heat"
 SEGMENT_STATS = ROOT / "data" / "segmented_failure_review.json"
 BACKTEST_CSV = ROOT / "data" / "ai_backtest.csv"
 OOS_SUMMARY = ROOT / "data" / "oos_top3_summary.json"
+HOLDINGS_FILE = ROOT / "data" / "holdings.json"
 
 
 def load_json(path):
@@ -163,6 +166,18 @@ def main():
         oos_guard=oos_guard,
         max_sector_weight=0.50,
     )
+    raw_holdings = load_holdings(HOLDINGS_FILE)
+    holdings_state = enrich_holdings(raw_holdings, rows)
+    matched_holdings = [x for x in holdings_state if x.get("matched")]
+    rotation_table = (
+        build_rotation_table(
+            matched_holdings,
+            opening_live_top3,
+            replacement_decision,
+            min_edge=8.0,
+        )
+        if matched_holdings else []
+    )
     for row in primary_top3:
         raw = float(row.get("allocation_weight_sector_capped") or 0.0)
         row["allocation_weight_oos_adjusted"] = round(
@@ -205,6 +220,8 @@ def main():
         "opening_live_top3": opening_live_top3,
         "opening_rejected": opening_rejected,
         "opening_capital_plan": opening_capital_plan,
+        "holdings_state": holdings_state,
+        "rotation_table": rotation_table,
         "secondary_top5": [x for x in rows if x.get("action_tier") == "SECONDARY_TOP5"],
         "top_practical": rows,
         "top_model_score": model_ranked,
