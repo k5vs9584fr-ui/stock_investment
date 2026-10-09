@@ -14,6 +14,7 @@ from taiwan_stock_agent.domain.darvas_overlay import darvas_overlay
 from taiwan_stock_agent.domain.relative_strength import relative_strength_overlay
 from taiwan_stock_agent.domain.divergence_overlay import divergence_overlay
 from taiwan_stock_agent.domain.chip_persistence import chip_persistence_overlay
+from taiwan_stock_agent.domain.catalyst_overlay import catalyst_overlay
 
 
 def _clip(value: float, low: float = 0.0, high: float = 100.0) -> float:
@@ -95,6 +96,10 @@ def calculate_practical_score(row: dict, market_context: dict | None = None) -> 
     chip_bonus, chip_flags = chip_persistence_overlay(row)
     score += chip_bonus
     flags.extend(chip_flags)
+
+    catalyst_bonus, catalyst_flags = catalyst_overlay(row)
+    score += catalyst_bonus
+    flags.extend(catalyst_flags)
 
     # "High education, no work experience": strong base model but little realized movement.
     stagnant = (
