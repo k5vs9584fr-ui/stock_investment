@@ -9,6 +9,7 @@ The goal is ranking, not replacing the underlying signal model.
 from __future__ import annotations
 
 from taiwan_stock_agent.domain.theory_overlay import calculate_theory_overlay
+from taiwan_stock_agent.domain.market_regime import market_regime_adjustment
 
 
 def _clip(value: float, low: float = 0.0, high: float = 100.0) -> float:
@@ -25,7 +26,7 @@ def _momentum_score(ret3: float, ret5: float, ret10: float) -> float:
     return _clip(raw)
 
 
-def calculate_practical_score(row: dict) -> tuple[float, list[str]]:
+def calculate_practical_score(row: dict, market_context: dict | None = None) -> tuple[float, list[str]]:
     """Return (score, flags) using only fields already present in scan rows."""
     final_score = float(row.get("final_score") or 0.0)
     chip_score = float(row.get("chip_score") or 50.0)
@@ -70,6 +71,10 @@ def calculate_practical_score(row: dict) -> tuple[float, list[str]]:
     theory_bonus, theory_flags = calculate_theory_overlay(row)
     score += theory_bonus
     flags.extend(theory_flags)
+
+    regime_bonus, regime_flags = market_regime_adjustment(market_context)
+    score += regime_bonus
+    flags.extend(regime_flags)
 
     # "High education, no work experience": strong base model but little realized movement.
     stagnant = (
