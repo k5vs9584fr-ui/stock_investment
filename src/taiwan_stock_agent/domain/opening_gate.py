@@ -42,10 +42,62 @@ def opening_eligibility(row: dict) -> tuple[bool, list[str]]:
     return eligible, reasons
 
 
+def opening_confirmation_score(row: dict) -> tuple[float, list[str]]:
+    """Re-rank eligible names using first-15-minute confirmation quality.
+
+    The premarket/hybrid score remains the anchor. Opening data can promote a
+    candidate that confirms with VWAP + momentum + volume, or demote one that is
+    already too extended / losing the high.
+    """
+    base = float(row.get("opening_reorder_score") or row.get("hybrid_action_score") or 0.0)
+    m = row.get("dt_metrics") or {}
+    if not m:
+        return round(base, 1), ["OPEN_CONFIRMATION_PENDING"]
+
+    score = base
+    reasons: list[str] = []
+
+    vwap_gap = float(m.get("vwap_gap_pct") or 0.0)
+    ret15 = float(m.get("return_15m_pct") or 0.0)
+    vol_accel = float(m.get("volume_accel_5m") or 1.0)
+    near_high = float(m.get("near_intraday_high") or 0.0)
+
+    if 0.15 <= vwap_gap <= 2.5:
+        score += 3.0
+        reasons.append("OPEN_ABOVE_VWAP")
+    elif vwap_gap > 4.0:
+        score -= 6.0
+        reasons.append("OPEN_CHASE_RISK")
+
+    if 0.25 <= ret15 <= 3.0:
+        score += 3.0
+        reasons.append("OPEN_POSITIVE_MOMENTUM")
+    elif ret15 > 5.0:
+        score -= 6.0
+        reasons.append("OPEN_MOMENTUM_OVEREXTENDED")
+
+    if vol_accel >= 1.4:
+        score += 4.0
+        reasons.append("OPEN_VOLUME_CONFIRMATION")
+    elif vol_accel < 0.8 and ret15 > 0:
+        score -= 3.0
+        reasons.append("OPEN_THIN_VOLUME")
+
+    if near_high >= 0.985:
+        score += 3.0
+        reasons.append("OPEN_HOLDING_HIGH")
+    elif near_high < 0.96:
+        score -= 4.0
+        reasons.append("OPEN_REJECTED_FROM_HIGH")
+
+    return round(max(0.0, min(100.0, score)), 1), reasons
+
+
 def promote_opening_candidates(rows: list[dict], target_n: int = 3) -> tuple[list[dict], list[dict]]:
     """Select the best eligible opening candidates and log rejected names.
 
-    Ranking uses opening_reorder_score first, then premarket Hybrid as tie-break.
+    Ranking uses opening confirmation quality first, then premarket Hybrid and
+    opportunity-cost score as tie-breakers.
     """
     annotated = []
     rejected = []
@@ -55,6 +107,11 @@ def promote_opening_candidates(rows: list[dict], target_n: int = 3) -> tuple[lis
         ok, reasons = opening_eligibility(r)
         r["opening_eligible"] = ok
         r["opening_gate_reasons"] = reasons
+
+        confirmation_score, confirmation_reasons = opening_confirmation_score(r)
+        r["opening_confirmation_score"] = confirmation_score
+        r["opening_confirmation_reasons"] = confirmation_reasons
+
         if ok:
             annotated.append(r)
         else:
@@ -62,7 +119,7 @@ def promote_opening_candidates(rows: list[dict], target_n: int = 3) -> tuple[lis
 
     annotated.sort(
         key=lambda r: (
-            float(r.get("opening_reorder_score") or r.get("hybrid_action_score") or 0.0),
+            float(r.get("opening_confirmation_score") or 0.0),
             float(r.get("hybrid_action_score") or 0.0),
             float(r.get("opportunity_cost_score") or 0.0),
         ),
