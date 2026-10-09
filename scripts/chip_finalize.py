@@ -14,6 +14,7 @@ from taiwan_stock_agent.domain.hybrid_action_score import hybrid_action_score
 from taiwan_stock_agent.domain.score_confidence import score_confidence
 from taiwan_stock_agent.domain.sector_concentration import apply_sector_concentration
 from taiwan_stock_agent.domain.segment_stats_loader import load_or_build_segment_stats
+from taiwan_stock_agent.domain.oos_tracker import append_signal_snapshot
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "data" / "final_signal_report.json"
@@ -177,6 +178,11 @@ def main():
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with OUT.open("w", encoding="utf-8") as f:
         json.dump(report, f, ensure_ascii=False, indent=2, default=str)
+
+    append_signal_snapshot(
+        report,
+        ROOT / "data" / "oos_top3_tracking.csv",
+    )
 
     with WATCHLIST.open("w", encoding="utf-8") as f:
         json.dump(
