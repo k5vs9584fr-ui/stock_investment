@@ -16,6 +16,7 @@ from taiwan_stock_agent.domain.divergence_overlay import divergence_overlay
 from taiwan_stock_agent.domain.chip_persistence import chip_persistence_overlay
 from taiwan_stock_agent.domain.catalyst_overlay import catalyst_overlay
 from taiwan_stock_agent.domain.failure_risk import failure_risk_overlay
+from taiwan_stock_agent.domain.segmented_risk import segmented_risk_adjustment
 
 
 def _clip(value: float, low: float = 0.0, high: float = 100.0) -> float:
@@ -105,6 +106,15 @@ def calculate_practical_score(row: dict, market_context: dict | None = None) -> 
     failure_bonus, failure_flags = failure_risk_overlay(row)
     score += failure_bonus
     flags.extend(failure_flags)
+
+    segment_stats = row.get("segment_stats")
+    segment_bonus, segment_flags = segmented_risk_adjustment(
+        row.get("industry") or row.get("industry_code"),
+        list(row.get("surge_flags") or []),
+        segment_stats,
+    )
+    score += segment_bonus
+    flags.extend(segment_flags)
 
     # "High education, no work experience": strong base model but little realized movement.
     stagnant = (
