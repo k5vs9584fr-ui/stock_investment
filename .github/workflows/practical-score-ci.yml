@@ -26,7 +26,8 @@ jobs:
         env:
           PYTHONPATH: src
         run: |
-          pytest -q             tests/unit/test_practical_score.py             tests/unit/test_regime_darvas.py             tests/unit/test_theory_overlay.py             tests/unit/test_rs_divergence_risk.py             tests/unit/test_action_tier.py             tests/unit/test_regime_v2_entry_top3.py             tests/unit/test_chip_hybrid.py             tests/unit/test_confidence_sector.py             tests/unit/test_catalyst_review.py             tests/unit/test_failure_risk.py             tests/unit/test_segmented_risk.py             tests/unit/test_current_schema_compat.py
+          pytest -q             tests/unit/test_practical_score.py             tests/unit/test_regime_darvas.py             tests/unit/test_theory_overlay.py             tests/unit/test_rs_divergence_risk.py             tests/unit/test_action_tier.py             tests/unit/test_regime_v2_entry_top3.py             tests/unit/test_chip_hybrid.py             tests/unit/test_confidence_sector.py             tests/unit/test_catalyst_review.py             tests/unit/test_failure_risk.py             tests/unit/test_segmented_risk.py             tests/unit/test_current_schema_compat.py \
+            tests/unit/test_oos_tracker.py
 
       - name: Run final ranking end-to-end
         env:
