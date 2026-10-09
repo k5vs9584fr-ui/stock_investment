@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from taiwan_stock_agent.domain.explosive_failure import explosive_failure_adjustment
+
 
 def _clip(value: float) -> float:
     return max(0.0, min(100.0, value))
@@ -144,5 +146,15 @@ def opening_reorder_score(row: dict, phase_minutes: int = 15) -> tuple[float, li
     penalty, penalty_flags = missed_entry_penalty(row)
     score += penalty
     flags.extend(penalty_flags)
+
+    failure = explosive_failure_adjustment(row, phase_minutes=phase_minutes)
+    score += float(failure.get("penalty") or 0.0)
+    flags.extend(failure.get("reasons") or [])
+    if failure.get("severity") == "HARD_FAIL":
+        score = min(score, 59.0)
+        flags.append("EXPLOSIVE_HARD_FAIL_DROP")
+    elif failure.get("severity") == "SOFT_FAIL":
+        score = min(score, 71.0)
+        flags.append("EXPLOSIVE_SOFT_FAIL_WATCH_ONLY")
 
     return round(_clip(score), 1), flags
