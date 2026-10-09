@@ -31,7 +31,8 @@ jobs:
             tests/unit/test_oos_guard.py \
             tests/unit/test_oos_settlement.py \
             tests/unit/test_market_universe.py \
-            tests/unit/test_decision_consistency.py
+            tests/unit/test_decision_consistency.py \
+            tests/unit/test_opportunity_opening.py
 
       - name: Compile expanded scanners
         env:
