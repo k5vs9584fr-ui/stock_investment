@@ -3,7 +3,10 @@ from __future__ import annotations
 import csv
 from pathlib import Path
 from datetime import datetime
+
 import yfinance as yf
+
+from taiwan_stock_agent.domain.oos_settlement import extract_future_ohlc, settle_row
 
 ROOT = Path(__file__).resolve().parents[1]
 TRACK = ROOT / "data" / "oos_top3_tracking.csv"
@@ -21,12 +24,8 @@ def fetch_history(symbol: str, start: str):
             if not df.empty:
                 return df
         except Exception:
-            pass
+            continue
     return None
-
-
-def pct(a, b):
-    return (b / a - 1.0) * 100.0
 
 
 def main():
@@ -36,60 +35,39 @@ def main():
 
     rows = list(csv.DictReader(TRACK.open("r", encoding="utf-8")))
     changed = False
+    settled = []
 
     for row in rows:
         if str(row.get("resolved_t5")).lower() == "true":
+            settled.append(row)
             continue
 
         try:
             signal_date = datetime.strptime(row["signal_date"], "%Y-%m-%d").date()
             entry = float(row["close_price"])
+            if entry <= 0:
+                raise ValueError("invalid close_price")
         except Exception:
+            settled.append(row)
             continue
 
         df = fetch_history(row["symbol"], signal_date.isoformat())
         if df is None or df.empty:
+            settled.append(row)
             continue
 
-        closes = []
-        highs = []
-        lows = []
-        for idx, rec in df.iterrows():
-            d = idx.date()
-            if d <= signal_date:
-                continue
-            try:
-                closes.append(float(rec["Close"]))
-                highs.append(float(rec["High"]))
-                lows.append(float(rec["Low"]))
-            except Exception:
-                continue
+        future = extract_future_ohlc(df, signal_date)
+        updated, row_changed = settle_row(row, future)
+        settled.append(updated)
+        changed = changed or row_changed
 
-        if len(closes) >= 1 and str(row.get("resolved_t1")).lower() != "true":
-            row["t1_return"] = round(pct(entry, closes[0]), 3)
-            row["resolved_t1"] = True
-            changed = True
-
-        if len(closes) >= 3 and str(row.get("resolved_t3")).lower() != "true":
-            row["t3_return"] = round(pct(entry, closes[2]), 3)
-            row["resolved_t3"] = True
-            changed = True
-
-        if len(closes) >= 5:
-            if str(row.get("resolved_t5")).lower() != "true":
-                row["t5_return"] = round(pct(entry, closes[4]), 3)
-                row["resolved_t5"] = True
-                changed = True
-            row["max_adverse_5d"] = round(min(pct(entry, x) for x in lows[:5]), 3)
-            row["max_favorable_5d"] = round(max(pct(entry, x) for x in highs[:5]), 3)
-
-    if changed:
+    if changed and settled:
         with TRACK.open("w", encoding="utf-8", newline="") as f:
-            w = csv.DictWriter(f, fieldnames=rows[0].keys())
+            w = csv.DictWriter(f, fieldnames=settled[0].keys())
             w.writeheader()
-            w.writerows(rows)
+            w.writerows(settled)
 
-    print(f"processed {len(rows)} OOS signals")
+    print(f"processed {len(rows)} OOS signals; changed={changed}")
 
 
 if __name__ == "__main__":
