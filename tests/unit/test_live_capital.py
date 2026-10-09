@@ -219,3 +219,49 @@ def test_live_rotation_rejects_failed_open_even_with_high_model_score():
     out = live_rotation_decision(held, challenger, cost_pct=0.0)
     assert out["final_action"] == "KEEP_CURRENT"
     assert "ROTATION_CHALLENGER_OPEN_FAIL" in out["live_rotation_reasons"]
+
+
+def test_rotation_position_plan_full_rotation_keeps_cash_buffer():
+    from taiwan_stock_agent.domain.live_capital import rotation_position_plan
+    out = rotation_position_plan(
+        {"symbol":"H"},
+        {"symbol":"C"},
+        {"final_action":"ROTATE"},
+        current_weight=0.40,
+        max_new_weight=0.40,
+        cash_buffer=0.10,
+    )
+    assert out["mode"] == "FULL_ROTATION"
+    assert out["sell_weight"] == 0.40
+    assert out["buy_weight"] == 0.36
+    assert out["cash_from_rotation"] == 0.04
+
+
+def test_rotation_position_plan_watch_is_partial():
+    from taiwan_stock_agent.domain.live_capital import rotation_position_plan
+    out = rotation_position_plan(
+        {"symbol":"H"},
+        {"symbol":"C"},
+        {"final_action":"WATCH_ROTATION"},
+        current_weight=0.40,
+        watch_fraction=0.35,
+        cash_buffer=0.10,
+    )
+    assert out["mode"] == "PARTIAL_ROTATION"
+    assert out["sell_weight"] == 0.14
+    assert out["remaining_held_weight"] == 0.26
+    assert out["buy_weight"] == 0.126
+
+
+def test_rotation_position_plan_keep_does_nothing():
+    from taiwan_stock_agent.domain.live_capital import rotation_position_plan
+    out = rotation_position_plan(
+        {"symbol":"H"},
+        {"symbol":"C"},
+        {"final_action":"KEEP_CURRENT"},
+        current_weight=0.40,
+    )
+    assert out["mode"] == "KEEP"
+    assert out["sell_weight"] == 0.0
+    assert out["buy_weight"] == 0.0
+    assert out["remaining_held_weight"] == 0.40
