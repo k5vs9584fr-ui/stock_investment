@@ -10,6 +10,7 @@ from __future__ import annotations
 
 from taiwan_stock_agent.domain.theory_overlay import calculate_theory_overlay
 from taiwan_stock_agent.domain.market_regime import market_regime_adjustment
+from taiwan_stock_agent.domain.darvas_overlay import darvas_overlay
 
 
 def _clip(value: float, low: float = 0.0, high: float = 100.0) -> float:
@@ -75,6 +76,10 @@ def calculate_practical_score(row: dict, market_context: dict | None = None) -> 
     regime_bonus, regime_flags = market_regime_adjustment(market_context)
     score += regime_bonus
     flags.extend(regime_flags)
+
+    darvas_bonus, darvas_flags = darvas_overlay(row)
+    score += darvas_bonus
+    flags.extend(darvas_flags)
 
     # "High education, no work experience": strong base model but little realized movement.
     stagnant = (
