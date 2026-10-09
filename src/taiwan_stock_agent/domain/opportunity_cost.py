@@ -19,8 +19,12 @@ def opportunity_cost_score(row: dict) -> tuple[float, list[str]]:
     flags = set(row.get("practical_flags") or [])
     lifecycle = classify_explosive_lifecycle(row)
 
-    # Explosiveness-first capital efficiency: Hybrid remains the anchor, but\n    # surge gets more weight than slow practical quality so scarce capital is\n    # directed toward names with near-term acceleration potential.\n    score = hybrid * 0.50 + practical * 0.15 + surge * 0.30
+    # Explosiveness-first capital efficiency: Hybrid remains the anchor, but
+    # surge gets more weight than slow practical quality so scarce capital is
+    # directed toward names with near-term acceleration potential.
+    score = hybrid * 0.50 + practical * 0.15 + surge * 0.30
     score += float(lifecycle.get("score") or 0.0) * 0.20
+
     flags_out: list[str] = []
 
     if lifecycle.get("phase") == "OVERHEATED":
