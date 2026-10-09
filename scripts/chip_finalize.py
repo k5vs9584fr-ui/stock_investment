@@ -6,6 +6,7 @@ from taiwan_stock_agent.domain.practical_score import (
     practical_phase,
 )
 from taiwan_stock_agent.domain.risk_policy import risk_policy
+from taiwan_stock_agent.domain.action_tier import action_tier, allocation_weight
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "data" / "final_signal_report.json"
@@ -89,6 +90,11 @@ def main():
         reverse=True,
     )
 
+    for rank, row in enumerate(rows, 1):
+        row["practical_rank"] = rank
+        row["action_tier"] = action_tier(rank, float(row.get("practical_score") or 0))
+        row["allocation_weight"] = allocation_weight(rank, float(row.get("practical_score") or 0))
+
     report = {
         "scan_date": actual_date,
         "model_version": "complete-v3",
@@ -116,6 +122,8 @@ def main():
         "a_plus": [x for x in rows if str(x.get("final_phase", "")).startswith("A+")],
         "a": [x for x in rows if str(x.get("final_phase", "")).startswith("A級")],
         "b": [x for x in rows if str(x.get("final_phase", "")).startswith("B級")],
+        "primary_top3": [x for x in rows if x.get("action_tier") == "PRIMARY_TOP3"],
+        "secondary_top5": [x for x in rows if x.get("action_tier") == "SECONDARY_TOP5"],
         "top_practical": rows,
         "top_model_score": model_ranked,
         "top_final": rows,
