@@ -21,7 +21,7 @@ def test_oneil_minervini_livermore_alignment_adds_bonus():
     })
     assert bonus > 0
     assert "ONEIL_LEADER_BREAKOUT" in flags
-    assert "MINERVINI_VCP_LIKE" in flags
+    assert "MINERVINI_VCP_LIKE_UNCONFIRMED" in flags
     assert "LIVERMORE_PIVOT_CONFIRM" in flags
     assert "WEINSTEIN_STAGE2_PROXY" in flags
 
