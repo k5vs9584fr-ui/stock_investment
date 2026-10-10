@@ -3,7 +3,7 @@ export PYTHONPATH
 PYTHON := .venv/bin/python
 _TODAY := $(shell date +%Y-%m-%d)
 
-.PHONY: plan report settle backtest backtest-compare factor-report optimize test setup migrate api install flow show bot-setup bot monitor surge surge-live surge-factor surge-tune surge-backtest heat-scan heat-update theme-flow tight-base-bt tight-base-v2 rotation analyze growth brief holdings-review
+.PHONY: plan report settle backtest backtest-compare factor-report optimize test setup migrate api install flow show bot-setup bot monitor surge surge-live surge-factor surge-tune surge-backtest heat-scan heat-update theme-flow tight-base-bt tight-base-v2 rotation analyze growth brief holdings-review intraday-orders
 
 DATE ?= $(shell date +%Y-%m-%d)
 LLM  ?=
@@ -314,3 +314,17 @@ holdings-review:
 		$(if $(DATE),--date $(DATE)) \
 		--lookback $(LOOKBACK) \
 		$(if $(filter 1,$(NO_LLM)),--no-llm)
+
+
+# ── 盤中唯一執行清單 ──────────────────────────────────────────────────────────
+# 用法:
+#   make intraday-orders PHASE=5 PORTFOLIO_VALUE=500000
+#   make intraday-orders PHASE=15 PORTFOLIO_VALUE=500000
+#   make intraday-orders PHASE=30 PORTFOLIO_VALUE=500000
+PHASE ?= 15
+PORTFOLIO_VALUE ?=
+
+intraday-orders:
+	$(PYTHON) scripts/intraday_orders.py \
+		--phase $(PHASE) \
+		$(if $(PORTFOLIO_VALUE),--portfolio-value $(PORTFOLIO_VALUE))
