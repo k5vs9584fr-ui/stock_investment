@@ -8,6 +8,7 @@ from taiwan_stock_agent.domain.live_capital import (
     rotation_position_plan,
 )
 from taiwan_stock_agent.domain.opening_gate import promote_opening_candidates
+from taiwan_stock_agent.domain.portfolio_exposure import portfolio_exposure_guard, rotation_exposure_capacity
 
 
 def _symbol(row: dict) -> str:
@@ -80,6 +81,8 @@ def build_intraday_decision_report(
     oos_guard: dict | None = None,
     holding_weights: dict[str, float] | None = None,
     cost_pct: float | None = None,
+    max_total_exposure: float = 0.90,
+    max_sector_exposure: float = 0.50,
 ) -> dict:
     """Build one compact, reusable intraday decision payload.
 
@@ -109,6 +112,16 @@ def build_intraday_decision_report(
     }
 
     by_symbol = {_symbol(r): r for r in ranked_rows}
+    symbol_sectors = {
+        _symbol(r): str(r.get("industry_code") or r.get("industry") or "UNKNOWN")
+        for r in ranked_rows
+    }
+    exposure = portfolio_exposure_guard(
+        holding_weights=holding_weights,
+        symbol_sectors=symbol_sectors,
+        max_total_exposure=max_total_exposure,
+        max_sector_exposure=max_sector_exposure,
+    )
     matched_holdings: list[dict] = []
     holding_views: list[dict] = []
     for h in holdings:
