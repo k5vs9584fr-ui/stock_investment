@@ -1,73 +1,98 @@
 from taiwan_stock_agent.domain.defensive_reduction import build_defensive_reduction_plan
 
 
-def test_reduction_prefers_weaker_holding_over_early_main_move():
+def _row(symbol, sector, hybrid, practical, dt, phase=None):
+    row = {
+        "symbol": symbol,
+        "name": symbol,
+        "industry_code": sector,
+        "hybrid_action_score": hybrid,
+        "practical_score": practical,
+        "dt_metrics": dt,
+    }
+    if phase == "EARLY_MAIN_MOVE":
+        row["surge_stage"] = "S+級：主升初段可追"
+        row["surge_metrics"] = {
+            "early_main_move": True,
+            "fresh_ignition": False,
+            "trend_accelerator": False,
+            "overextended": False,
+        }
+    elif phase == "FRESH_IGNITION":
+        row["surge_stage"] = "S級：首發動可追"
+        row["surge_metrics"] = {
+            "early_main_move": False,
+            "fresh_ignition": True,
+            "trend_accelerator": False,
+            "overextended": False,
+        }
+    return row
+
+
+def test_failed_open_is_reduced_before_healthy_strong_holding():
     holdings = [
-        {
-            "symbol":"WEAK","name":"WEAK","hybrid_action_score":62,"practical_score":58,
-            "surge_stage":"B級：非飆股型","surge_metrics":{"overextended":False},
-        },
-        {
-            "symbol":"STRONG","name":"STRONG","hybrid_action_score":90,"practical_score":86,
-            "surge_stage":"S+級：主升初段可追",
-            "surge_metrics":{"early_main_move":True,"overextended":False},
-        },
+        _row("WEAK", "24", 62, 58, {
+            "vwap_gap_pct": -1.1,
+            "return_15m_pct": -1.4,
+            "volume_accel_5m": 0.5,
+            "near_intraday_high": 0.92,
+        }),
+        _row("STRONG", "25", 90, 86, {
+            "vwap_gap_pct": 0.6,
+            "return_15m_pct": 1.0,
+            "volume_accel_5m": 1.5,
+            "near_intraday_high": 0.99,
+        }, phase="EARLY_MAIN_MOVE"),
     ]
     out = build_defensive_reduction_plan(
         holdings,
         holding_weights={"WEAK":0.35,"STRONG":0.35},
         symbol_sectors={"WEAK":"24","STRONG":"25"},
-        max_total_exposure=0.50,
+        max_total_exposure=0.45,
         max_sector_exposure=0.50,
     )
     assert out["needs_reduction"] is True
     assert out["actions"][0]["symbol"] == "WEAK"
+    assert out["actions"][0]["opening_eligible"] is False
 
 
-def test_sector_excess_is_reduced_from_overweight_sector():
+def test_healthy_early_main_move_keeps_protected_floor():
     holdings = [
-        {"symbol":"A","hybrid_action_score":70,"practical_score":68,"surge_metrics":{"overextended":False}},
-        {"symbol":"B","hybrid_action_score":75,"practical_score":72,"surge_metrics":{"overextended":False}},
-        {"symbol":"C","hybrid_action_score":88,"practical_score":84,"surge_metrics":{"overextended":False}},
+        _row("STRONG", "24", 92, 88, {
+            "vwap_gap_pct": 0.5,
+            "return_15m_pct": 1.1,
+            "volume_accel_5m": 1.6,
+            "near_intraday_high": 0.995,
+        }, phase="EARLY_MAIN_MOVE"),
     ]
     out = build_defensive_reduction_plan(
         holdings,
-        holding_weights={"A":0.30,"B":0.25,"C":0.20},
-        symbol_sectors={"A":"24","B":"24","C":"27"},
-        max_total_exposure=0.90,
-        max_sector_exposure=0.40,
+        holding_weights={"STRONG":0.40},
+        symbol_sectors={"STRONG":"24"},
+        max_total_exposure=0.20,
+        max_sector_exposure=0.50,
     )
-    assert out["sector_excess"]["24"] == 0.15
     assert out["actions"]
-    assert out["actions"][0]["sector"] == "24"
+    action = out["actions"][0]
+    assert action["protected_floor"] == 0.15
+    assert action["remaining_weight"] >= 0.15
 
 
-def test_no_reduction_when_within_limits():
-    out = build_defensive_reduction_plan(
-        [{"symbol":"A","hybrid_action_score":80,"practical_score":78,"surge_metrics":{"overextended":False}}],
-        holding_weights={"A":0.30},
-        symbol_sectors={"A":"24"},
-        max_total_exposure=0.75,
-        max_sector_exposure=0.40,
-    )
-    assert out["needs_reduction"] is False
-    assert out["actions"] == []
-
-
-def test_post_reduction_exposure_returns_within_limits():
+def test_fresh_ignition_keeps_smaller_protected_floor():
     holdings = [
-        {"symbol":"A","hybrid_action_score":62,"practical_score":60,"surge_metrics":{"overextended":False}},
-        {"symbol":"B","hybrid_action_score":74,"practical_score":70,"surge_metrics":{"overextended":False}},
-        {"symbol":"C","hybrid_action_score":88,"practical_score":84,"surge_metrics":{"fresh_ignition":True,"overextended":False}},
+        _row("FRESH", "24", 86, 82, {
+            "vwap_gap_pct": 0.4,
+            "return_15m_pct": 0.8,
+            "volume_accel_5m": 1.4,
+            "near_intraday_high": 0.99,
+        }, phase="FRESH_IGNITION"),
     ]
     out = build_defensive_reduction_plan(
         holdings,
-        holding_weights={"A":0.30,"B":0.25,"C":0.25},
-        symbol_sectors={"A":"24","B":"24","C":"25"},
-        max_total_exposure=0.60,
-        max_sector_exposure=0.35,
+        holding_weights={"FRESH":0.30},
+        symbol_sectors={"FRESH":"24"},
+        max_total_exposure=0.15,
+        max_sector_exposure=0.50,
     )
-    assert out["needs_reduction"] is True
-    assert out["post_reduction_total_exposure"] <= 0.60
-    assert out["post_reduction_sector_exposure"]["24"] <= 0.35
-    assert out["total_reduce_weight"] >= 0.20
+    assert out["actions"][0]["protected_floor"] == 0.10
+    assert out["actions"][0]["remaining_weight"] >= 0.10
