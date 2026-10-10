@@ -52,3 +52,22 @@ def test_no_reduction_when_within_limits():
     )
     assert out["needs_reduction"] is False
     assert out["actions"] == []
+
+
+def test_post_reduction_exposure_returns_within_limits():
+    holdings = [
+        {"symbol":"A","hybrid_action_score":62,"practical_score":60,"surge_metrics":{"overextended":False}},
+        {"symbol":"B","hybrid_action_score":74,"practical_score":70,"surge_metrics":{"overextended":False}},
+        {"symbol":"C","hybrid_action_score":88,"practical_score":84,"surge_metrics":{"fresh_ignition":True,"overextended":False}},
+    ]
+    out = build_defensive_reduction_plan(
+        holdings,
+        holding_weights={"A":0.30,"B":0.25,"C":0.25},
+        symbol_sectors={"A":"24","B":"24","C":"25"},
+        max_total_exposure=0.60,
+        max_sector_exposure=0.35,
+    )
+    assert out["needs_reduction"] is True
+    assert out["post_reduction_total_exposure"] <= 0.60
+    assert out["post_reduction_sector_exposure"]["24"] <= 0.35
+    assert out["total_reduce_weight"] >= 0.20
