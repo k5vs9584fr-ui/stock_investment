@@ -175,3 +175,29 @@ def test_summary_counts_only_selected_rotations():
     ]
     assert len(actionable) <= 1
     assert out["summary"]["rotation_count"] + out["summary"]["watch_rotation_count"] == len(actionable)
+
+
+def test_report_rotation_sizing_respects_top3_target_weight():
+    rows = [
+        _row("H", "24", 68, 66, 50, {
+            "vwap_gap_pct": -0.3, "return_15m_pct": -0.2,
+            "volume_accel_5m": 0.9, "near_intraday_high": 0.97,
+        }),
+        _row("C", "27", 95, 92, 88, {
+            "vwap_gap_pct": 0.8, "return_15m_pct": 1.3,
+            "volume_accel_5m": 1.9, "near_intraday_high": 0.996,
+        }),
+    ]
+    holdings = [{"symbol": "H", "cost": 100, "shares": 1000}]
+    out = build_intraday_decision_report(
+        rows,
+        holdings,
+        holding_weights={"H": 0.40, "C": 0.25},
+        cost_pct=0.0,
+    )
+    assert out["selected_rotations"]
+    plan = out["selected_rotations"][0]["position_plan"]
+    assert plan["target_challenger_weight"] == 0.40
+    assert plan["existing_challenger_weight"] == 0.25
+    assert plan["buy_weight"] <= 0.15
+    assert plan["capacity_limited"] is True
