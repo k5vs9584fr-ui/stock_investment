@@ -26,6 +26,6 @@ def main():
     if not TRACK.exists():
         OUT.write_text(json.dumps({"signals_total":0,"overall":{"n":0}},indent=2),encoding="utf-8");return
     rows=list(csv.DictReader(TRACK.open("r",encoding="utf-8")))
-    out={"signals_total":len(rows),"overall":stats(rows),"by_rank":grouped(rows,"rank"),"by_confidence":grouped(rows,"confidence_level"),"by_entry_mode":grouped(rows,"entry_mode"),"by_regime":grouped(rows,"regime_v2"),"by_sector":grouped(rows,"sector_key")}
+    out={"signals_total":len(rows),"overall":stats(rows),"by_rank":grouped(rows,"rank"),"by_confidence":grouped(rows,"confidence_level"),"by_entry_mode":grouped(rows,"entry_mode"),"by_regime":grouped(rows,"regime_v2"),"by_sector":grouped(rows,"sector_key"),"by_explosive_phase":grouped(rows,"explosive_phase")}
     OUT.write_text(json.dumps(out,ensure_ascii=False,indent=2),encoding="utf-8");print(json.dumps(out,ensure_ascii=False,indent=2))
 if __name__=="__main__":main()
