@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from taiwan_stock_agent.domain.leadership_overlay import leadership_overlay
 from taiwan_stock_agent.domain.explosive_lifecycle import classify_explosive_lifecycle
+from taiwan_stock_agent.domain.explosive_history import explosive_history_adjustment
 
 
 def top3_quality(row: dict) -> tuple[float, list[str]]:
@@ -31,6 +32,13 @@ def top3_quality(row: dict) -> tuple[float, list[str]]:
     lifecycle = classify_explosive_lifecycle(row)
     score += float(lifecycle.get("score") or 0.0) * 0.35
     reasons.append(f"EXPLOSIVE_PHASE:{lifecycle.get('phase')}")
+
+    history_bonus, history_flags = explosive_history_adjustment(
+        row,
+        row.get("explosive_history_stats"),
+    )
+    score += history_bonus
+    reasons.extend(history_flags)
 
     # Explosiveness-first overlay. Reward early acceleration much more than
     # slow structural quality, but only while the move remains buyable.
