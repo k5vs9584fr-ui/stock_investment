@@ -44,12 +44,13 @@ jobs:
             tests/unit/test_dynamic_exposure.py \
             tests/unit/test_execution_plan.py \
             tests/unit/test_order_sheet.py \
+            tests/unit/test_intraday_orders_cli.py \
             tests/unit/test_defensive_reduction.py
 
       - name: Compile expanded scanners
         env:
           PYTHONPATH: src
-        run: python -m py_compile scripts/daytrade_scan.py scripts/surge_scan.py src/taiwan_stock_agent/domain/market_universe.py
+        run: python -m py_compile scripts/daytrade_scan.py scripts/surge_scan.py scripts/intraday_orders.py src/taiwan_stock_agent/domain/market_universe.py
 
       - name: Run final ranking end-to-end
         env:
