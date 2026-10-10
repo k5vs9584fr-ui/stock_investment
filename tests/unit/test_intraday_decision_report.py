@@ -106,3 +106,72 @@ def test_report_rotation_actions_are_prioritized():
     actions = out["rotation_actions"]
     assert actions
     assert priority[actions[0]["action"]] >= priority[actions[-1]["action"]]
+
+
+def test_selected_rotations_do_not_reuse_same_challenger():
+    rows = [
+        _row("H1", "24", 68, 66, 50, {
+            "vwap_gap_pct": -0.3, "return_15m_pct": -0.2,
+            "volume_accel_5m": 0.9, "near_intraday_high": 0.97,
+        }),
+        _row("H2", "25", 70, 68, 52, {
+            "vwap_gap_pct": -0.2, "return_15m_pct": -0.1,
+            "volume_accel_5m": 0.9, "near_intraday_high": 0.975,
+        }),
+        _row("C1", "27", 95, 92, 88, {
+            "vwap_gap_pct": 0.8, "return_15m_pct": 1.3,
+            "volume_accel_5m": 1.9, "near_intraday_high": 0.996,
+        }),
+        _row("C2", "28", 90, 87, 80, {
+            "vwap_gap_pct": 0.5, "return_15m_pct": 0.9,
+            "volume_accel_5m": 1.5, "near_intraday_high": 0.992,
+        }),
+    ]
+    holdings = [
+        {"symbol": "H1", "cost": 100, "shares": 1000},
+        {"symbol": "H2", "cost": 100, "shares": 1000},
+    ]
+    out = build_intraday_decision_report(
+        rows,
+        holdings,
+        holding_weights={"H1": 0.30, "H2": 0.30},
+        cost_pct=0.0,
+    )
+    selected = out["selected_rotations"]
+    challenger_symbols = [x["challenger_symbol"] for x in selected]
+    held_symbols = [x["held_symbol"] for x in selected]
+    assert len(challenger_symbols) == len(set(challenger_symbols))
+    assert len(held_symbols) == len(set(held_symbols))
+
+
+def test_summary_counts_only_selected_rotations():
+    rows = [
+        _row("H1", "24", 68, 66, 50, {
+            "vwap_gap_pct": -0.3, "return_15m_pct": -0.2,
+            "volume_accel_5m": 0.9, "near_intraday_high": 0.97,
+        }),
+        _row("H2", "25", 69, 67, 51, {
+            "vwap_gap_pct": -0.2, "return_15m_pct": -0.1,
+            "volume_accel_5m": 0.9, "near_intraday_high": 0.975,
+        }),
+        _row("C", "27", 96, 93, 90, {
+            "vwap_gap_pct": 0.8, "return_15m_pct": 1.3,
+            "volume_accel_5m": 1.9, "near_intraday_high": 0.996,
+        }),
+    ]
+    holdings = [
+        {"symbol": "H1", "cost": 100, "shares": 1000},
+        {"symbol": "H2", "cost": 100, "shares": 1000},
+    ]
+    out = build_intraday_decision_report(
+        rows,
+        holdings,
+        holding_weights={"H1": 0.30, "H2": 0.30},
+        cost_pct=0.0,
+    )
+    actionable = [
+        x for x in out["selected_rotations"]
+        if x["action"] in {"ROTATE", "WATCH_ROTATION"}
+    ]
+    assert len(actionable) <= 1
+    assert out["summary"]["rotation_count"] + out["summary"]["watch_rotation_count"] == len(actionable)
