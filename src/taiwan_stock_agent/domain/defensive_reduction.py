@@ -150,4 +150,6 @@ def build_defensive_reduction_plan(
         "post_reduction_total_exposure": round(post_total, 4),
         "post_reduction_sector_exposure": {k: round(v, 4) for k, v in post_sectors.items()},
         "remaining_total_excess": round(remaining_total, 4),
+        "remaining_sector_excess": {k: round(v, 4) for k, v in remaining_sector.items()},
+        "fully_de_risked": remaining_total <= 1e-9 and not any(v > 1e-9 for v in remaining_sector.values()),
     }
