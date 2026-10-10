@@ -40,7 +40,8 @@ jobs:
             tests/unit/test_explosive_history.py \
             tests/unit/test_explosive_confluence.py \
             tests/unit/test_intraday_decision_report.py \
-            tests/unit/test_portfolio_exposure.py
+            tests/unit/test_portfolio_exposure.py \
+            tests/unit/test_dynamic_exposure.py
 
       - name: Compile expanded scanners
         env:
