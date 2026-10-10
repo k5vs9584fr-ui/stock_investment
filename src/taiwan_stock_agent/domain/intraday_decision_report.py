@@ -12,6 +12,7 @@ from taiwan_stock_agent.domain.portfolio_exposure import portfolio_exposure_guar
 from taiwan_stock_agent.domain.dynamic_exposure import dynamic_exposure_policy
 from taiwan_stock_agent.domain.defensive_reduction import build_defensive_reduction_plan
 from taiwan_stock_agent.domain.execution_plan import build_execution_plan
+from taiwan_stock_agent.domain.order_sheet import build_order_sheet
 
 
 def _symbol(row: dict) -> str:
@@ -87,6 +88,7 @@ def build_intraday_decision_report(
     max_total_exposure: float = 0.90,
     max_sector_exposure: float = 0.50,
     market_context: dict | None = None,
+    portfolio_value: float | None = None,
 ) -> dict:
     """Build one compact, reusable intraday decision payload.
 
@@ -256,6 +258,12 @@ def build_intraday_decision_report(
         selected_rotations=selected_rotations,
         defensive_reduction_plan=defensive_reduction,
     )
+    order_sheet = build_order_sheet(
+        execution_plan=execution,
+        ranked_rows=ranked_rows,
+        holdings=holdings,
+        portfolio_value=portfolio_value,
+    )
 
     return {
         "phase_minutes": int(phase_minutes),
@@ -268,6 +276,7 @@ def build_intraday_decision_report(
         "rotation_actions": rotation_actions,
         "selected_rotations": selected_rotations,
         "execution_plan": execution,
+        "order_sheet": order_sheet,
         "no_chase": no_chase,
         "summary": {
             "top_candidate": _symbol(enriched_top[0]) if enriched_top else None,
@@ -284,6 +293,8 @@ def build_intraday_decision_report(
             "needs_defensive_reduction": defensive_reduction.get("needs_reduction"),
             "execution_buy_count": execution.get("buy_count"),
             "execution_sell_count": execution.get("sell_count"),
+            "ready_order_count": order_sheet.get("ready_order_count"),
+            "weight_only_count": order_sheet.get("weight_only_count"),
             "defensive_reduction_weight": sum(
                 float(x.get("reduce_weight") or 0.0)
                 for x in defensive_reduction.get("actions") or []
