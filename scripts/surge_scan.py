@@ -1710,6 +1710,7 @@ def main() -> None:
     parser.add_argument("--no-html", action="store_true", dest="no_html", help="不產生 HTML 報告也不自動開啟瀏覽器")
     parser.add_argument("--llm", action="store_true", help="對所有個股執行 LLM 評估並嵌入 HTML")
     parser.add_argument("--llm-model", default=None, help="指定 LLM provider: claude / openai / gemini（預設自動偵測）")
+    parser.add_argument("--legacy-sectors", action="store_true", help="忽略全市場熱門池，改用原本預設產業母體")
     args = parser.parse_args()
 
     if args.intraday:
@@ -1737,15 +1738,35 @@ def main() -> None:
                 _console.print("  [yellow]指定代號無效，使用預設產業[/yellow]")
                 chosen = _DEFAULT_SECTOR_NAMES
         else:
-            # Always use default sectors unless --sectors explicitly given.
-            # Interactive menu is opt-in via --sectors flag only.
-            chosen = _DEFAULT_SECTOR_NAMES
-            if sys.stdin.isatty():
-                _console.print(f"  [dim]使用預設產業（{len(chosen)} 個）；指定 --sectors <代號> 可覆蓋[/dim]")
-            else:
-                _console.print(f"  [dim]非互動模式，使用預設產業（{len(chosen)} 個）[/dim]")
+            hot_path = Path(__file__).resolve().parents[1] / "data" / "hot_market_universe.json"
+            hot_tickers = []
+            if hot_path.exists() and not args.legacy_sectors:
+                try:
+                    hot_payload = json.loads(hot_path.read_text(encoding="utf-8"))
+                    hot_tickers = [
+                        str(x.get("symbol") or "")
+                        for x in hot_payload.get("stocks") or []
+                        if str(x.get("symbol") or "") in industry_map
+                    ]
+                except Exception:
+                    hot_tickers = []
 
-        tickers = sorted(t for t, ind in industry_map.items() if ind in chosen)
+            if hot_tickers:
+                tickers = list(dict.fromkeys(hot_tickers))[:120]
+                _console.print(
+                    f"  [dim]使用全市場熱門池（{len(tickers)} 檔）；"
+                    "--legacy-sectors 可切回原本產業母體[/dim]"
+                )
+                chosen = None
+            else:
+                chosen = _DEFAULT_SECTOR_NAMES
+                if sys.stdin.isatty():
+                    _console.print(f"  [dim]熱門池不存在，使用預設產業（{len(chosen)} 個）[/dim]")
+                else:
+                    _console.print(f"  [dim]非互動模式，使用預設產業（{len(chosen)} 個）[/dim]")
+
+        if chosen is not None:
+            tickers = sorted(t for t, ind in industry_map.items() if ind in chosen)
 
     llm_provider = None
     if args.llm:
