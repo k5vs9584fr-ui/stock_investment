@@ -43,6 +43,7 @@ jobs:
             tests/unit/test_portfolio_exposure.py \
             tests/unit/test_dynamic_exposure.py \
             tests/unit/test_execution_plan.py \
+            tests/unit/test_order_sheet.py \
             tests/unit/test_defensive_reduction.py
 
       - name: Compile expanded scanners
