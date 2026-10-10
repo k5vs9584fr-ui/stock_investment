@@ -37,7 +37,8 @@ jobs:
             tests/unit/test_live_capital.py \
             tests/unit/test_explosive_lifecycle.py \
             tests/unit/test_explosive_failure.py \
-            tests/unit/test_explosive_history.py
+            tests/unit/test_explosive_history.py \
+            tests/unit/test_explosive_confluence.py
 
       - name: Compile expanded scanners
         env:
