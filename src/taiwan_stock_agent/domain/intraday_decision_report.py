@@ -10,6 +10,7 @@ from taiwan_stock_agent.domain.live_capital import (
 from taiwan_stock_agent.domain.opening_gate import promote_opening_candidates
 from taiwan_stock_agent.domain.portfolio_exposure import portfolio_exposure_guard, rotation_exposure_capacity
 from taiwan_stock_agent.domain.dynamic_exposure import dynamic_exposure_policy
+from taiwan_stock_agent.domain.defensive_reduction import build_defensive_reduction_plan
 
 
 def _symbol(row: dict) -> str:
@@ -157,6 +158,14 @@ def build_intraday_decision_report(
                 "shares": h.get("shares"),
             })
 
+    defensive_reduction = build_defensive_reduction_plan(
+        matched_holdings,
+        holding_weights=holding_weights,
+        symbol_sectors=symbol_sectors,
+        max_total_exposure=effective_max_total_exposure,
+        max_sector_exposure=effective_max_sector_exposure,
+    )
+
     rotations = build_live_rotation_table(
         matched_holdings,
         enriched_top,
@@ -246,6 +255,7 @@ def build_intraday_decision_report(
         "capital_plan": capital,
         "portfolio_exposure": exposure,
         "dynamic_exposure_policy": dynamic_policy,
+        "defensive_reduction_plan": defensive_reduction,
         "holdings": holding_views,
         "rotation_actions": rotation_actions,
         "selected_rotations": selected_rotations,
@@ -262,5 +272,10 @@ def build_intraday_decision_report(
             "regime_v2": dynamic_policy.get("regime_v2"),
             "max_total_exposure": dynamic_policy.get("max_total_exposure"),
             "max_sector_exposure": dynamic_policy.get("max_sector_exposure"),
+            "needs_defensive_reduction": defensive_reduction.get("needs_reduction"),
+            "defensive_reduction_weight": sum(
+                float(x.get("reduce_weight") or 0.0)
+                for x in defensive_reduction.get("actions") or []
+            ),
         },
     }
