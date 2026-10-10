@@ -3,6 +3,7 @@ from __future__ import annotations
 from taiwan_stock_agent.domain.leadership_overlay import leadership_overlay
 from taiwan_stock_agent.domain.explosive_lifecycle import classify_explosive_lifecycle
 from taiwan_stock_agent.domain.explosive_history import explosive_history_adjustment
+from taiwan_stock_agent.domain.explosive_confluence import explosive_confluence_adjustment
 
 
 def top3_quality(row: dict) -> tuple[float, list[str]]:
@@ -39,6 +40,10 @@ def top3_quality(row: dict) -> tuple[float, list[str]]:
     )
     score += history_bonus
     reasons.extend(history_flags)
+
+    confluence_bonus, confluence_flags = explosive_confluence_adjustment(row)
+    score += confluence_bonus
+    reasons.extend(confluence_flags)
 
     # Explosiveness-first overlay. Reward early acceleration much more than
     # slow structural quality, but only while the move remains buyable.
