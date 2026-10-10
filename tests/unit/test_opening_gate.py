@@ -141,6 +141,7 @@ def test_failed_fresh_ignition_drops_below_confirmed_candidate_at_30m():
             },
         },
     ]
-    selected, _ = promote_opening_candidates(rows, target_n=2, phase_minutes=30)
-    assert [x["symbol"] for x in selected] == ["GOOD","HOT"]
-    assert selected[1]["opening_confirmation_score"] <= 59
+    selected, rejected = promote_opening_candidates(rows, target_n=2, phase_minutes=30)
+    assert [x["symbol"] for x in selected] == ["GOOD"]
+    assert [x["symbol"] for x in rejected] == ["HOT"]
+    assert "OPEN_FAIL_RELATIVE_WEAKNESS" in rejected[0]["opening_gate_reasons"]
