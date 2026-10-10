@@ -181,6 +181,19 @@ def build_intraday_decision_report(
             max_total_exposure=max_total_exposure,
             max_sector_exposure=max_sector_exposure,
         )
+        allowed_buy = min(
+            float(sizing.get("buy_weight") or 0.0),
+            float(exposure_capacity.get("max_buy_capacity") or 0.0),
+        )
+        if allowed_buy + 1e-9 < float(sizing.get("buy_weight") or 0.0):
+            released = float(sizing.get("sell_weight") or 0.0)
+            sizing["buy_weight"] = round(allowed_buy, 4)
+            sizing["cash_from_rotation"] = round(max(0.0, released - allowed_buy), 4)
+            sizing["exposure_limited"] = True
+        else:
+            sizing["exposure_limited"] = False
+        sizing["portfolio_exposure_capacity"] = exposure_capacity
+
         rotation_actions.append({
             "held_symbol": held_symbol,
             "held_name": dec.get("held_name"),
@@ -222,6 +235,7 @@ def build_intraday_decision_report(
         "phase_minutes": int(phase_minutes),
         "top_candidates": [_candidate_view(r) for r in enriched_top],
         "capital_plan": capital,
+        "portfolio_exposure": exposure,
         "holdings": holding_views,
         "rotation_actions": rotation_actions,
         "selected_rotations": selected_rotations,
@@ -233,5 +247,7 @@ def build_intraday_decision_report(
                 1 for x in selected_rotations if x.get("action") == "WATCH_ROTATION"
             ),
             "cash_weight": capital.get("cash_weight"),
+            "total_exposure": exposure.get("total_exposure"),
+            "remaining_total_capacity": exposure.get("remaining_total_capacity"),
         },
     }
