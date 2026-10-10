@@ -9,6 +9,7 @@ from taiwan_stock_agent.domain.live_capital import (
 )
 from taiwan_stock_agent.domain.opening_gate import promote_opening_candidates
 from taiwan_stock_agent.domain.portfolio_exposure import portfolio_exposure_guard, rotation_exposure_capacity
+from taiwan_stock_agent.domain.dynamic_exposure import dynamic_exposure_policy
 
 
 def _symbol(row: dict) -> str:
@@ -83,6 +84,7 @@ def build_intraday_decision_report(
     cost_pct: float | None = None,
     max_total_exposure: float = 0.90,
     max_sector_exposure: float = 0.50,
+    market_context: dict | None = None,
 ) -> dict:
     """Build one compact, reusable intraday decision payload.
 
@@ -91,6 +93,13 @@ def build_intraday_decision_report(
     can render the same trading decision without recomputing business logic.
     """
     holding_weights = holding_weights or {}
+    dynamic_policy = dynamic_exposure_policy(
+        market_context,
+        base_max_total=max_total_exposure,
+        base_max_sector=max_sector_exposure,
+    )
+    effective_max_total_exposure = float(dynamic_policy.get("max_total_exposure") or max_total_exposure)
+    effective_max_sector_exposure = float(dynamic_policy.get("max_sector_exposure") or max_sector_exposure)
 
     live_top, rejected = promote_opening_candidates(
         ranked_rows,
@@ -119,8 +128,8 @@ def build_intraday_decision_report(
     exposure = portfolio_exposure_guard(
         holding_weights=holding_weights,
         symbol_sectors=symbol_sectors,
-        max_total_exposure=max_total_exposure,
-        max_sector_exposure=max_sector_exposure,
+        max_total_exposure=effective_max_total_exposure,
+        max_sector_exposure=effective_max_sector_exposure,
     )
     matched_holdings: list[dict] = []
     holding_views: list[dict] = []
@@ -178,8 +187,8 @@ def build_intraday_decision_report(
             sell_weight=float(sizing.get("sell_weight") or 0.0),
             holding_weights=holding_weights,
             symbol_sectors=symbol_sectors,
-            max_total_exposure=max_total_exposure,
-            max_sector_exposure=max_sector_exposure,
+            max_total_exposure=effective_max_total_exposure,
+            max_sector_exposure=effective_max_sector_exposure,
         )
         allowed_buy = min(
             float(sizing.get("buy_weight") or 0.0),
@@ -236,6 +245,7 @@ def build_intraday_decision_report(
         "top_candidates": [_candidate_view(r) for r in enriched_top],
         "capital_plan": capital,
         "portfolio_exposure": exposure,
+        "dynamic_exposure_policy": dynamic_policy,
         "holdings": holding_views,
         "rotation_actions": rotation_actions,
         "selected_rotations": selected_rotations,
@@ -249,5 +259,8 @@ def build_intraday_decision_report(
             "cash_weight": capital.get("cash_weight"),
             "total_exposure": exposure.get("total_exposure"),
             "remaining_total_capacity": exposure.get("remaining_total_capacity"),
+            "regime_v2": dynamic_policy.get("regime_v2"),
+            "max_total_exposure": dynamic_policy.get("max_total_exposure"),
+            "max_sector_exposure": dynamic_policy.get("max_sector_exposure"),
         },
     }
