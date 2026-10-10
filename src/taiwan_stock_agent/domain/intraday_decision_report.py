@@ -172,6 +172,15 @@ def build_intraday_decision_report(
             existing_challenger_weight=challenger_existing_weight,
             target_challenger_weight=challenger_target_weight,
         )
+        exposure_capacity = rotation_exposure_capacity(
+            held_symbol=held_symbol,
+            challenger_symbol=challenger_symbol,
+            sell_weight=float(sizing.get("sell_weight") or 0.0),
+            holding_weights=holding_weights,
+            symbol_sectors=symbol_sectors,
+            max_total_exposure=max_total_exposure,
+            max_sector_exposure=max_sector_exposure,
+        )
         rotation_actions.append({
             "held_symbol": held_symbol,
             "held_name": dec.get("held_name"),
