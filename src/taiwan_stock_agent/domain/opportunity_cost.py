@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from taiwan_stock_agent.domain.explosive_lifecycle import classify_explosive_lifecycle
+from taiwan_stock_agent.domain.explosive_confluence import explosive_confluence_adjustment
 
 
 def opportunity_cost_score(row: dict) -> tuple[float, list[str]]:
@@ -18,14 +19,16 @@ def opportunity_cost_score(row: dict) -> tuple[float, list[str]]:
     max_pos = float(risk.get("max_position_pct") or 10.0)
     flags = set(row.get("practical_flags") or [])
     lifecycle = classify_explosive_lifecycle(row)
+    confluence_bonus, confluence_flags = explosive_confluence_adjustment(row)
 
     # Explosiveness-first capital efficiency: Hybrid remains the anchor, but
     # surge gets more weight than slow practical quality so scarce capital is
     # directed toward names with near-term acceleration potential.
     score = hybrid * 0.50 + practical * 0.15 + surge * 0.30
     score += float(lifecycle.get("score") or 0.0) * 0.20
+    score += confluence_bonus * 0.50
 
-    flags_out: list[str] = []
+    flags_out: list[str] = list(confluence_flags)
 
     if lifecycle.get("phase") == "OVERHEATED":
         score -= 18.0
