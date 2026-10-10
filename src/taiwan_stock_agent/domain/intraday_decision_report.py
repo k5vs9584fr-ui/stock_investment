@@ -11,6 +11,7 @@ from taiwan_stock_agent.domain.opening_gate import promote_opening_candidates
 from taiwan_stock_agent.domain.portfolio_exposure import portfolio_exposure_guard, rotation_exposure_capacity
 from taiwan_stock_agent.domain.dynamic_exposure import dynamic_exposure_policy
 from taiwan_stock_agent.domain.defensive_reduction import build_defensive_reduction_plan
+from taiwan_stock_agent.domain.execution_plan import build_execution_plan
 
 
 def _symbol(row: dict) -> str:
@@ -248,6 +249,13 @@ def build_intraday_decision_report(
         reverse=True,
     )
     selected_rotations = _select_executable_rotations(rotation_actions)
+    execution = build_execution_plan(
+        top_candidates=[_candidate_view(r) for r in enriched_top],
+        capital_plan=capital,
+        holding_weights=holding_weights,
+        selected_rotations=selected_rotations,
+        defensive_reduction_plan=defensive_reduction,
+    )
 
     return {
         "phase_minutes": int(phase_minutes),
@@ -259,6 +267,7 @@ def build_intraday_decision_report(
         "holdings": holding_views,
         "rotation_actions": rotation_actions,
         "selected_rotations": selected_rotations,
+        "execution_plan": execution,
         "no_chase": no_chase,
         "summary": {
             "top_candidate": _symbol(enriched_top[0]) if enriched_top else None,
@@ -273,6 +282,8 @@ def build_intraday_decision_report(
             "max_total_exposure": dynamic_policy.get("max_total_exposure"),
             "max_sector_exposure": dynamic_policy.get("max_sector_exposure"),
             "needs_defensive_reduction": defensive_reduction.get("needs_reduction"),
+            "execution_buy_count": execution.get("buy_count"),
+            "execution_sell_count": execution.get("sell_count"),
             "defensive_reduction_weight": sum(
                 float(x.get("reduce_weight") or 0.0)
                 for x in defensive_reduction.get("actions") or []
