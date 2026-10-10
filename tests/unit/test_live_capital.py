@@ -324,3 +324,20 @@ def test_opportunity_cost_prefers_higher_explosiveness_when_hybrid_is_close():
     slow_score, _ = opportunity_cost_score(slow)
     explosive_score, _ = opportunity_cost_score(explosive)
     assert explosive_score > slow_score
+
+
+def test_rotation_position_plan_respects_existing_challenger_capacity():
+    from taiwan_stock_agent.domain.live_capital import rotation_position_plan
+    out = rotation_position_plan(
+        {"symbol":"H"},
+        {"symbol":"C"},
+        {"final_action":"ROTATE"},
+        current_weight=0.40,
+        existing_challenger_weight=0.25,
+        target_challenger_weight=0.30,
+        cash_buffer=0.10,
+    )
+    assert out["buy_weight"] == 0.05
+    assert out["challenger_capacity"] == 0.05
+    assert out["capacity_limited"] is True
+    assert out["cash_from_rotation"] == 0.35
