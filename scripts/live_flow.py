@@ -9,6 +9,9 @@ from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+from taiwan_stock_agent.domain.opening_progression import build_opening_progression
+
 ROOT = Path(__file__).resolve().parents[1]
 DAYTRADE_SCRIPT = ROOT / "scripts" / "daytrade_scan.py"
 ORDERS_SCRIPT = ROOT / "scripts" / "intraday_orders.py"
@@ -65,6 +68,53 @@ def build_flow_summary(snapshot: Path) -> dict:
     }
 
 
+
+def _phase_from_name(path: Path) -> int | None:
+    stem = path.stem
+    if "_phase" not in stem:
+        return None
+    try:
+        return int(stem.rsplit("_phase", 1)[1])
+    except (TypeError, ValueError):
+        return None
+
+
+def build_daily_progression(
+    *,
+    snapshot_dir: Path,
+    now: datetime | None = None,
+) -> tuple[Path | None, dict | None]:
+    now = now or datetime.now(ZoneInfo("Asia/Taipei"))
+    prefix = now.strftime("%Y%m%d_")
+    files = sorted(snapshot_dir.glob(f"{prefix}*_phase*.json"))
+    snapshots: list[tuple[int, dict]] = []
+    latest_by_phase: dict[int, tuple[Path, dict]] = {}
+
+    for path in files:
+        phase = _phase_from_name(path)
+        if phase not in {5, 15, 30}:
+            continue
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        latest_by_phase[phase] = (path, payload)
+
+    for phase in (5, 15, 30):
+        if phase in latest_by_phase:
+            snapshots.append((phase, latest_by_phase[phase][1]))
+
+    if len(snapshots) < 2:
+        return None, None
+
+    progression = build_opening_progression(snapshots)
+    out = snapshot_dir / f"opening_progression_{now:%Y%m%d}.json"
+    out.write_text(
+        json.dumps(progression, ensure_ascii=False, indent=2, default=str),
+        encoding="utf-8",
+    )
+    return out, progression
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Refresh live scan and build archived intraday order sheet")
     parser.add_argument("--phase", choices=("auto", "5", "15", "30"), default="auto")
@@ -97,6 +147,9 @@ def main() -> None:
         snapshot_dir=args.snapshot_dir,
     )
     summary = build_flow_summary(snapshot)
+    progression_path, progression = build_daily_progression(
+        snapshot_dir=args.snapshot_dir,
+    )
 
     print(f"[live-flow] snapshot: {snapshot}")
     print(
@@ -105,6 +158,12 @@ def main() -> None:
         f"ready_orders={summary.get('ready_order_count')} "
         f"weight_only={summary.get('weight_only_count')}"
     )
+    if progression_path and progression:
+        print(
+            f"[live-flow] progression={progression_path} "
+            f"leaders={progression.get('persistent_leaders')} "
+            f"fake_breakouts={progression.get('fake_breakouts')}"
+        )
 
 
 if __name__ == "__main__":
