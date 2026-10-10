@@ -201,3 +201,41 @@ def test_report_rotation_sizing_respects_top3_target_weight():
     assert plan["existing_challenger_weight"] == 0.25
     assert plan["buy_weight"] <= 0.15
     assert plan["capacity_limited"] is True
+
+
+def test_report_builds_defensive_reduction_plan_in_selloff():
+    rows = [
+        _row("H1", "24", 62, 58, 40, {
+            "vwap_gap_pct": -0.4, "return_15m_pct": -0.3,
+            "volume_accel_5m": 0.8, "near_intraday_high": 0.96,
+        }),
+        _row("H2", "25", 88, 84, 78, {
+            "vwap_gap_pct": 0.2, "return_15m_pct": 0.5,
+            "volume_accel_5m": 1.2, "near_intraday_high": 0.985,
+        }),
+    ]
+    rows[1]["surge_stage"] = "S+級：主升初段可追"
+    rows[1]["surge_metrics"] = {
+        "early_main_move": True,
+        "fresh_ignition": False,
+        "trend_accelerator": False,
+        "overextended": False,
+    }
+    holdings = [
+        {"symbol": "H1", "cost": 100, "shares": 1000},
+        {"symbol": "H2", "cost": 100, "shares": 1000},
+    ]
+    out = build_intraday_decision_report(
+        rows,
+        holdings,
+        holding_weights={"H1": 0.35, "H2": 0.35},
+        market_context={
+            "market_state": "broad_selloff",
+            "market_breadth": 20,
+            "market_return_5d": -6.0,
+        },
+    )
+    assert out["dynamic_exposure_policy"]["max_total_exposure"] == 0.45
+    assert out["defensive_reduction_plan"]["needs_reduction"] is True
+    assert out["summary"]["needs_defensive_reduction"] is True
+    assert out["defensive_reduction_plan"]["actions"][0]["symbol"] == "H1"
