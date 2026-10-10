@@ -103,6 +103,10 @@ def build_intraday_decision_report(
         enriched_top.append(r)
 
     capital = live_capital_plan(enriched_top, oos_guard=oos_guard)
+    target_weights = {
+        str(x.get("symbol") or ""): float(x.get("final_weight") or 0.0)
+        for x in capital.get("positions") or []
+    }
 
     by_symbol = {_symbol(r): r for r in ranked_rows}
     matched_holdings: list[dict] = []
@@ -145,11 +149,15 @@ def build_intraday_decision_report(
         held = next((x for x in matched_holdings if _symbol(x) == held_symbol), {})
         challenger = next((x for x in enriched_top if _symbol(x) == challenger_symbol), {})
         current_weight = float(holding_weights.get(held_symbol, 0.0))
+        challenger_existing_weight = float(holding_weights.get(challenger_symbol, 0.0))
+        challenger_target_weight = float(target_weights.get(challenger_symbol, 0.40))
         sizing = rotation_position_plan(
             held,
             challenger,
             dec,
             current_weight=current_weight,
+            existing_challenger_weight=challenger_existing_weight,
+            target_challenger_weight=challenger_target_weight,
         )
         rotation_actions.append({
             "held_symbol": held_symbol,
