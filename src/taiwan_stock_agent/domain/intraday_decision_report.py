@@ -41,6 +41,35 @@ def _candidate_view(row: dict) -> dict:
     }
 
 
+
+def _select_executable_rotations(rotation_actions: list[dict]) -> list[dict]:
+    """Greedily select non-conflicting actionable rotations.
+
+    Keep the full comparison table for diagnostics, but executable actions must
+    not reuse the same holding or challenger more than once.
+    """
+    selected: list[dict] = []
+    used_holdings: set[str] = set()
+    used_challengers: set[str] = set()
+
+    for row in rotation_actions:
+        action = str(row.get("action") or "")
+        if action not in {"ROTATE", "WATCH_ROTATION"}:
+            continue
+
+        held = str(row.get("held_symbol") or "")
+        challenger = str(row.get("challenger_symbol") or "")
+        if not held or not challenger:
+            continue
+        if held in used_holdings or challenger in used_challengers:
+            continue
+
+        selected.append(row)
+        used_holdings.add(held)
+        used_challengers.add(challenger)
+
+    return selected
+
 def build_intraday_decision_report(
     ranked_rows: list[dict],
     holdings: list[dict],
@@ -157,6 +186,7 @@ def build_intraday_decision_report(
         ),
         reverse=True,
     )
+    selected_rotations = _select_executable_rotations(rotation_actions)
 
     return {
         "phase_minutes": int(phase_minutes),
@@ -164,12 +194,13 @@ def build_intraday_decision_report(
         "capital_plan": capital,
         "holdings": holding_views,
         "rotation_actions": rotation_actions,
+        "selected_rotations": selected_rotations,
         "no_chase": no_chase,
         "summary": {
             "top_candidate": _symbol(enriched_top[0]) if enriched_top else None,
-            "rotation_count": sum(1 for x in rotation_actions if x.get("action") == "ROTATE"),
+            "rotation_count": sum(1 for x in selected_rotations if x.get("action") == "ROTATE"),
             "watch_rotation_count": sum(
-                1 for x in rotation_actions if x.get("action") == "WATCH_ROTATION"
+                1 for x in selected_rotations if x.get("action") == "WATCH_ROTATION"
             ),
             "cash_weight": capital.get("cash_weight"),
         },
