@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from taiwan_stock_agent.domain.explosive_lifecycle import classify_explosive_lifecycle
+from taiwan_stock_agent.domain.opening_gate import opening_eligibility
 
 
 def build_defensive_reduction_plan(
@@ -44,6 +45,7 @@ def build_defensive_reduction_plan(
         action_score = float(row.get("hybrid_action_score") or 0.0)
         practical = float(row.get("practical_score") or 0.0)
         sector = str(symbol_sectors.get(symbol, "UNKNOWN"))
+        open_ok, open_reasons = opening_eligibility(row)
 
         protect = 0.0
         if phase == "EARLY_MAIN_MOVE":
@@ -54,8 +56,15 @@ def build_defensive_reduction_plan(
             protect += 10.0
 
         sector_pressure = 20.0 if sector_excess.get(sector, 0.0) > 0 else 0.0
+        open_failure = 0.0 if open_ok else 18.0
         weakness = max(0.0, 80.0 - action_score) + max(0.0, 72.0 - practical) * 0.5
-        reduction_priority = weakness + sector_pressure - protect
+        reduction_priority = weakness + sector_pressure + open_failure - protect
+
+        protected_floor = 0.0
+        if phase == "EARLY_MAIN_MOVE" and open_ok:
+            protected_floor = min(weight, 0.15)
+        elif phase == "FRESH_IGNITION" and open_ok:
+            protected_floor = min(weight, 0.10)
 
         ranked.append({
             "symbol": symbol,
@@ -66,6 +75,9 @@ def build_defensive_reduction_plan(
             "action_score": action_score,
             "practical_score": practical,
             "reduction_priority": reduction_priority,
+            "opening_eligible": open_ok,
+            "opening_reasons": open_reasons,
+            "protected_floor": protected_floor,
         })
 
     ranked.sort(key=lambda x: (x["reduction_priority"], x["weight"]), reverse=True)
@@ -81,7 +93,8 @@ def build_defensive_reduction_plan(
         if need <= 1e-9:
             break
 
-        reduce_weight = min(row["weight"], need)
+        max_reducible = max(0.0, row["weight"] - row.get("protected_floor", 0.0))
+        reduce_weight = min(max_reducible, need)
         if reduce_weight <= 1e-9:
             continue
 
@@ -96,6 +109,9 @@ def build_defensive_reduction_plan(
             "reason": "SECTOR_AND_TOTAL_EXCESS" if sector_need > 0 and remaining_total > 0
                 else "SECTOR_EXCESS" if sector_need > 0
                 else "TOTAL_EXPOSURE_EXCESS",
+            "opening_eligible": row.get("opening_eligible"),
+            "opening_reasons": row.get("opening_reasons") or [],
+            "protected_floor": round(float(row.get("protected_floor") or 0.0), 4),
         })
 
         remaining_total = max(0.0, remaining_total - reduce_weight)
