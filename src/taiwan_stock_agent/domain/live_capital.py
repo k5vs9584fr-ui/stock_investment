@@ -116,6 +116,7 @@ def rotation_position_plan(
         target_challenger_weight = max_new_weight
     target_challenger_weight = max(0.0, min(1.0, float(target_challenger_weight)))
     challenger_capacity = max(0.0, target_challenger_weight - existing_challenger_weight)
+    deployable = 0.0
 
     if action == "ROTATE":
         sell_weight = current_weight
