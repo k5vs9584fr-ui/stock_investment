@@ -96,3 +96,28 @@ def test_fresh_ignition_keeps_smaller_protected_floor():
     )
     assert out["actions"][0]["protected_floor"] == 0.10
     assert out["actions"][0]["remaining_weight"] >= 0.10
+
+
+def test_defensive_reduction_returns_executable_share_count():
+    holdings = [
+        {
+            **_row("WEAK", "24", 60, 56, {
+                "vwap_gap_pct": -1.0,
+                "return_15m_pct": -1.0,
+                "volume_accel_5m": 0.6,
+                "near_intraday_high": 0.93,
+            }),
+            "shares": 1000,
+        },
+    ]
+    out = build_defensive_reduction_plan(
+        holdings,
+        holding_weights={"WEAK":0.40},
+        symbol_sectors={"WEAK":"24"},
+        max_total_exposure=0.20,
+        max_sector_exposure=0.50,
+    )
+    action = out["actions"][0]
+    assert action["reduce_fraction"] == 0.5
+    assert action["reduce_shares"] == 500
+    assert action["remaining_shares"] == 500
