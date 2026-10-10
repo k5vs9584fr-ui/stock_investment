@@ -3,7 +3,7 @@ export PYTHONPATH
 PYTHON := .venv/bin/python
 _TODAY := $(shell date +%Y-%m-%d)
 
-.PHONY: plan report settle backtest backtest-compare factor-report optimize test setup migrate api install flow show bot-setup bot monitor surge surge-live surge-factor surge-tune surge-backtest heat-scan heat-update theme-flow tight-base-bt tight-base-v2 rotation analyze growth brief holdings-review intraday-orders
+.PHONY: plan report settle backtest backtest-compare factor-report optimize test setup migrate api install flow show bot-setup bot monitor surge surge-live surge-factor surge-tune surge-backtest heat-scan heat-update theme-flow tight-base-bt tight-base-v2 rotation analyze growth brief holdings-review intraday-orders live-flow
 
 DATE ?= $(shell date +%Y-%m-%d)
 LLM  ?=
@@ -328,3 +328,22 @@ intraday-orders:
 	$(PYTHON) scripts/intraday_orders.py \
 		--phase $(PHASE) \
 		$(if $(PORTFOLIO_VALUE),--portfolio-value $(PORTFOLIO_VALUE))
+
+
+# ── 一鍵盤中 Live Flow ─────────────────────────────────────────────────────────
+# 自動判斷 5/15/30 分鐘 checkpoint：
+#   09:00-09:09 -> 5m
+#   09:10-09:24 -> 15m
+#   09:25 之後  -> 30m
+# 用法:
+#   make live-flow PORTFOLIO_VALUE=500000
+#   make live-flow LIVE_PHASE=15 PORTFOLIO_VALUE=500000
+#   make live-flow LIVE_PHASE=30 SKIP_SCAN=1 PORTFOLIO_VALUE=500000
+LIVE_PHASE ?= auto
+SKIP_SCAN ?=
+
+live-flow:
+	$(PYTHON) scripts/live_flow.py \
+		--phase $(LIVE_PHASE) \
+		$(if $(PORTFOLIO_VALUE),--portfolio-value $(PORTFOLIO_VALUE)) \
+		$(if $(filter 1,$(SKIP_SCAN)),--skip-scan)
