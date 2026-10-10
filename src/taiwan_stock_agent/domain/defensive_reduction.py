@@ -98,6 +98,15 @@ def build_defensive_reduction_plan(
         if reduce_weight <= 1e-9:
             continue
 
+        reduce_fraction = reduce_weight / row["weight"] if row["weight"] > 0 else 0.0
+        source_holding = next((h for h in holdings if str(h.get("symbol") or h.get("ticker") or "") == row["symbol"]), {})
+        shares = source_holding.get("shares")
+        try:
+            shares_num = int(shares) if shares is not None else None
+        except (TypeError, ValueError):
+            shares_num = None
+        reduce_shares = int(round(shares_num * reduce_fraction)) if shares_num is not None else None
+
         actions.append({
             "symbol": row["symbol"],
             "name": row["name"],
@@ -105,6 +114,10 @@ def build_defensive_reduction_plan(
             "phase": row["phase"],
             "current_weight": round(row["weight"], 4),
             "reduce_weight": round(reduce_weight, 4),
+            "reduce_fraction": round(reduce_fraction, 4),
+            "current_shares": shares_num,
+            "reduce_shares": reduce_shares,
+            "remaining_shares": max(0, shares_num - reduce_shares) if shares_num is not None else None,
             "remaining_weight": round(max(0.0, row["weight"] - reduce_weight), 4),
             "reason": "SECTOR_AND_TOTAL_EXCESS" if sector_need > 0 and remaining_total > 0
                 else "SECTOR_EXCESS" if sector_need > 0
