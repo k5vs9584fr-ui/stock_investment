@@ -96,6 +96,8 @@ def rotation_position_plan(
     max_new_weight: float = 0.40,
     watch_fraction: float = 0.35,
     cash_buffer: float = 0.10,
+    existing_challenger_weight: float = 0.0,
+    target_challenger_weight: float | None = None,
 ) -> dict:
     """Translate a live rotation decision into concrete portfolio weights.
 
@@ -109,18 +111,23 @@ def rotation_position_plan(
     max_new_weight = max(0.0, min(1.0, float(max_new_weight)))
     cash_buffer = max(0.0, min(0.9, float(cash_buffer)))
     watch_fraction = max(0.0, min(1.0, float(watch_fraction)))
+    existing_challenger_weight = max(0.0, min(1.0, float(existing_challenger_weight)))
+    if target_challenger_weight is None:
+        target_challenger_weight = max_new_weight
+    target_challenger_weight = max(0.0, min(1.0, float(target_challenger_weight)))
+    challenger_capacity = max(0.0, target_challenger_weight - existing_challenger_weight)
 
     if action == "ROTATE":
         sell_weight = current_weight
         deployable = max(0.0, sell_weight * (1.0 - cash_buffer))
-        buy_weight = min(deployable, max_new_weight)
+        buy_weight = min(deployable, max_new_weight, challenger_capacity)
         remaining_held = max(0.0, current_weight - sell_weight)
         residual_cash = max(0.0, sell_weight - buy_weight)
         mode = "FULL_ROTATION"
     elif action == "WATCH_ROTATION":
         sell_weight = current_weight * watch_fraction
         deployable = max(0.0, sell_weight * (1.0 - cash_buffer))
-        buy_weight = min(deployable, max_new_weight)
+        buy_weight = min(deployable, max_new_weight, challenger_capacity)
         remaining_held = max(0.0, current_weight - sell_weight)
         residual_cash = max(0.0, sell_weight - buy_weight)
         mode = "PARTIAL_ROTATION"
@@ -142,6 +149,10 @@ def rotation_position_plan(
         "buy_weight": round(buy_weight, 4),
         "cash_from_rotation": round(residual_cash, 4),
         "max_new_weight": round(max_new_weight, 4),
+        "existing_challenger_weight": round(existing_challenger_weight, 4),
+        "target_challenger_weight": round(target_challenger_weight, 4),
+        "challenger_capacity": round(challenger_capacity, 4),
+        "capacity_limited": buy_weight + 1e-9 < deployable,
         "cash_buffer": round(cash_buffer, 4),
     }
 
