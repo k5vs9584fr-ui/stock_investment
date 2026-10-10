@@ -102,10 +102,23 @@ def build_defensive_reduction_plan(
         if sector in remaining_sector:
             remaining_sector[sector] = max(0.0, remaining_sector[sector] - reduce_weight)
 
+    total_reduced = sum(float(x.get("reduce_weight") or 0.0) for x in actions)
+    post_total = max(0.0, total - total_reduced)
+    post_sectors = dict(sector_weights)
+    for action in actions:
+        sector = str(action.get("sector") or "UNKNOWN")
+        post_sectors[sector] = max(
+            0.0,
+            float(post_sectors.get(sector, 0.0)) - float(action.get("reduce_weight") or 0.0),
+        )
+
     return {
         "needs_reduction": bool(actions),
         "total_excess": round(total_excess, 4),
         "sector_excess": {k: round(v, 4) for k, v in sector_excess.items()},
         "actions": actions,
+        "total_reduce_weight": round(total_reduced, 4),
+        "post_reduction_total_exposure": round(post_total, 4),
+        "post_reduction_sector_exposure": {k: round(v, 4) for k, v in post_sectors.items()},
         "remaining_total_excess": round(remaining_total, 4),
     }
