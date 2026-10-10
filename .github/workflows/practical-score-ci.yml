@@ -34,7 +34,10 @@ jobs:
             tests/unit/test_decision_consistency.py \
             tests/unit/test_opportunity_opening.py \
             tests/unit/test_opening_gate.py \
-            tests/unit/test_live_capital.py
+            tests/unit/test_live_capital.py \
+            tests/unit/test_explosive_lifecycle.py \
+            tests/unit/test_explosive_failure.py \
+            tests/unit/test_explosive_history.py
 
       - name: Compile expanded scanners
         env:
