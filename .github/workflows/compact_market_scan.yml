@@ -1,0 +1,57 @@
+name: Compact Market Scan
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - upgrade/practical-score-v1
+    paths:
+      - ".github/workflows/compact_market_scan.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  compact:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build compact ranking
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("data/market_scan_results.json")
+          d=json.loads(p.read_text(encoding="utf-8"))
+          rows=list((d.get("stocks") or {}).values())
+          def num(x,k): 
+              try:return float(x.get(k,0) or 0)
+              except:return 0.0
+          out=[]
+          for x in rows:
+              flags=x.get("latent_flags") or []
+              pce=num(x,"price"); ch=num(x,"change_pct"); val=num(x,"value")
+              if not (pce>0 and val>=1e8 and -3<ch<8): continue
+              if "TOO_EXTENDED" in flags: continue
+              score = num(x,"latent_score")*.48 + num(x,"score")*.32 + num(x,"close_strength")*12 + min(ch,4)*2
+              y=dict(symbol=x.get("symbol"),name=x.get("name"),market=x.get("market"),price=pce,change_pct=ch,value=val,
+                     score=x.get("score"),latent_score=x.get("latent_score"),close_strength=x.get("close_strength"),
+                     phase=x.get("phase"),a=x.get("a"),b=x.get("b"),c=x.get("c"),latent_flags=flags,rank_score=round(score,2))
+              out.append(y)
+          out.sort(key=lambda x:x["rank_score"], reverse=True)
+          under200=[x for x in out if x["price"]<=200]
+          result={"scan_date":d.get("scan_date"),"completed_batches":d.get("completed_batches"),"total_batches":d.get("total_batches"),
+                  "scanned_stocks":len(rows),"top30":out[:30],"top20_under200":under200[:20]}
+          Path("data/market_scan_compact.json").write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding="utf-8")
+          PY
+      - name: Commit compact result
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add data/market_scan_compact.json
+          git diff --cached --quiet || git commit -m "Update compact market scan"
+          git pull --rebase origin upgrade/practical-score-v1
+          git push origin upgrade/practical-score-v1
