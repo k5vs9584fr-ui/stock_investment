@@ -2,6 +2,11 @@ name: Realtime Stock Scan
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - upgrade/practical-score-v1
+    paths:
+      - ".github/workflows/realtime_scan.yml"
 
 permissions:
   contents: write
