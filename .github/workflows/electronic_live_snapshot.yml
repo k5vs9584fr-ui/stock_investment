@@ -1,0 +1,92 @@
+name: Electronic Live Snapshot
+
+on:
+  push:
+    branches:
+      - upgrade/practical-score-v1
+    paths:
+      - ".github/workflows/electronic_live_snapshot.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    env:
+      FUGLE_API_KEY: ${{ secrets.FUGLE_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Fetch current electronic snapshots
+        env:
+          PYTHONPATH: "src:scripts"
+        run: |
+          python - <<'PY'
+          import json, math, urllib.parse
+          from datetime import datetime
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+          from realtime_scan import API_KEY, FUGLE_BASE, get_json
+
+          headers={"X-API-KEY":API_KEY,"User-Agent":"Mozilla/5.0"}
+          old=json.loads(Path("data/market_scan_results.json").read_text(encoding="utf-8"))
+          electronic={s for s,x in (old.get("stocks") or {}).items() if x.get("is_electronic")}
+
+          def snap(market):
+              url=f"{FUGLE_BASE}/snapshot/quotes/{market}?"+urllib.parse.urlencode({"type":"COMMONSTOCK"})
+              return (get_json(url,headers=headers).get("data") or [])
+
+          rows=[]
+          for market in ("TSE","OTC"):
+              for x in snap(market):
+                  s=str(x.get("symbol") or "").strip()
+                  if s not in electronic: continue
+                  def n(k):
+                      try:return float(x.get(k) or 0)
+                      except:return 0.0
+                  p=n("closePrice") or n("lastPrice"); ch=n("changePercent")
+                  val=n("tradeValue"); vol=n("tradeVolume"); hi=n("highPrice"); lo=n("lowPrice")
+                  if p<=0 or hi<=0 or lo<=0: continue
+                  cs=max(0,min(1,(p-lo)/(hi-lo))) if hi>lo else 0.5
+                  near_high=p/hi if hi else 0
+                  # current-only rank score
+                  liq=min(28, math.log10(max(val,1)/1e8+1)*10 + min(vol/50000,1)*10)
+                  mom=0
+                  if 0.5<=ch<=4.5: mom=18
+                  elif 4.5<ch<=6.5: mom=11
+                  elif 0<=ch<0.5: mom=7
+                  elif ch<0: mom=max(-10, ch*4)
+                  else: mom=-8
+                  quality=cs*24 + (8 if near_high>=0.99 else 4 if near_high>=0.975 else 0)
+                  score=liq+mom+quality
+                  if ch>=7: score-=12
+                  if (hi-lo)/p*100>=9: score-=8
+                  rows.append({
+                    "symbol":s,"name":x.get("name",""),"market":market,
+                    "price":p,"change_pct":round(ch,2),"volume":int(vol),"value":int(val),
+                    "high":hi,"low":lo,"close_strength":round(cs,3),"near_high":round(near_high,4),
+                    "rank_score":round(score,2)
+                  })
+
+          rows.sort(key=lambda z:z["rank_score"], reverse=True)
+          now=datetime.now(ZoneInfo("Asia/Taipei")).isoformat(timespec="seconds")
+          out={
+            "generated_at":now,
+            "electronic_count":len(rows),
+            "top30":rows[:30],
+            "top30_under200":[r for r in rows if r["price"]<=200][:30]
+          }
+          Path("data/electronic_live_snapshot.json").write_text(json.dumps(out,ensure_ascii=False,indent=2),encoding="utf-8")
+          print(now, len(rows))
+          PY
+      - name: Commit snapshot
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add data/electronic_live_snapshot.json
+          git diff --cached --quiet || git commit -m "Update electronic live snapshot"
+          git pull --rebase origin upgrade/practical-score-v1
+          git push origin upgrade/practical-score-v1

@@ -1,0 +1,400 @@
+{
+  "scan_date": "2026-10-12",
+  "scanned_stocks": 1888,
+  "eligible": 25,
+  "top20": [
+    {
+      "symbol": "2344",
+      "name": "華邦電",
+      "price": 176.5,
+      "change_pct": -0.28,
+      "volume": 16494,
+      "value": 2871141000,
+      "score": 78,
+      "latent_score": 94,
+      "close_strength": 1.0,
+      "phase": "A+級：預備發動",
+      "a": 173.85,
+      "b": 179.15,
+      "c": 171.2,
+      "flags": [
+        "COIL_PROXY",
+        "NOT_EXTENDED",
+        "CLOSE_NEAR_HIGH"
+      ],
+      "independent_score": 90.56
+    },
+    {
+      "symbol": "2002",
+      "name": "中鋼",
+      "price": 19.25,
+      "change_pct": 1.58,
+      "volume": 29471,
+      "value": 565292250,
+      "score": 89,
+      "latent_score": 93,
+      "close_strength": 0.833,
+      "phase": "A+級：預備發動",
+      "a": 19.0,
+      "b": 19.54,
+      "c": 18.67,
+      "flags": [
+        "COIL_PROXY",
+        "NOT_EXTENDED",
+        "CLOSE_STRONG",
+        "RANGE_TIGHT"
+      ],
+      "independent_score": 88.72
+    },
+    {
+      "symbol": "1301",
+      "name": "台塑",
+      "price": 83.7,
+      "change_pct": 2.95,
+      "volume": 78637,
+      "value": 6475124500,
+      "score": 96,
+      "latent_score": 59,
+      "close_strength": 0.936,
+      "phase": "B級：觀察",
+      "a": 82.44,
+      "b": 84.96,
+      "c": 79.3,
+      "flags": [
+        "EARLY_MOVE",
+        "CLOSE_NEAR_HIGH"
+      ],
+      "independent_score": 81.65
+    },
+    {
+      "symbol": "2887",
+      "name": "台新新光金",
+      "price": 42.3,
+      "change_pct": 3.17,
+      "volume": 20285,
+      "value": 850112350,
+      "score": 97,
+      "latent_score": 68,
+      "close_strength": 0.923,
+      "phase": "A級：潛伏",
+      "a": 41.67,
+      "b": 42.93,
+      "c": 41.03,
+      "flags": [
+        "EARLY_MOVE",
+        "CLOSE_NEAR_HIGH"
+      ],
+      "independent_score": 76.35
+    },
+    {
+      "symbol": "3481",
+      "name": "群創",
+      "price": 51.4,
+      "change_pct": 0.78,
+      "volume": 46782,
+      "value": 2382302850,
+      "score": 78,
+      "latent_score": 66,
+      "close_strength": 0.76,
+      "phase": "A級：潛伏",
+      "a": 50.63,
+      "b": 52.17,
+      "c": 49.5,
+      "flags": [
+        "NOT_EXTENDED",
+        "CLOSE_STRONG"
+      ],
+      "independent_score": 73.46
+    },
+    {
+      "symbol": "9904",
+      "name": "寶成",
+      "price": 25.6,
+      "change_pct": 2.2,
+      "volume": 13325,
+      "value": 340069700,
+      "score": 79,
+      "latent_score": 69,
+      "close_strength": 0.786,
+      "phase": "A級：潛伏",
+      "a": 25.22,
+      "b": 25.98,
+      "c": 24.83,
+      "flags": [
+        "EARLY_MOVE",
+        "COIL_PROXY",
+        "CLOSE_STRONG"
+      ],
+      "independent_score": 72.05
+    },
+    {
+      "symbol": "2883",
+      "name": "凱基金",
+      "price": 38.45,
+      "change_pct": 2.4,
+      "volume": 14849,
+      "value": 561268000,
+      "score": 91,
+      "latent_score": 59,
+      "close_strength": 0.931,
+      "phase": "B級：觀察",
+      "a": 37.87,
+      "b": 39.03,
+      "c": 37.1,
+      "flags": [
+        "EARLY_MOVE",
+        "CLOSE_NEAR_HIGH"
+      ],
+      "independent_score": 69.51
+    },
+    {
+      "symbol": "3231",
+      "name": "緯創",
+      "price": 190.5,
+      "change_pct": 1.06,
+      "volume": 14898,
+      "value": 2831800000,
+      "score": 76,
+      "latent_score": 67,
+      "close_strength": 0.7,
+      "phase": "A級：潛伏",
+      "a": 187.64,
+      "b": 193.36,
+      "c": 184.78,
+      "flags": [
+        "NOT_EXTENDED"
+      ],
+      "independent_score": 67.94
+    },
+    {
+      "symbol": "2324",
+      "name": "仁寶",
+      "price": 36.45,
+      "change_pct": 2.68,
+      "volume": 22714,
+      "value": 823317250,
+      "score": 84,
+      "latent_score": 61,
+      "close_strength": 0.75,
+      "phase": "B級：觀察",
+      "a": 35.9,
+      "b": 37.0,
+      "c": 35.36,
+      "flags": [
+        "EARLY_MOVE",
+        "CLOSE_STRONG"
+      ],
+      "independent_score": 67.02
+    },
+    {
+      "symbol": "2885",
+      "name": "元大金",
+      "price": 69.9,
+      "change_pct": 2.34,
+      "volume": 8195,
+      "value": 570464900,
+      "score": 84,
+      "latent_score": 61,
+      "close_strength": 0.813,
+      "phase": "B級：觀察",
+      "a": 68.85,
+      "b": 70.95,
+      "c": 67.8,
+      "flags": [
+        "EARLY_MOVE",
+        "CLOSE_STRONG"
+      ],
+      "independent_score": 64.18
+    },
+    {
+      "symbol": "1605",
+      "name": "華新",
+      "price": 40.2,
+      "change_pct": 2.81,
+      "volume": 20062,
+      "value": 803565150,
+      "score": 84,
+      "latent_score": 44,
+      "close_strength": 0.686,
+      "phase": "C級：暫不碰",
+      "a": 39.6,
+      "b": 40.8,
+      "c": 38.99,
+      "flags": [
+        "EARLY_MOVE"
+      ],
+      "independent_score": 58.71
+    },
+    {
+      "symbol": "6127",
+      "name": "九豪",
+      "price": 66.1,
+      "change_pct": 3.12,
+      "volume": 24346,
+      "value": 1604544000,
+      "score": 88,
+      "latent_score": 44,
+      "close_strength": 0.659,
+      "phase": "C級：暫不碰",
+      "a": 65.11,
+      "b": 67.5,
+      "c": 63.4,
+      "flags": [
+        "EARLY_MOVE"
+      ],
+      "independent_score": 57.74
+    },
+    {
+      "symbol": "1326",
+      "name": "台化",
+      "price": 77.7,
+      "change_pct": 0.13,
+      "volume": 17161,
+      "value": 1326417600,
+      "score": 76,
+      "latent_score": 58,
+      "close_strength": 0.714,
+      "phase": "B級：觀察",
+      "a": 76.53,
+      "b": 78.87,
+      "c": 75.37,
+      "flags": [
+        "NOT_EXTENDED"
+      ],
+      "independent_score": 56.95
+    },
+    {
+      "symbol": "1802",
+      "name": "台玻",
+      "price": 65.3,
+      "change_pct": 2.19,
+      "volume": 46786,
+      "value": 3066568300,
+      "score": 84,
+      "latent_score": 36,
+      "close_strength": 0.667,
+      "phase": "C級：暫不碰",
+      "a": 64.32,
+      "b": 66.8,
+      "c": 62.3,
+      "flags": [
+        "EARLY_MOVE",
+        "RANGE_HOT"
+      ],
+      "independent_score": 52.12
+    },
+    {
+      "symbol": "6209",
+      "name": "今國光",
+      "price": 91.5,
+      "change_pct": 1.55,
+      "volume": 15252,
+      "value": 1418681500,
+      "score": 67,
+      "latent_score": 38,
+      "close_strength": 0.159,
+      "phase": "C級：暫不碰",
+      "a": 90.5,
+      "b": 96.8,
+      "c": 88.75,
+      "flags": [
+        "NOT_EXTENDED",
+        "CLOSE_WEAK"
+      ],
+      "independent_score": 44.85
+    },
+    {
+      "symbol": "4919",
+      "name": "新唐",
+      "price": 158.0,
+      "change_pct": 1.61,
+      "volume": 8123,
+      "value": 1289700000,
+      "score": 72,
+      "latent_score": 50,
+      "close_strength": 0.565,
+      "phase": "B級：觀察",
+      "a": 155.63,
+      "b": 163.0,
+      "c": 151.5,
+      "flags": [
+        "NOT_EXTENDED",
+        "RANGE_HOT"
+      ],
+      "independent_score": 43.72
+    },
+    {
+      "symbol": "2340",
+      "name": "台亞",
+      "price": 54.5,
+      "change_pct": 3.02,
+      "volume": 47455,
+      "value": 2603071300,
+      "score": 81,
+      "latent_score": 26,
+      "close_strength": 0.447,
+      "phase": "C級：暫不碰",
+      "a": 53.68,
+      "b": 56.6,
+      "c": 52.8,
+      "flags": [
+        "EARLY_MOVE",
+        "RANGE_HOT"
+      ],
+      "independent_score": 41.93
+    },
+    {
+      "symbol": "6770",
+      "name": "力積電",
+      "price": 71.4,
+      "change_pct": -1.11,
+      "volume": 23031,
+      "value": 1648260100,
+      "score": 57,
+      "latent_score": 27,
+      "close_strength": 0.467,
+      "phase": "C級：暫不碰",
+      "a": 70.7,
+      "b": 72.47,
+      "c": 69.26,
+      "flags": [],
+      "independent_score": 40.62
+    },
+    {
+      "symbol": "1815",
+      "name": "富喬",
+      "price": 133.0,
+      "change_pct": -1.48,
+      "volume": 24764,
+      "value": 3315147000,
+      "score": 57,
+      "latent_score": 18,
+      "close_strength": 0.429,
+      "phase": "C級：暫不碰",
+      "a": 131.0,
+      "b": 137.0,
+      "c": 129.01,
+      "flags": [],
+      "independent_score": 39.82
+    },
+    {
+      "symbol": "2303",
+      "name": "聯電",
+      "price": 145.5,
+      "change_pct": -1.36,
+      "volume": 34345,
+      "value": 5022192500,
+      "score": 49,
+      "latent_score": 17,
+      "close_strength": 0.222,
+      "phase": "C級：暫不碰",
+      "a": 144.5,
+      "b": 149.0,
+      "c": 141.13,
+      "flags": [
+        "CLOSE_WEAK"
+      ],
+      "independent_score": 37.66
+    }
+  ]
+}
