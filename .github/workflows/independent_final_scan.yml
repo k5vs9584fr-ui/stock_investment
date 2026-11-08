@@ -1,0 +1,69 @@
+name: Independent Final Scan
+
+on:
+  push:
+    branches:
+      - upgrade/practical-score-v1
+    paths:
+      - ".github/workflows/independent_final_scan.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  rank:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Re-rank entire market independently
+        run: |
+          python - <<'PY'
+          import json, math
+          from pathlib import Path
+          d=json.loads(Path("data/market_scan_results.json").read_text(encoding="utf-8"))
+          rows=list((d.get("stocks") or {}).values())
+          def n(x,k):
+              try:return float(x.get(k,0) or 0)
+              except:return 0.0
+          ranked=[]
+          for x in rows:
+              p=n(x,"price"); ch=n(x,"change_pct"); vol=n(x,"volume"); val=n(x,"value")
+              cs=n(x,"close_strength"); base=n(x,"score"); latent=n(x,"latent_score")
+              flags=set(x.get("latent_flags") or [])
+              if p<=0 or p>200: continue
+              if vol<8000 or val<3e8: continue
+              if ch<=-2.5 or ch>=6.0: continue
+              if "TOO_EXTENDED" in flags: continue
+
+              # independent score: explosive potential + liquidity + close quality
+              momentum = max(0, min(ch, 4))*2.2
+              liquidity = min(18, math.log10(max(val,1)/1e8+1)*8 + min(vol/50000,1)*6)
+              phase_bonus = 8 if "A+級" in str(x.get("phase")) else 4 if "A級" in str(x.get("phase")) else 0
+              coil_bonus = 4 if "COIL_PROXY" in flags else 0
+              near_high_bonus = 4 if "CLOSE_NEAR_HIGH" in flags else 2 if "CLOSE_STRONG" in flags else 0
+              hot_penalty = 10 if "RANGE_HOT" in flags else 0
+              early_penalty = 5 if "EARLY_MOVE" in flags and ch>3 else 0
+              score = latent*.32 + base*.24 + cs*12 + momentum + liquidity + phase_bonus + coil_bonus + near_high_bonus - hot_penalty - early_penalty
+
+              ranked.append({
+                "symbol":x.get("symbol"),"name":x.get("name"),"price":p,"change_pct":round(ch,2),
+                "volume":int(vol),"value":int(val),"score":x.get("score"),"latent_score":x.get("latent_score"),
+                "close_strength":round(cs,3),"phase":x.get("phase"),"a":x.get("a"),"b":x.get("b"),"c":x.get("c"),
+                "flags":list(flags),"independent_score":round(score,2)
+              })
+          ranked.sort(key=lambda x:x["independent_score"], reverse=True)
+          Path("data/independent_final_scan.json").write_text(json.dumps({
+            "scan_date":d.get("scan_date"),"scanned_stocks":len(rows),"eligible":len(ranked),"top20":ranked[:20]
+          },ensure_ascii=False,indent=2),encoding="utf-8")
+          PY
+      - name: Commit result
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add data/independent_final_scan.json
+          git diff --cached --quiet || git commit -m "Update independent full-market ranking"
+          git pull --rebase origin upgrade/practical-score-v1
+          git push origin upgrade/practical-score-v1

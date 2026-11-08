@@ -1,0 +1,58 @@
+name: Liquid Market Scan
+
+on:
+  push:
+    branches:
+      - upgrade/practical-score-v1
+    paths:
+      - ".github/workflows/liquid_market_scan.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  liquid:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build liquid ranking
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path("data/market_scan_results.json").read_text(encoding="utf-8"))
+          rows=list((d.get("stocks") or {}).values())
+          def n(x,k):
+              try:return float(x.get(k,0) or 0)
+              except:return 0.0
+          out=[]
+          for x in rows:
+              p=n(x,"price"); ch=n(x,"change_pct"); val=n(x,"value"); vol=n(x,"volume"); cs=n(x,"close_strength")
+              flags=x.get("latent_flags") or []
+              if not (0<p<=200 and val>=3e8 and vol>=5000 and -3<ch<7 and cs>=0.55): continue
+              if "TOO_EXTENDED" in flags: continue
+              liquidity=min(20, val/1e9*6 + vol/50000*4)
+              setup=n(x,"latent_score")*.38+n(x,"score")*.28+cs*12+min(ch,4)*2+liquidity
+              out.append({
+                "symbol":x.get("symbol"),"name":x.get("name"),"market":x.get("market"),
+                "price":p,"change_pct":ch,"volume":vol,"value":val,"score":x.get("score"),
+                "latent_score":x.get("latent_score"),"close_strength":cs,"phase":x.get("phase"),
+                "a":x.get("a"),"b":x.get("b"),"c":x.get("c"),"latent_flags":flags,
+                "liquid_score":round(setup,2)
+              })
+          out.sort(key=lambda x:x["liquid_score"], reverse=True)
+          Path("data/liquid_market_scan.json").write_text(json.dumps({
+            "scan_date":d.get("scan_date"),"scanned_stocks":len(rows),"top25":out[:25]
+          },ensure_ascii=False,indent=2),encoding="utf-8")
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add data/liquid_market_scan.json
+          git diff --cached --quiet || git commit -m "Update liquid market scan"
+          git pull --rebase origin upgrade/practical-score-v1
+          git push origin upgrade/practical-score-v1

@@ -7,11 +7,13 @@ from zoneinfo import ZoneInfo
 from pathlib import Path
 
 from realtime_scan import API_KEY, FUGLE_BASE, get_json, get_quote, score_stock, calc_abc
+from taiwan_stock_agent.domain.market_universe import score_hot_universe, merge_universes
 
 OUT = Path("data/daytrade_results.json")
 MARKET_RESULTS = Path("data/market_scan_results.json")
 FINAL_SIGNAL = Path("data/final_signal_report.json")
 ELECTRONIC_WATCHLIST = Path("data/electronic_watchlist.json")
+HOT_UNIVERSE = Path("data/hot_market_universe.json")
 
 HEADERS = {
     "X-API-KEY": API_KEY,
@@ -53,53 +55,11 @@ def snapshot_candidates():
             volume = float(x.get("tradeVolume") or 0)
             high = float(x.get("highPrice") or 0)
             low = float(x.get("lowPrice") or 0)
-
             if price <= 0 or high <= 0 or low <= 0:
-                continue
-            if value < 100_000_000:
-                continue
-            if volume < 1000:
-                continue
-            if not (-1.5 <= change <= 7.5):
                 continue
 
             cs = close_strength(x)
-            if cs < 0.55:
-                continue
-
-            pre = 0.0
-            if value >= 1_000_000_000:
-                pre += 24
-            elif value >= 500_000_000:
-                pre += 18
-            elif value >= 200_000_000:
-                pre += 12
-            else:
-                pre += 6
-
-            if 0.8 <= change <= 4.5:
-                pre += 24
-            elif 4.5 < change <= 6.5:
-                pre += 13
-            elif -0.5 <= change < 0.8:
-                pre += 8
-            elif change > 6.5:
-                pre -= 8
-
-            if cs >= 0.88:
-                pre += 22
-            elif cs >= 0.75:
-                pre += 14
-            else:
-                pre += 6
-
-            day_range = (high - low) / price * 100 if price else 0
-            if 1.2 <= day_range <= 5.5:
-                pre += 10
-            elif day_range > 8:
-                pre -= 8
-
-            rows.append({
+            row = {
                 "symbol": symbol,
                 "name": x.get("name", ""),
                 "market": market,
@@ -110,12 +70,22 @@ def snapshot_candidates():
                 "high": high,
                 "low": low,
                 "close_strength": cs,
-                "pre_score": round(pre, 1),
-                "source": "snapshot",
-            })
+                "source": "market_snapshot",
+                "universe_sources": ["market_snapshot"],
+            }
+            uscore, uflags = score_hot_universe(row)
+            if uscore <= 0:
+                continue
+            row["universe_score"] = uscore
+            row["universe_flags"] = uflags
+            row["pre_score"] = uscore
+            rows.append(row)
 
-    rows.sort(key=lambda r: (r["pre_score"], r["value"]), reverse=True)
-    return rows[:40]
+    rows.sort(
+        key=lambda r: (r.get("universe_score", 0), r.get("value", 0)),
+        reverse=True,
+    )
+    return rows[:120]
 
 
 def fallback_candidates():
@@ -412,10 +382,46 @@ def main():
         candidates = fallback_candidates()
         source = "fallback"
 
-    print(f"candidate source={source}, count={len(candidates)}")
+    # Merge legacy electronic candidates so existing model discoveries remain
+    # eligible even when they are not currently top by market attention.
+    legacy = []
+    if ELECTRONIC_WATCHLIST.exists():
+        try:
+            legacy_payload = json.loads(ELECTRONIC_WATCHLIST.read_text(encoding="utf-8"))
+            for x in legacy_payload.get("stocks") or []:
+                row = dict(x)
+                row["universe_score"] = max(
+                    float(row.get("universe_score") or 0),
+                    float(row.get("final_score") or row.get("refined_score") or 0),
+                )
+                row["universe_sources"] = ["electronic_watchlist"]
+                legacy.append(row)
+        except Exception as e:
+            print(f"legacy universe merge error: {e}")
 
-    # 只深挖前 30 檔，避免 API 呼叫過多。
-    candidates = candidates[:30]
+    candidates = merge_universes(candidates, legacy, limit=120)
+
+    HOT_UNIVERSE.parent.mkdir(parents=True, exist_ok=True)
+    HOT_UNIVERSE.write_text(
+        json.dumps(
+            {
+                "generated_at": datetime.now(ZoneInfo("Asia/Taipei")).isoformat(timespec="seconds"),
+                "source": source,
+                "count": len(candidates),
+                "stocks": candidates,
+            },
+            ensure_ascii=False,
+            indent=2,
+            default=str,
+        ),
+        encoding="utf-8",
+    )
+
+    print(f"candidate source={source}, merged universe count={len(candidates)}")
+
+    # Deep intraday API calls remain bounded; the broad 120-name universe is
+    # persisted for later Surge/Hybrid passes.
+    candidates = candidates[:40]
     results = []
 
     for i, base in enumerate(candidates, 1):
