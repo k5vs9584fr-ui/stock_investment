@@ -39,6 +39,18 @@ class ScanGuardrailTests(unittest.TestCase):
             self.assertEqual(state["stocks"], [])
             self.assertEqual(state["early_momentum_watch"], [])
 
+    def test_old_snapshot_date_cannot_be_used(self):
+        yesterday = {"date": "2026-10-07", "time": "100000", "data": []}
+        with self.assertRaisesRegex(RuntimeError, "STALE_MARKET_DATE"):
+            daytrade_scan.validate_snapshot_time(yesterday)
+
+    def test_missing_snapshot_time_cannot_be_used(self):
+        from datetime import datetime
+        from zoneinfo import ZoneInfo
+        today = datetime.now(ZoneInfo("Asia/Taipei")).strftime("%Y-%m-%d")
+        with self.assertRaisesRegex(RuntimeError, "MISSING_SNAPSHOT_TIMESTAMP"):
+            daytrade_scan.validate_snapshot_time({"date": today})
+
     def test_high_momentum_is_watched_without_auto_buy_and_excludes_2344(self):
         def stock(symbol):
             return {
@@ -58,7 +70,7 @@ class ScanGuardrailTests(unittest.TestCase):
             ), patch.object(daytrade_scan.time, "sleep", return_value=None):
                 daytrade_scan.main()
             state = json.loads(output.read_text(encoding="utf-8"))
-            self.assertEqual(state["data_status"], "LIVE_CONFIRMED")
+            self.assertEqual(state["data_status"], "LIVE_SNAPSHOT_WATCH_ONLY")
             self.assertEqual([row["symbol"] for row in state["early_momentum_watch"]], ["2337"])
             self.assertEqual([row["symbol"] for row in state["stocks"]], ["2337"])
             self.assertEqual(state["strong_count"], 0)
