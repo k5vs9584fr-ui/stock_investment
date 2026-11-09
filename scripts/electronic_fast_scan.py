@@ -1,5 +1,8 @@
 import json
+import os
 import time
+from datetime import datetime
+from zoneinfo import ZoneInfo
 from pathlib import Path
 
 from realtime_scan import get_quote, score_stock, calc_abc
@@ -24,6 +27,13 @@ def main():
         payload = json.load(f)
 
     watchlist = payload.get("stocks") or []
+    scan_date = payload.get("scan_date") or payload.get("source_scan_date")
+    today = datetime.now(ZoneInfo("Asia/Taipei")).strftime("%Y-%m-%d")
+    if scan_date != today and os.getenv("ALLOW_STALE_WATCHLIST") != "1":
+        raise RuntimeError(
+            f"STALE_ELECTRONIC_WATCHLIST: {scan_date} != {today}; "
+            "run full market scan before issuing current signals"
+        )
     print(f"watchlist source: {watchlist_source}")
 
     chip_map = {}
@@ -108,6 +118,8 @@ def main():
                 f"{stock.get('name','')} OK"
             )
         except Exception as e:
+            if "MARKET_DATA_AUTH_FAILED" in str(e):
+                raise
             print(f"{symbol} ERROR: {e}")
 
         time.sleep(1.05)
