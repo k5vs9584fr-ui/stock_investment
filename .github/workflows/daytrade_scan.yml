@@ -5,7 +5,8 @@ on:
   schedule:
     # UTC 01:00-05:59 = Asia/Taipei 09:00-13:59, weekdays.
     # GitHub-hosted scheduling is best effort, not low-latency streaming.
-    - cron: "3,13,23,33,43,53 1-5 * * 1-5"
+    - cron: "3,13,23,33,43,53 1-4 * * 1-5"
+    - cron: "3,13,23 5 * * 1-5"
   push:
     paths:
       - "scripts/daytrade_scan.py"
