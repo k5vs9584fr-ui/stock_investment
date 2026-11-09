@@ -442,6 +442,11 @@ def main():
     )
 
     total_stock_count = len(stocks)
+    # Abort before the full-market loop if the credential is invalid or unauthorized.
+    # Do not mark any batch complete on missing market access.
+    if not API_KEY:
+        raise RuntimeError("MARKET_DATA_AUTH_FAILED: FUGLE_API_KEY is empty")
+    get_quote("2330")
 
     print(f"全市場股票總數：{total_stock_count}")
 
@@ -522,6 +527,8 @@ def main():
             )
 
         except Exception as e:
+            if "MARKET_DATA_AUTH_FAILED" in str(e):
+                raise  # Never report a completed market batch after auth failure.
             print(
                 f"{symbol} ERROR: {e}"
             )
