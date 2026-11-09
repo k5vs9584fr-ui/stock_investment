@@ -474,6 +474,7 @@ def main():
     )[:30]
 
     # Bounded API usage: keep radar broad but confirm a limited, liquid shortlist.
+    market_candidates_screened = len(candidates)
     candidates = candidates[:max(1, min(30, int(__import__("os").getenv("MAX_DEEP_CANDIDATES", "12"))))]
     results = []
 
@@ -550,7 +551,7 @@ def main():
         "source": source,
         "data_status": ("LIVE_CONFIRMED" if strong else "LIVE_SNAPSHOT_WATCH_ONLY"),
         "early_momentum_watch": early_momentum,
-        "market_candidates_screened": len(candidates),
+        "market_candidates_screened": market_candidates_screened,
         "candidate_count": len(results),
         "strong_count": len(strong),
         "top_daytrade": results[:20],
