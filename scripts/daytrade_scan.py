@@ -30,7 +30,10 @@ def validate_snapshot_time(body):
     """Reject prior-day or delayed snapshots before making trading decisions."""
     now = datetime.now(ZoneInfo("Asia/Taipei"))
     date = str(body.get("date") or "")
-    time_value = str(body.get("time") or "").zfill(6)
+    raw_time = body.get("time")
+    if raw_time is None or str(raw_time).strip() == "":
+        raise RuntimeError("MISSING_SNAPSHOT_TIMESTAMP")
+    time_value = str(raw_time).zfill(6)
     if date != now.strftime("%Y-%m-%d"):
         raise RuntimeError(f"STALE_MARKET_DATE expected={now.date()} got={date}")
     if len(time_value) != 6 or not time_value.isdigit():
