@@ -60,7 +60,7 @@ def snapshot_candidates():
                 continue
             if volume < 1000:
                 continue
-            if not (-1.5 <= change <= 7.5):
+            if not (-1.5 <= change <= 10.0):
                 continue
 
             cs = close_strength(x)
@@ -84,7 +84,7 @@ def snapshot_candidates():
             elif -0.5 <= change < 0.8:
                 pre += 8
             elif change > 6.5:
-                pre -= 8
+                pre += 4
 
             if cs >= 0.88:
                 pre += 22
@@ -135,7 +135,7 @@ def fallback_candidates():
                     len(symbol) == 4
                     and symbol.isdigit()
                     and value >= 100_000_000
-                    and -1.5 <= change <= 7.5
+                    and -1.5 <= change <= 10.0
                     and cs >= 0.55
                     and price > 0
                 ):
@@ -310,9 +310,12 @@ def score_daytrade(base, ticker, bars):
         flags.append("DAILY_MOVE_HEALTHY")
     elif 4.5 < change <= 6.5:
         score += 4
-    elif change > 7:
-        score -= 10
-        flags.append("DAILY_TOO_EXTENDED")
+    elif change > 9:
+        score -= 5
+        flags.append("NEAR_LIMIT_RISK")
+    elif change > 6.5:
+        score += 3
+        flags.append("STRONG_MOMENTUM")
     elif change < -1:
         score -= 8
 
@@ -414,6 +417,19 @@ def main():
 
     print(f"candidate source={source}, count={len(candidates)}")
 
+    # Snapshot-based early-momentum radar: watch-only, never an automatic buy signal.
+    fresh_snapshot = source == "snapshot"
+    early_momentum = [
+        {"symbol": x["symbol"], "name": x.get("name", ""),
+         "price": x.get("price"), "change_pct": x.get("change_pct"),
+         "value": x.get("value"), "phase": "MOMENTUM_WATCH_ONLY"}
+        for x in candidates
+        if fresh_snapshot and 3.5 <= float(x.get("change_pct") or 0) <= 10.0
+        and float(x.get("value") or 0) >= 200_000_000
+        and float(x.get("close_strength") or 0) >= 0.65
+    ]
+    early_momentum = sorted(early_momentum, key=lambda r: r["value"], reverse=True)[:20]
+
     # 只深挖前 30 檔，避免 API 呼叫過多。
     candidates = candidates[:30]
     results = []
@@ -481,6 +497,8 @@ def main():
         "generated_at": now.isoformat(timespec="seconds"),
         "scan_date": now.strftime("%Y-%m-%d"),
         "source": source,
+        "data_status": "LIVE_SNAPSHOT" if fresh_snapshot else "STALE_FALLBACK_NOT_ACTIONABLE",
+        "early_momentum_watch": early_momentum,
         "candidate_count": len(results),
         "strong_count": len(strong),
         "top_daytrade": results[:20],
