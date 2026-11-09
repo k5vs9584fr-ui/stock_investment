@@ -9,6 +9,7 @@ from pathlib import Path
 from realtime_scan import API_KEY, FUGLE_BASE, get_json, get_quote, score_stock, calc_abc
 
 OUT = Path("data/daytrade_results.json")
+MOMENTUM_STATE = Path("data/momentum_state.json")
 MARKET_RESULTS = Path("data/market_scan_results.json")
 FINAL_SIGNAL = Path("data/final_signal_report.json")
 ELECTRONIC_WATCHLIST = Path("data/electronic_watchlist.json")
@@ -45,6 +46,18 @@ def validate_snapshot_time(body):
     if age < -30 or age > 240:
         raise RuntimeError(f"STALE_SNAPSHOT_AGE_SECONDS={age:.0f}")
     return snapshot_at.isoformat(timespec="seconds")
+
+
+def load_recent_momentum_state(now):
+    try:
+        state = json.loads(MOMENTUM_STATE.read_text(encoding="utf-8"))
+        recorded = datetime.fromisoformat(state["generated_at"])
+        age = (now - recorded).total_seconds()
+        if state.get("scan_date") == now.strftime("%Y-%m-%d") and 0 <= age <= 1800:
+            return state.get("stocks") or {}
+    except (OSError, ValueError, KeyError, TypeError):
+        pass
+    return {}
 
 
 def close_strength(row):
@@ -456,24 +469,46 @@ def main():
 
     print(f"candidate source={source}, count={len(candidates)}")
 
-    # Snapshot-based early-momentum radar: watch-only, never an automatic buy signal.
-    fresh_snapshot = source == "snapshot"
-    early_momentum = [
-        {"symbol": x["symbol"], "name": x.get("name", ""),
-         "price": x.get("price"), "change_pct": x.get("change_pct"),
-         "value": x.get("value"), "phase": "MOMENTUM_WATCH_ONLY"}
-        for x in candidates
-        if fresh_snapshot and x.get("symbol") != "2344" and 3.5 <= float(x.get("change_pct") or 0) <= 10.0
-        and float(x.get("value") or 0) >= 200_000_000
-        and float(x.get("close_strength") or 0) >= 0.65
-    ]
-    early_momentum = sorted(
-        early_momentum,
-        key=lambda r: (r["change_pct"], r["value"]),
+    # Watch all snapshot-qualified liquid names, not just the first deep-scan shortlist.
+    # Detect acceleration between recent scheduled snapshots before 6 completed 5m bars.
+    now_for_velocity = datetime.now(ZoneInfo("Asia/Taipei"))
+    previous = load_recent_momentum_state(now_for_velocity)
+    early_momentum = []
+    for x in candidates:
+        if x.get("symbol") == "2344":
+            continue
+        move = float(x.get("change_pct") or 0)
+        old = previous.get(x["symbol"], {})
+        delta = round(move - float(old.get("change_pct", move)), 2)
+        value = float(x.get("value") or 0)
+        strength = float(x.get("close_strength") or 0)
+        if value < 200_000_000 or strength < 0.65:
+            continue
+        if not (3.5 <= move <= 10.0 or (1.5 <= move <= 10.0 and delta >= 0.8)):
+            continue
+        early_momentum.append({
+            "symbol": x["symbol"],
+            "name": x.get("name", ""),
+            "price": x.get("price"),
+            "change_pct": move,
+            "change_acceleration_pct": delta if old else None,
+            "value": value,
+            "close_strength": strength,
+            "phase": "MOMENTUM_WATCH_ONLY",
+            "near_limit_risk": move >= 9.0,
+        })
+    early_momentum.sort(
+        key=lambda r: (
+            r["change_acceleration_pct"] if r["change_acceleration_pct"] is not None else 0,
+            r["change_pct"],
+            r["value"],
+        ),
         reverse=True,
-    )[:30]
+    )
+    early_momentum = early_momentum[:30]
 
     # Bounded API usage: keep radar broad but confirm a limited, liquid shortlist.
+    snapshot_candidates_rows = candidates
     market_candidates_screened = len(candidates)
     candidates = candidates[:max(1, min(30, int(__import__("os").getenv("MAX_DEEP_CANDIDATES", "12"))))]
     results = []
@@ -563,6 +598,19 @@ def main():
         json.dumps(payload, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
+    MOMENTUM_STATE.parent.mkdir(parents=True, exist_ok=True)
+    MOMENTUM_STATE.write_text(json.dumps({
+        "scan_date": now.strftime("%Y-%m-%d"),
+        "generated_at": now.isoformat(timespec="seconds"),
+        "stocks": {
+            x["symbol"]: {
+                "price": x.get("price"),
+                "change_pct": x.get("change_pct"),
+                "value": x.get("value"),
+            }
+            for x in snapshot_candidates_rows
+        },
+    }, ensure_ascii=False), encoding="utf-8")
 
     print("\n=== 當沖候選 TOP 15 ===")
     for i, r in enumerate(results[:15], 1):
