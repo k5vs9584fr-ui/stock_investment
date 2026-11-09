@@ -411,9 +411,22 @@ def main():
         if not candidates:
             raise RuntimeError("snapshot returned no candidates")
     except Exception as e:
-        print(f"snapshot unavailable, fallback: {e}")
-        candidates = fallback_candidates()
-        source = "fallback"
+        # Fail closed: prior-day fallbacks must never produce fresh trade signals.
+        now = datetime.now(ZoneInfo("Asia/Taipei"))
+        OUT.parent.mkdir(parents=True, exist_ok=True)
+        OUT.write_text(json.dumps({
+            "generated_at": now.isoformat(timespec="seconds"),
+            "scan_date": now.strftime("%Y-%m-%d"),
+            "source": "error",
+            "data_status": "ERROR_NO_LIVE_MARKET_DATA",
+            "error": str(e)[:300],
+            "early_momentum_watch": [],
+            "candidate_count": 0,
+            "strong_count": 0,
+            "top_daytrade": [],
+            "stocks": [],
+        }, ensure_ascii=False, indent=2), encoding="utf-8")
+        raise RuntimeError("Day-trade scan aborted: no validated live snapshot") from e
 
     print(f"candidate source={source}, count={len(candidates)}")
 
@@ -424,18 +437,20 @@ def main():
          "price": x.get("price"), "change_pct": x.get("change_pct"),
          "value": x.get("value"), "phase": "MOMENTUM_WATCH_ONLY"}
         for x in candidates
-        if fresh_snapshot and 3.5 <= float(x.get("change_pct") or 0) <= 10.0
+        if fresh_snapshot and x.get("symbol") != "2344" and 3.5 <= float(x.get("change_pct") or 0) <= 10.0
         and float(x.get("value") or 0) >= 200_000_000
         and float(x.get("close_strength") or 0) >= 0.65
     ]
     early_momentum = sorted(early_momentum, key=lambda r: r["value"], reverse=True)[:20]
 
-    # 只深挖前 30 檔，避免 API 呼叫過多。
-    candidates = candidates[:30]
+    # Bounded API usage: keep radar broad but confirm a limited, liquid shortlist.
+    candidates = candidates[:max(1, min(30, int(__import__("os").getenv("MAX_DEEP_CANDIDATES", "12"))))]
     results = []
 
     for i, base in enumerate(candidates, 1):
         symbol = base["symbol"]
+        if symbol == "2344":
+            continue  # Excluded from trade recommendations, not sector-wide data.
         try:
             quote = get_quote(symbol)
             scored = score_stock(quote)
@@ -475,9 +490,15 @@ def main():
                 f"DT={dt_score:.1f} {dt_phase}"
             )
         except Exception as e:
+            if "MARKET_DATA_AUTH_FAILED" in str(e):
+                raise RuntimeError("MARKET_DATA_AUTH_FAILED during deep scan") from e
             print(f"{symbol} ERROR: {e}")
 
         time.sleep(1.05)
+
+    # An empty confirmation result is NOT a successful trading signal scan.
+    if not results:
+        print("WARNING: no stocks had validated deep confirmations")
 
     results.sort(
         key=lambda x: (
@@ -497,7 +518,7 @@ def main():
         "generated_at": now.isoformat(timespec="seconds"),
         "scan_date": now.strftime("%Y-%m-%d"),
         "source": source,
-        "data_status": "LIVE_SNAPSHOT" if fresh_snapshot else "STALE_FALLBACK_NOT_ACTIONABLE",
+        "data_status": ("LIVE_CONFIRMED" if results else "LIVE_SNAPSHOT_NO_CONFIRMED_STOCKS"),
         "early_momentum_watch": early_momentum,
         "candidate_count": len(results),
         "strong_count": len(strong),
