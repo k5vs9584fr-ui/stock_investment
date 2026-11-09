@@ -31,7 +31,20 @@ def get_bytes(url, headers=None, retries=HTTP_RETRIES):
             )
             with urllib.request.urlopen(req, timeout=30) as resp:
                 return resp.read()
-        except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, OSError) as e:
+        except urllib.error.HTTPError as e:
+            # Authentication and entitlement errors will not recover with retries.
+            if e.code in (401, 403):
+                raise RuntimeError(
+                    f"MARKET_DATA_AUTH_FAILED HTTP {e.code}: "
+                    "check FUGLE_API_KEY, plan access, and endpoint permissions"
+                ) from e
+            last_error = e
+            if attempt >= retries:
+                break
+            wait = attempt * 2
+            print(f"HTTP retry {attempt}/{retries}: {e}; sleep {wait}s")
+            time.sleep(wait)
+        except (urllib.error.URLError, TimeoutError, OSError) as e:
             last_error = e
             if attempt >= retries:
                 break
