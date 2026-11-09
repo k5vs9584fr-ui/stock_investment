@@ -26,6 +26,24 @@ def api_get(path, params=None):
     return get_json(url, headers=HEADERS)
 
 
+def validate_snapshot_time(body):
+    """Reject prior-day or delayed snapshots before making trading decisions."""
+    now = datetime.now(ZoneInfo("Asia/Taipei"))
+    date = str(body.get("date") or "")
+    time_value = str(body.get("time") or "").zfill(6)
+    if date != now.strftime("%Y-%m-%d"):
+        raise RuntimeError(f"STALE_MARKET_DATE expected={now.date()} got={date}")
+    if len(time_value) != 6 or not time_value.isdigit():
+        raise RuntimeError("MISSING_SNAPSHOT_TIMESTAMP")
+    snapshot_at = datetime.strptime(date + time_value, "%Y-%m-%d%H%M%S").replace(
+        tzinfo=ZoneInfo("Asia/Taipei")
+    )
+    age = (now - snapshot_at).total_seconds()
+    if age < -30 or age > 240:
+        raise RuntimeError(f"STALE_SNAPSHOT_AGE_SECONDS={age:.0f}")
+    return snapshot_at.isoformat(timespec="seconds")
+
+
 def close_strength(row):
     high = float(row.get("highPrice") or row.get("high") or 0)
     low = float(row.get("lowPrice") or row.get("low") or 0)
@@ -42,6 +60,7 @@ def snapshot_candidates():
             f"snapshot/quotes/{market}",
             {"type": "COMMONSTOCK"},
         )
+        validate_snapshot_time(body)
         for x in body.get("data") or []:
             symbol = str(x.get("symbol") or "").strip()
             if len(symbol) != 4 or not symbol.isdigit():
@@ -518,7 +537,7 @@ def main():
         "generated_at": now.isoformat(timespec="seconds"),
         "scan_date": now.strftime("%Y-%m-%d"),
         "source": source,
-        "data_status": ("LIVE_CONFIRMED" if results else "LIVE_SNAPSHOT_NO_CONFIRMED_STOCKS"),
+        "data_status": ("LIVE_CONFIRMED" if strong else "LIVE_SNAPSHOT_WATCH_ONLY"),
         "early_momentum_watch": early_momentum,
         "candidate_count": len(results),
         "strong_count": len(strong),
