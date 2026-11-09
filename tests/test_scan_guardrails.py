@@ -13,9 +13,23 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
 import realtime_scan
 import daytrade_scan
+import electronic_fast_scan
 
 
 class ScanGuardrailTests(unittest.TestCase):
+    def test_electronic_fast_scan_rejects_old_watchlist(self):
+        with tempfile.TemporaryDirectory() as directory:
+            watchlist = Path(directory) / "old_watchlist.json"
+            watchlist.write_text(
+                json.dumps({"scan_date": "2026-10-07", "stocks": [{"symbol": "2337"}]}),
+                encoding="utf-8",
+            )
+            with patch.object(electronic_fast_scan, "WATCHLIST", watchlist), patch.object(
+                electronic_fast_scan, "FINAL_WATCHLIST", Path(directory) / "nonexistent.json"
+            ), patch.dict(os.environ, {"ALLOW_STALE_WATCHLIST": "0"}):
+                with self.assertRaisesRegex(RuntimeError, "STALE_ELECTRONIC_WATCHLIST"):
+                    electronic_fast_scan.main()
+
     def test_unauthorized_is_fail_fast(self):
         err = HTTPError("https://api.fugle.tw/test", 401, "Unauthorized", {}, None)
         with patch.object(realtime_scan.urllib.request, "urlopen", side_effect=err) as fetch:
