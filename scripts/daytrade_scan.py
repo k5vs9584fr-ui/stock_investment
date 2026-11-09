@@ -69,7 +69,9 @@ def snapshot_candidates():
             if len(symbol) != 4 or not symbol.isdigit():
                 continue
 
-            price = float(x.get("closePrice") or x.get("lastPrice") or 0)
+            if x.get("isTrial"):
+                continue  # Never treat pre-open trial auction prices as executed trades.
+            price = float(x.get("closePrice") or 0)
             change = float(x.get("changePercent") or 0)
             value = float(x.get("tradeValue") or 0)
             volume = float(x.get("tradeVolume") or 0)
@@ -137,7 +139,9 @@ def snapshot_candidates():
             })
 
     rows.sort(key=lambda r: (r["pre_score"], r["value"]), reverse=True)
-    return rows[:40]
+    # Retain the entire live market snapshot for independent early-momentum detection.
+    # Deep quote/candle calls are separately capped in main().
+    return rows
 
 
 def fallback_candidates():
@@ -463,7 +467,11 @@ def main():
         and float(x.get("value") or 0) >= 200_000_000
         and float(x.get("close_strength") or 0) >= 0.65
     ]
-    early_momentum = sorted(early_momentum, key=lambda r: r["value"], reverse=True)[:20]
+    early_momentum = sorted(
+        early_momentum,
+        key=lambda r: (r["change_pct"], r["value"]),
+        reverse=True,
+    )[:30]
 
     # Bounded API usage: keep radar broad but confirm a limited, liquid shortlist.
     candidates = candidates[:max(1, min(30, int(__import__("os").getenv("MAX_DEEP_CANDIDATES", "12"))))]
@@ -542,6 +550,7 @@ def main():
         "source": source,
         "data_status": ("LIVE_CONFIRMED" if strong else "LIVE_SNAPSHOT_WATCH_ONLY"),
         "early_momentum_watch": early_momentum,
+        "market_candidates_screened": len(candidates),
         "candidate_count": len(results),
         "strong_count": len(strong),
         "top_daytrade": results[:20],
