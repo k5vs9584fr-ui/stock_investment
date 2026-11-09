@@ -51,6 +51,23 @@ class ScanGuardrailTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "MISSING_SNAPSHOT_TIMESTAMP"):
             daytrade_scan.validate_snapshot_time({"date": today})
 
+    def test_momentum_acceleration_requires_recent_same_day_state(self):
+        from datetime import datetime, timedelta
+        from zoneinfo import ZoneInfo
+        now = datetime.now(ZoneInfo("Asia/Taipei"))
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "momentum.json"
+            state = {
+                "generated_at": (now - timedelta(minutes=10)).isoformat(),
+                "scan_date": now.strftime("%Y-%m-%d"),
+                "stocks": {"2337": {"change_pct": 2.0}},
+            }
+            path.write_text(json.dumps(state), encoding="utf-8")
+            with patch.object(daytrade_scan, "MOMENTUM_STATE", path):
+                self.assertEqual(daytrade_scan.load_recent_momentum_state(now)["2337"]["change_pct"], 2.0)
+                stale_now = now + timedelta(minutes=31)
+                self.assertEqual(daytrade_scan.load_recent_momentum_state(stale_now), {})
+
     def test_high_momentum_is_watched_without_auto_buy_and_excludes_2344(self):
         def stock(symbol):
             return {
@@ -61,6 +78,8 @@ class ScanGuardrailTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "results.json"
             with patch.object(daytrade_scan, "OUT", output), patch.object(
+                daytrade_scan, "MOMENTUM_STATE", Path(directory) / "momentum.json"
+            ), patch.object(
                 daytrade_scan, "snapshot_candidates", return_value=[stock("2337"), stock("2344")]
             ), patch.object(daytrade_scan, "get_quote", return_value={}), patch.object(
                 daytrade_scan, "score_stock", return_value=None
