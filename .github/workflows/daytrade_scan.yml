@@ -3,19 +3,27 @@ name: Day Trade Scan
 on:
   workflow_dispatch:
   schedule:
-    - cron: "5 1-5 * * 1-5"
+    # UTC 01:00-05:59 = Asia/Taipei 09:00-13:59, weekdays.
+    # GitHub-hosted scheduling is best effort, not low-latency streaming.
+    - cron: "3,13,23,33,43,53 1-5 * * 1-5"
   push:
     paths:
       - "scripts/daytrade_scan.py"
+      - "scripts/realtime_scan.py"
+      - ".github/workflows/daytrade_scan.yml"
+      - "tests/test_scan_guardrails.py"
 
 permissions:
   contents: write
 
+concurrency:
+  group: daytrade-scan-main
+  cancel-in-progress: false
+
 jobs:
   scan:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-
+    timeout-minutes: 12
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,16 +33,23 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Run day-trade scan
+      - name: Test scanner guardrails (offline)
+        env:
+          FUGLE_API_KEY: test-placeholder
+        run: python -m unittest discover -s tests -p 'test_scan_guardrails.py' -v
+
+      - name: Run day-trade scan (live market required)
         env:
           FUGLE_API_KEY: ${{ secrets.FUGLE_API_KEY }}
+          MAX_DEEP_CANDIDATES: "12"
         run: python scripts/daytrade_scan.py
 
-      - name: Save day-trade results
+      - name: Save result or failure status (never silently green)
+        if: always()
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add data/daytrade_results.json
-          git diff --cached --quiet || git commit -m "Update day-trade scan"
+          git diff --cached --quiet || git commit -m "Update day-trade scan status"
           git pull --rebase origin main
           git push
