@@ -1,32 +1,64 @@
-name: Verify Fugle API
+name: Verify Fugle Market Data Access
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/fugle_verify.yml"
+
+permissions:
+  contents: read
 
 jobs:
   verify:
     runs-on: ubuntu-latest
+    timeout-minutes: 3
     steps:
-      - name: Verify Fugle
+      - name: Check API key and all required endpoints
         env:
           FUGLE_API_KEY: ${{ secrets.FUGLE_API_KEY }}
         run: |
           python - <<'PY'
-          import json, os, urllib.request
+          import os
+          import sys
+          import urllib.request
+          from urllib.error import HTTPError, URLError
 
-          key = os.environ["FUGLE_API_KEY"]
-          url = "https://api.fugle.tw/marketdata/v1.0/stock/intraday/quote/2330"
-
-          req = urllib.request.Request(
-              url,
-              headers={"X-API-KEY": key}
-          )
-
-          with urllib.request.urlopen(req, timeout=20) as resp:
-              data = json.load(resp)
-
-          print("FUGLE_VERIFY_OK")
-          print("symbol:", data.get("symbol"))
-          print("name:", data.get("name"))
-          print("closePrice:", data.get("closePrice"))
+          key = os.getenv("FUGLE_API_KEY", "").strip()
+          if not key:
+              print("FUGLE_SECRET_MISSING: set repository Actions secret FUGLE_API_KEY")
+              sys.exit(1)
+          base = "https://api.fugle.tw/marketdata/v1.0/stock/"
+          endpoints = {
+              "intraday_quote": "intraday/quote/2330",
+              "snapshot_TSE": "snapshot/quotes/TSE?type=COMMONSTOCK",
+              "snapshot_OTC": "snapshot/quotes/OTC?type=COMMONSTOCK",
+              "intraday_candles": "intraday/candles/2330?timeframe=5",
+              "intraday_ticker": "intraday/ticker/2330",
+          }
+          failed = False
+          for name, path in endpoints.items():
+              request = urllib.request.Request(
+                  base + path, headers={"X-API-KEY": key, "User-Agent": "StockScanner/1.0"}
+              )
+              try:
+                  with urllib.request.urlopen(request, timeout=15) as resp:
+                      print(f"{name}: HTTP {resp.status} OK")
+              except HTTPError as e:
+                  failed = True
+                  if e.code == 401:
+                      reason = "INVALID_KEY_OR_AUTHENTICATION"
+                  elif e.code == 403:
+                      reason = "PLAN_DOES_NOT_ALLOW_ENDPOINT"
+                  elif e.code == 429:
+                      reason = "RATE_LIMIT"
+                  else:
+                      reason = "HTTP_ERROR"
+                  print(f"{name}: HTTP {e.code} {reason}")
+              except (URLError, TimeoutError, OSError) as e:
+                  failed = True
+                  print(f"{name}: NETWORK_ERROR {type(e).__name__}")
+          if failed:
+              sys.exit("FUGLE_VERIFY_FAILED: inspect above endpoint diagnoses")
+          print("FUGLE_VERIFY_OK_ALL_REQUIRED_ENDPOINTS")
           PY
