@@ -2,6 +2,11 @@ name: Official EOD Full Market Radar
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/official_eod_radar.py'
+      - 'tests/test_official_eod_radar.py'
+      - '.github/workflows/official_eod_radar.yml'
   schedule:
     # Official TWSE end-of-day feed may lag until evening.
     # 20:35 Taipei and 07:45 Taipei next trading morning (UTC prior day).
