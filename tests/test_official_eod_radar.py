@@ -1,6 +1,9 @@
 """Offline tests for official full-market end-of-day radar."""
 import sys
+import json
 import unittest
+from io import BytesIO
+from unittest.mock import patch
 from datetime import date, datetime
 from zoneinfo import ZoneInfo
 from pathlib import Path
@@ -32,6 +35,23 @@ class OfficialEODTests(unittest.TestCase):
         r = radar.parse_row(row, "TPEx")
         self.assertEqual(r["change_pct"], 5.0)
         self.assertEqual(r["symbol"], "5425")
+
+    def test_dated_twse_report_sign_and_schema(self):
+        report = {
+            "stat": "OK",
+            "tables": [{
+                "fields": ["證券代號", "證券名稱", "成交股數", "成交金額",
+                           "最高價", "最低價", "收盤價", "漲跌(+/-)", "漲跌價差"],
+                "data": [
+                    ["2337", "旺宏", "1000000", "100000000", "110",
+                     "99", "105", "<p>+</p>", "5"],
+                ] * 750,
+            }],
+        }
+        with patch.object(radar.urllib.request, "urlopen", return_value=BytesIO(json.dumps(report).encode())):
+            rows = radar.twse_dated_rows(date(2026, 11, 11))
+        self.assertEqual(rows[0]["Date"], "1151111")
+        self.assertEqual(rows[0]["Change"], "5.0")
 
     def test_old_daily_quote_rejected(self):
         rows = [{"Date": "1151110", "Code": "2337", "Name": "旺宏",
