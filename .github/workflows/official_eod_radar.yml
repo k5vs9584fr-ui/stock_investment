@@ -1,0 +1,42 @@
+name: Official EOD Full Market Radar
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 17:35 Taipei time = 09:35 UTC; official exchange data can lag.
+    - cron: "35 9 * * 1-5"
+  push:
+    paths:
+      - "scripts/official_eod_radar.py"
+      - "tests/test_official_eod_radar.py"
+      - ".github/workflows/official_eod_radar.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: official-eod-radar
+  cancel-in-progress: false
+
+jobs:
+  market-radar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Offline parsing and freshness tests
+        run: python -m unittest discover -s tests -p 'test_official_eod_radar.py' -v
+      - name: Verify both official exchanges and scan all eligible stocks
+        run: python scripts/official_eod_radar.py
+      - name: Persist result or explicit failure state
+        if: always()
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add data/official_eod_radar.json
+          git diff --cached --quiet || git commit -m "Update official EOD radar status"
+          git pull --rebase origin main
+          git push
