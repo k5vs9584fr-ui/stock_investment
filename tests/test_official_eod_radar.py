@@ -1,13 +1,20 @@
 """Offline tests for official full-market end-of-day radar."""
 import sys
 import unittest
-from datetime import date
+from datetime import date, datetime
+from zoneinfo import ZoneInfo
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 import official_eod_radar as radar
 
 
 class OfficialEODTests(unittest.TestCase):
+    def test_expected_date_preopen(self):
+        moment = datetime(2026, 11, 12, 7, 45, tzinfo=ZoneInfo("Asia/Taipei"))
+        self.assertEqual(radar.expected_market_date(moment), date(2026, 11, 11))
+        monday = datetime(2026, 11, 16, 7, 45, tzinfo=ZoneInfo("Asia/Taipei"))
+        self.assertEqual(radar.expected_market_date(monday), date(2026, 11, 13))
+
     def test_roc_date_and_quote_fields(self):
         self.assertEqual(radar.roc_date("1151111"), date(2026, 11, 11))
         row = dict(Date="1151111", Code="2337", Name="旺宏",
