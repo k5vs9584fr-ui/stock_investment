@@ -1,6 +1,7 @@
 """Keyless official TWSE/TPEx after-close market radar. Not an intraday feed."""
 import json
 import re
+import html
 import urllib.request
 from datetime import date, datetime, timedelta
 from pathlib import Path
@@ -65,6 +66,66 @@ def fetch(url):
     if not isinstance(data, list) or not data:
         raise RuntimeError("Official exchange feed returned empty or non-list data")
     return data
+
+
+
+def twse_dated_rows(target):
+    """Fallback to the dated TWSE report when OpenAPI daily snapshot lags."""
+    url = ("https://www.twse.com.tw/rwd/zh/afterTrading/MI_INDEX?"
+           f"date={target.strftime('%Y%m%d')}&type=ALLBUT0999&response=json")
+    req = urllib.request.Request(url, headers={
+        "User-Agent": "Mozilla/5.0", "Accept": "application/json"
+    })
+    with urllib.request.urlopen(req, timeout=35) as response:
+        data = json.load(response)
+    if data.get("stat") != "OK":
+        raise RuntimeError(f"TWSE_DATED_REPORT_NOT_READY: {data.get('stat')}")
+    candidates = []
+    for table in data.get("tables") or []:
+        fields = [str(x).strip() for x in table.get("fields") or []]
+        required = {"證券代號", "證券名稱", "成交股數", "成交金額",
+                    "最高價", "最低價", "收盤價", "漲跌價差"}
+        if not required.issubset(fields):
+            continue
+        positions = {x: i for i, x in enumerate(fields)}
+        for raw in table.get("data") or []:
+            if len(raw) < len(fields):
+                continue
+            r = {k: raw[i] for k, i in positions.items()}
+            diff = num(r.get("漲跌價差"))
+            if diff is None:
+                continue
+            sign_field = html.unescape(re.sub(r"<[^>]+>", "", str(r.get("漲跌(+/-)") or ""))).strip()
+            if sign_field == "-":
+                diff = -abs(diff)
+            elif sign_field == "+":
+                diff = abs(diff)
+            elif sign_field not in ("", " ", "X"):
+                continue
+            candidates.append({
+                "Date": f"{target.year - 1911:03d}{target.month:02d}{target.day:02d}",
+                "Code": str(r["證券代號"]).strip(),
+                "Name": str(r["證券名稱"]).strip(),
+                "ClosingPrice": r["收盤價"],
+                "Change": str(diff),
+                "HighestPrice": r["最高價"],
+                "LowestPrice": r["最低價"],
+                "TradeValue": r["成交金額"],
+                "TradeVolume": r["成交股數"],
+            })
+    if len(candidates) < 700:
+        raise RuntimeError(f"TWSE_DATED_REPORT_INCOMPLETE: {len(candidates)}")
+    return candidates
+
+
+def fetch_market_dates(target):
+    twse = fetch(URLS["TWSE"])
+    dates = {roc_date(row.get("Date")) for row in twse if row.get("Date")}
+    if dates != {target}:
+        print(f"TWSE OpenAPI delayed: {dates}; using verified dated market report", flush=True)
+        twse = twse_dated_rows(target)
+    tpex = fetch(URLS["TPEx"])
+    return {"TWSE": twse, "TPEx": tpex}
 
 
 def build(payloads, universe, today):
@@ -134,7 +195,8 @@ def main():
     universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
     listed = {x["symbol"] for x in universe["stocks"] if len(x["symbol"]) == 4}
     try:
-        payload = build({market: fetch(url) for market, url in URLS.items()}, listed, expected_market_date(now))
+        target = expected_market_date(now)
+        payload = build(fetch_market_dates(target), listed, target)
     except Exception as exc:
         OUT.parent.mkdir(parents=True, exist_ok=True)
         OUT.write_text(json.dumps({
