@@ -1,6 +1,6 @@
 {
   "scan_date": "2026-11-11",
-  "generated_at": "2026-11-11T17:18:27+08:00",
+  "generated_at": "2026-11-12T03:50:00+08:00",
   "source": "TWSE_TPEX_OFFICIAL_EOD",
   "data_status": "OFFICIAL_EOD_WATCH_ONLY",
   "intraday": false,
@@ -717,8 +717,8 @@
       "change": 230.0,
       "high": 3650.0,
       "low": 3440.0,
-      "value": 14061156310.0,
-      "volume": 3956733.0,
+      "value": 14086410070.0,
+      "volume": 3963733.0,
       "close_strength": 1.0
     },
     {
@@ -954,8 +954,8 @@
       "change": 2.1,
       "high": 71.2,
       "low": 68.7,
-      "value": 1819107907.0,
-      "volume": 25891610.0,
+      "value": 1849915307.0,
+      "volume": 26333610.0,
       "close_strength": 1.0
     },
     {
@@ -4742,8 +4742,8 @@
       "change": 0.5,
       "high": 242.5,
       "low": 236.0,
-      "value": 5833224161.0,
-      "volume": 24324770.0,
+      "value": 5873638161.0,
+      "volume": 24491770.0,
       "close_strength": 0.923
     },
     {
@@ -4833,8 +4833,8 @@
       "change": 110.0,
       "high": 2395.0,
       "low": 2305.0,
-      "value": 77857742485.0,
-      "volume": 33038476.0,
+      "value": 77900786705.0,
+      "volume": 33056476.0,
       "close_strength": 1.0
     },
     {
@@ -5054,8 +5054,8 @@
       "change": 18.0,
       "high": 906.0,
       "low": 880.0,
-      "value": 1546940472.0,
-      "volume": 1723586.0,
+      "value": 1613669232.0,
+      "volume": 1797586.0,
       "close_strength": 0.846
     },
     {
@@ -5925,8 +5925,8 @@
       "change": 160.0,
       "high": 3990.0,
       "low": 3780.0,
-      "value": 41350689270.0,
-      "volume": 10615606.0,
+      "value": 41817911522.0,
+      "volume": 10733606.0,
       "close_strength": 1.0
     },
     {
@@ -7446,8 +7446,8 @@
       "change": 6.5,
       "high": 159.5,
       "low": 150.0,
-      "value": 3490567783.0,
-      "volume": 22385361.0,
+      "value": 3560428903.0,
+      "volume": 22833361.0,
       "close_strength": 1.0
     },
     {
@@ -7498,8 +7498,8 @@
       "change": 2.1,
       "high": 71.2,
       "low": 68.7,
-      "value": 1819107907.0,
-      "volume": 25891610.0,
+      "value": 1849915307.0,
+      "volume": 26333610.0,
       "close_strength": 1.0
     },
     {
@@ -7576,8 +7576,8 @@
       "change": 1.1,
       "high": 42.3,
       "low": 40.7,
-      "value": 868698074.0,
-      "volume": 20798282.0,
+      "value": 891546264.0,
+      "volume": 21345282.0,
       "close_strength": 0.906
     },
     {
@@ -9097,8 +9097,8 @@
       "change": 60.0,
       "high": 1825.0,
       "low": 1720.0,
-      "value": 1216432305.0,
-      "volume": 687551.0,
+      "value": 1722446804.0,
+      "volume": 970551.0,
       "close_strength": 0.952
     },
     {
@@ -9370,8 +9370,8 @@
       "change": 230.0,
       "high": 3650.0,
       "low": 3440.0,
-      "value": 14061156310.0,
-      "volume": 3956733.0,
+      "value": 14086410070.0,
+      "volume": 3963733.0,
       "close_strength": 1.0
     },
     {
@@ -9383,8 +9383,8 @@
       "change": 50.0,
       "high": 1595.0,
       "low": 1490.0,
-      "value": 3709672585.0,
-      "volume": 2400019.0,
+      "value": 3745223697.0,
+      "volume": 2423019.0,
       "close_strength": 0.857
     },
     {
@@ -9552,8 +9552,8 @@
       "change": 12.0,
       "high": 620.0,
       "low": 596.0,
-      "value": 11848655743.0,
-      "volume": 19490892.0,
+      "value": 12023206719.0,
+      "volume": 19774892.0,
       "close_strength": 0.875
     },
     {
@@ -11671,8 +11671,8 @@
       "change": 52.0,
       "high": 580.0,
       "low": 538.0,
-      "value": 2797737331.0,
-      "volume": 4955526.0,
+      "value": 3635843331.0,
+      "volume": 6499526.0,
       "close_strength": 1.0
     },
     {
@@ -13153,8 +13153,8 @@
       "change": -4.9,
       "high": 48.7,
       "low": 44.45,
-      "value": 74655744.0,
-      "volume": 1643222.0,
+      "value": 89911606.0,
+      "volume": 1986436.0,
       "close_strength": 0
     },
     {
@@ -19952,8 +19952,8 @@
       "change": 2.4,
       "high": 71.2,
       "low": 65.3,
-      "value": 497155266.0,
-      "volume": 7308868.0,
+      "value": 513619266.0,
+      "volume": 7548868.0,
       "close_strength": 0.559
     },
     {
@@ -20238,8 +20238,8 @@
       "change": 620.0,
       "high": 12590.0,
       "low": 11895.0,
-      "value": 6701034305.0,
-      "volume": 546864.0,
+      "value": 6935978995.0,
+      "volume": 565864.0,
       "close_strength": 0.95
     },
     {
