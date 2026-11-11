@@ -161,6 +161,29 @@ def build(payloads, universe, today):
               r["close_strength"] is not None and r["close_strength"] >= .65]
     strong.sort(key=lambda r: (r["change_pct"], r["value"]), reverse=True)
     actionable_watch = [r for r in strong if r["change_pct"] < 9.0]
+    # A separate earlier-stage radar intentionally does not require a 4% daily rally.
+    # These are watch-only names: without multi-day structure they are NOT proven bases.
+    early_stage = [
+        r for r in liquid
+        if 1.5 <= r["change_pct"] < 4.0
+        and r["close_strength"] is not None
+        and r["close_strength"] >= 0.8
+        and r["value"] >= 200_000_000
+    ]
+    early_stage.sort(
+        key=lambda r: (r["close_strength"], r["value"]), reverse=True
+    )
+    # Distinguish a close above the day's low from a verified multi-day reversal.
+    reversal_watch = [
+        r for r in liquid
+        if -5.0 <= r["change_pct"] < -1.0
+        and r["close_strength"] is not None
+        and r["close_strength"] >= 0.75
+        and r["value"] >= 200_000_000
+    ]
+    reversal_watch.sort(
+        key=lambda r: (r["close_strength"], r["value"]), reverse=True
+    )
     # Strong closes are research watchlist entries, not confirmed next-day entry prices.
     return {
         "scan_date": today.isoformat(),
@@ -176,6 +199,10 @@ def build(payloads, universe, today):
         "strong_close_count": len(strong),
         "top_strong_close": strong[:30],
         "top_next_day_watch": actionable_watch[:30],
+        "early_stage_count": len(early_stage),
+        "top_early_stage": early_stage[:30],
+        "reversal_watch_count": len(reversal_watch),
+        "top_reversal_watch": reversal_watch[:20],
         "all_scanned": list(mapped.values()),
         "notice": "Daily official closing prices only. Reconfirm next-session quote, VWAP and breakout before entry.",
     }
@@ -204,10 +231,11 @@ def main():
             "source": "TWSE_TPEX_OFFICIAL_EOD",
             "data_status": "ERROR_OFFICIAL_EOD_NOT_AVAILABLE",
             "error": str(exc)[:300], "top_next_day_watch": [], "top_strong_close": [],
+            "top_early_stage": [], "top_reversal_watch": [],
         }, ensure_ascii=False, indent=2), encoding="utf-8")
         raise
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(json.dumps({k: v for k, v in payload.items() if k not in ("all_scanned", "top_strong_close", "top_next_day_watch")}, ensure_ascii=False, indent=2))
+    print(json.dumps({k: v for k, v in payload.items() if k not in ("all_scanned", "top_strong_close", "top_next_day_watch", "top_early_stage", "top_reversal_watch")}, ensure_ascii=False, indent=2))
     print("NEXT-DAY WATCH:", [(r["symbol"], r["name"], r["change_pct"]) for r in payload["top_next_day_watch"][:15]])
 
 
