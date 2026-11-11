@@ -7,11 +7,6 @@ on:
     # 20:35 Taipei and 07:45 Taipei next trading morning (UTC prior day).
     - cron: "35 12 * * 1-5"
     - cron: "45 23 * * 0-4"
-  push:
-    paths:
-      - "scripts/official_eod_radar.py"
-      - "tests/test_official_eod_radar.py"
-      - ".github/workflows/official_eod_radar.yml"
 
 permissions:
   contents: write
@@ -40,5 +35,5 @@ jobs:
           git config user.email "github-actions@github.com"
           git add data/official_eod_radar.json
           git diff --cached --quiet || git commit -m "Update official EOD radar status"
-          git pull --rebase origin main
+          git pull --rebase -X theirs origin main
           git push
