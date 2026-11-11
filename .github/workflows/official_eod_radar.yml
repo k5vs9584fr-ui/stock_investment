@@ -3,8 +3,10 @@ name: Official EOD Full Market Radar
 on:
   workflow_dispatch:
   schedule:
-    # 17:35 Taipei time = 09:35 UTC; official exchange data can lag.
-    - cron: "35 9 * * 1-5"
+    # Official TWSE end-of-day feed may lag until evening.
+    # 20:35 Taipei and 07:45 Taipei next trading morning (UTC prior day).
+    - cron: "35 12 * * 1-5"
+    - cron: "45 23 * * 0-4"
   push:
     paths:
       - "scripts/official_eod_radar.py"
