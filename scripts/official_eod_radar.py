@@ -2,7 +2,7 @@
 import json
 import re
 import urllib.request
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -120,6 +120,13 @@ def build(payloads, universe, today):
     }
 
 
+def expected_market_date(now):
+    target = now.date() if now.hour >= 14 else now.date() - timedelta(days=1)
+    while target.weekday() >= 5:
+        target -= timedelta(days=1)
+    return target
+
+
 def main():
     now = datetime.now(ZoneInfo("Asia/Taipei"))
     if now.weekday() >= 5:
@@ -127,11 +134,11 @@ def main():
     universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
     listed = {x["symbol"] for x in universe["stocks"] if len(x["symbol"]) == 4}
     try:
-        payload = build({market: fetch(url) for market, url in URLS.items()}, listed, now.date())
+        payload = build({market: fetch(url) for market, url in URLS.items()}, listed, expected_market_date(now))
     except Exception as exc:
         OUT.parent.mkdir(parents=True, exist_ok=True)
         OUT.write_text(json.dumps({
-            "scan_date": now.date().isoformat(), "generated_at": now.isoformat(),
+            "scan_date": expected_market_date(now).isoformat(), "generated_at": now.isoformat(),
             "source": "TWSE_TPEX_OFFICIAL_EOD",
             "data_status": "ERROR_OFFICIAL_EOD_NOT_AVAILABLE",
             "error": str(exc)[:300], "top_next_day_watch": [], "top_strong_close": [],
