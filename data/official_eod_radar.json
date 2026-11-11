@@ -1,6 +1,6 @@
 {
   "scan_date": "2026-11-11",
-  "generated_at": "2026-11-11T17:07:08.723899+08:00",
+  "generated_at": "2026-11-11T17:10:49.942959+08:00",
   "source": "TWSE_TPEX_OFFICIAL_EOD",
   "data_status": "ERROR_OFFICIAL_EOD_NOT_AVAILABLE",
   "error": "TWSE: STALE_EOD_MARKET_DATE 2026-11-10 != 2026-11-11",
