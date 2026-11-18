@@ -1,6 +1,2086 @@
 {
+  "risk_first_v2": {
+    "model": "risk_first_eod_v2",
+    "data_status": "EOD_WATCH_ONLY_NOT_ACTIONABLE",
+    "risk_first_count": 2,
+    "early_strength_count": 147,
+    "chase_risk_count": 46,
+    "top_risk_first": [
+      {
+        "symbol": "3211",
+        "name": "順達",
+        "style": "PANIC_REVERSAL_WATCH",
+        "watch_eligible": true,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 54.9,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 215.0,
+        "scenario_stop": 205.97,
+        "scenario_target_prior_close": 229.5,
+        "scenario_rr": 1.61,
+        "close_strength": 0.552,
+        "range_pct": 6.74,
+        "reasons": [],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "6944",
+        "name": "兆聯實業",
+        "style": "PANIC_REVERSAL_WATCH",
+        "watch_eligible": true,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 51.38,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 541.0,
+        "scenario_stop": 525.36,
+        "scenario_target_prior_close": 566.02,
+        "scenario_rr": 1.6,
+        "close_strength": 0.591,
+        "range_pct": 4.07,
+        "reasons": [],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      }
+    ],
+    "top_early_strength": [
+      {
+        "symbol": "2451",
+        "name": "創見",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 31.25,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 212.0,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.75,
+        "range_pct": 7.55,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "1476",
+        "name": "儒鴻",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 30.88,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 385.0,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.821,
+        "range_pct": 3.64,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "5347",
+        "name": "世界",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 30.75,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 125.5,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.85,
+        "range_pct": 7.97,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "2887",
+        "name": "台新新光金",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 30.33,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 39.3,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.933,
+        "range_pct": 5.73,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "2618",
+        "name": "長榮航",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 30.32,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 48.1,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.936,
+        "range_pct": 4.89,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "2610",
+        "name": "華航",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 29.39,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 23.1,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 1.0,
+        "range_pct": 4.11,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "1477",
+        "name": "聚陽",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 27.46,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 226.5,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.889,
+        "range_pct": 3.97,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "6691",
+        "name": "洋基工程",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 27.38,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 516.0,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.778,
+        "range_pct": 7.85,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "8112",
+        "name": "至上",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 26.08,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 78.6,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.83,
+        "range_pct": 5.98,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "1513",
+        "name": "中興電",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 24.39,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 141.5,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.75,
+        "range_pct": 4.24,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "5904",
+        "name": "寶雅*",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 24.16,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 74.8,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.824,
+        "range_pct": 4.55,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "6620",
+        "name": "漢達",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 23.95,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 108.5,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.765,
+        "range_pct": 7.83,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "3227",
+        "name": "原相",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 23.56,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 181.5,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.792,
+        "range_pct": 6.61,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "5388",
+        "name": "中磊",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 23.41,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 70.4,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.762,
+        "range_pct": 5.97,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "1229",
+        "name": "聯華",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 23.06,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 39.9,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.75,
+        "range_pct": 4.51,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "2498",
+        "name": "宏達電",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 22.88,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 35.4,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.795,
+        "range_pct": 6.21,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "6176",
+        "name": "瑞儀",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 22.75,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 79.0,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.758,
+        "range_pct": 4.18,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "1722",
+        "name": "台肥",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 22.41,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 38.75,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.75,
+        "range_pct": 1.55,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "4973",
+        "name": "廣穎",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 22.09,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 112.0,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.75,
+        "range_pct": 7.14,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "4105",
+        "name": "東洋",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 21.98,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 83.0,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.75,
+        "range_pct": 1.93,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "6491",
+        "name": "晶碩",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 21.76,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 374.0,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.8,
+        "range_pct": 4.01,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "6509",
+        "name": "聚和",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 21.71,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 44.4,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.789,
+        "range_pct": 6.42,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "1342",
+        "name": "八貫",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 21.68,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 97.1,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.767,
+        "range_pct": 6.18,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "7827",
+        "name": "漢康-KY創",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 21.6,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 119.5,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.75,
+        "range_pct": 6.69,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "5522",
+        "name": "遠雄",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 21.39,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 60.9,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.897,
+        "range_pct": 4.76,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "9925",
+        "name": "新保",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 21.38,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 39.7,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.778,
+        "range_pct": 1.13,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "3130",
+        "name": "一零四",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 21.36,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 205.0,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.75,
+        "range_pct": 0.98,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "7780",
+        "name": "大研生醫*",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 21.36,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 14.7,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.75,
+        "range_pct": 2.72,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "8432",
+        "name": "東生華",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 21.31,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 61.4,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.75,
+        "range_pct": 2.61,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "1236",
+        "name": "宏亞",
+        "style": "EARLY_STRENGTH_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 21.27,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 27.05,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.75,
+        "range_pct": 1.48,
+        "reasons": [
+          "NO_MULTIDAY_BREAKOUT_CONFIRMATION"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      }
+    ],
+    "top_chase_risk": [
+      {
+        "symbol": "5269",
+        "name": "祥碩",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 30.65,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 1135.0,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.789,
+        "range_pct": 8.37,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED",
+          "WIDE_INTRADAY_RANGE"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "7799",
+        "name": "禾榮科",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 30.1,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 485.0,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.673,
+        "range_pct": 11.34,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED",
+          "WIDE_INTRADAY_RANGE"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "9933",
+        "name": "中鼎",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 30.0,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 56.6,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 1.0,
+        "range_pct": 7.42,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED",
+          "CLOSE_NEAR_HIGH_NOT_AUTOBUY"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "7717",
+        "name": "萊德光電-KY",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 30.0,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 533.0,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 1.0,
+        "range_pct": 14.45,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED",
+          "WIDE_INTRADAY_RANGE",
+          "CLOSE_NEAR_HIGH_NOT_AUTOBUY"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "6919",
+        "name": "康霈*",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 29.34,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 74.8,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.977,
+        "range_pct": 11.5,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED",
+          "WIDE_INTRADAY_RANGE",
+          "CLOSE_NEAR_HIGH_NOT_AUTOBUY"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "5230",
+        "name": "雷笛克光學",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 27.7,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 34.5,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.622,
+        "range_pct": 10.72,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED",
+          "WIDE_INTRADAY_RANGE"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "5013",
+        "name": "強新",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 23.89,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 66.6,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 1.0,
+        "range_pct": 10.51,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED",
+          "WIDE_INTRADAY_RANGE",
+          "CLOSE_NEAR_HIGH_NOT_AUTOBUY"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "8415",
+        "name": "大國鋼",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 23.68,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 41.35,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 1.0,
+        "range_pct": 11.25,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED",
+          "WIDE_INTRADAY_RANGE",
+          "CLOSE_NEAR_HIGH_NOT_AUTOBUY"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "3023",
+        "name": "信邦",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 23.57,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 268.0,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.941,
+        "range_pct": 6.34,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED",
+          "CLOSE_NEAR_HIGH_NOT_AUTOBUY"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "3704",
+        "name": "合勤控",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 23.4,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 38.5,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 1.0,
+        "range_pct": 6.23,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED",
+          "CLOSE_NEAR_HIGH_NOT_AUTOBUY"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "6872",
+        "name": "浩宇生醫",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 23.11,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 18.9,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.381,
+        "range_pct": 5.56,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "2466",
+        "name": "冠西電",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 23.03,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 435.5,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.937,
+        "range_pct": 7.23,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED",
+          "CLOSE_NEAR_HIGH_NOT_AUTOBUY"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "6416",
+        "name": "瑞祺電通",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 22.98,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 112.5,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.708,
+        "range_pct": 10.67,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED",
+          "WIDE_INTRADAY_RANGE"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "1110",
+        "name": "東泥",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 22.51,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 14.35,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.519,
+        "range_pct": 9.41,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED",
+          "WIDE_INTRADAY_RANGE"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "5398",
+        "name": "慕康生醫",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 22.41,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 16.55,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.52,
+        "range_pct": 7.55,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "7722",
+        "name": "LINEPAY",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 22.4,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 248.0,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.745,
+        "range_pct": 10.28,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED",
+          "WIDE_INTRADAY_RANGE"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "4155",
+        "name": "訊映",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 22.25,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 18.55,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.688,
+        "range_pct": 12.94,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED",
+          "WIDE_INTRADAY_RANGE"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "7689",
+        "name": "大鵬科CLMX",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 22.08,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 101.0,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.615,
+        "range_pct": 6.44,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "4737",
+        "name": "華廣",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 22.05,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 59.6,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.627,
+        "range_pct": 8.56,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED",
+          "WIDE_INTRADAY_RANGE"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "2740",
+        "name": "華軒",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 22.0,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 26.75,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.6,
+        "range_pct": 1.87,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "6661",
+        "name": "威健生技",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 22.0,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 15.6,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.6,
+        "range_pct": 3.21,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "4529",
+        "name": "淳紳",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 21.92,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 3.03,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.615,
+        "range_pct": 4.29,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "6174",
+        "name": "安碁",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 21.81,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 39.2,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.762,
+        "range_pct": 12.88,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED",
+          "WIDE_INTRADAY_RANGE"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "1525",
+        "name": "江申",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 21.79,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 62.9,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.647,
+        "range_pct": 2.7,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "3311",
+        "name": "閎暉",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 21.66,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 38.75,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.816,
+        "range_pct": 9.81,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED",
+          "WIDE_INTRADAY_RANGE"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "6612",
+        "name": "奈米醫材",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 21.61,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 60.6,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.696,
+        "range_pct": 7.59,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "5546",
+        "name": "永固-KY",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 21.59,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 11.05,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.688,
+        "range_pct": 7.24,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "3004",
+        "name": "豐達科",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 21.57,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 129.0,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.857,
+        "range_pct": 8.14,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED",
+          "WIDE_INTRADAY_RANGE"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "6843",
+        "name": "進典",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 21.43,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 39.4,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.726,
+        "range_pct": 9.26,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED",
+          "WIDE_INTRADAY_RANGE"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      },
+      {
+        "symbol": "6945",
+        "name": "圓祥生技",
+        "style": "EXTENDED_OR_BREAKOUT_WATCH",
+        "watch_eligible": false,
+        "entry_confirmed": false,
+        "technical_score_out_of_85": 21.41,
+        "fundamental_score": null,
+        "weights": {
+          "risk_reward": 30,
+          "location": 25,
+          "price_structure": 20,
+          "fundamental": 15,
+          "liquidity": 10
+        },
+        "reference_close": 123.0,
+        "scenario_stop": null,
+        "scenario_target_prior_close": null,
+        "scenario_rr": null,
+        "close_strength": 0.842,
+        "range_pct": 7.72,
+        "reasons": [
+          "CHASE_RISK_CHECK_REQUIRED"
+        ],
+        "needs": [
+          "LIVE_QUOTE",
+          "LIVE_VWAP",
+          "VOLUME_CONFIRMATION",
+          "MULTIDAY_HISTORY",
+          "FUNDAMENTAL_VERIFICATION"
+        ],
+        "disclaimer": "EOD-only hypothetical setup, not an executable buy signal."
+      }
+    ],
+    "scoring_note": "Technical-only /85, fundamental /15 UNKNOWN; no live entry confirmed."
+  },
   "scan_date": "2026-11-17",
-  "generated_at": "2026-11-18T05:17:26+08:00",
+  "generated_at": "2026-11-18T09:45:33+08:00",
   "source": "TWSE_TPEX_OFFICIAL_EOD",
   "data_status": "OFFICIAL_EOD_WATCH_ONLY",
   "intraday": false,

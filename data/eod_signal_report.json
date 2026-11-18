@@ -1,0 +1,7 @@
+{
+  "data_status": "RESEARCH_CLOSE_TO_CLOSE_ONLY",
+  "last_date": "2026-11-17",
+  "min_sample": 30,
+  "groups": [],
+  "disclaimer": "Look-ahead-free signal-date close to future close research. Not executed P&L; excludes realistic fills, commissions, tax, slippage, gaps, and market benchmark; do not infer predictive edge."
+}
