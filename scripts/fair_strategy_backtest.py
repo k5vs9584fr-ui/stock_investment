@@ -106,7 +106,7 @@ def replay(panel, dates, *, minimum_symbols=100, minimum_signal_dates=10,
         day = dates[idx]
         prev_day = dates[idx-1]
         eligible_symbols = [
-            sym for sym in symbols
+            sym for sym in sorted(symbols)
             if (day, sym) in panel and (prev_day, sym) in panel
         ]
         date_coverage.append({"date": day, "symbols_with_two_bars": len(eligible_symbols)})
