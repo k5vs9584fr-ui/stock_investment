@@ -31,6 +31,8 @@ jobs:
           python-version: "3.12"
       - name: Offline parsing and freshness tests
         run: python -m unittest discover -s tests -p 'test_official_eod_radar.py' -v
+      - name: Offline risk-first ranking tests
+        run: python -m unittest discover -s tests -p 'test_risk_first_radar.py' -v
       - name: Verify both official exchanges and scan all eligible stocks
         run: python scripts/official_eod_radar.py
       - name: Persist result or explicit failure state
