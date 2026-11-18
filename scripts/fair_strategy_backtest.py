@@ -99,6 +99,10 @@ def replay(panel, dates, *, minimum_symbols=100, minimum_signal_dates=10,
     missing = defaultdict(int)
     date_coverage = []
     for idx in range(1, len(dates) - 3):
+        # Purge training signals whose D+2 settlement would touch test dates.
+        if idx < split_index and idx + max(HOLD_SESSIONS) >= split_index:
+            missing["purged_train_test_boundary_signals"] += 1
+            continue
         day = dates[idx]
         prev_day = dates[idx-1]
         eligible_symbols = [
