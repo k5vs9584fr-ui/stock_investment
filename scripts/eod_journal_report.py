@@ -30,7 +30,7 @@ def summarize(journal, min_sample=MIN_SAMPLE, min_dates=MIN_SESSIONS):
         row = {"style": style, "horizon_sessions": int(horizon),
                "completed_samples": n, "independent_signal_dates": trading_dates,
                "sufficient_sample": n >= min_sample and trading_dates >= min_dates}
-        if n >= min_sample and trading_dates >= MIN_SESSIONS:
+        if n >= min_sample and trading_dates >= min_dates:
             row.update({
                 "mean_close_return_pct": round(sum(vals) / n, 3),
                 "median_close_return_pct": round(
