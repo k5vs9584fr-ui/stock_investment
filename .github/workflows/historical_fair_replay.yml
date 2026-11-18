@@ -1,0 +1,61 @@
+name: Historical Fair Strategy Research
+
+on:
+  workflow_dispatch:
+    inputs:
+      start_date:
+        description: "Historical start date YYYY-MM-DD"
+        required: true
+        default: "2025-11-01"
+      end_date:
+        description: "Historical end date YYYY-MM-DD"
+        required: true
+        default: "2026-11-17"
+      sample_limit:
+        description: "Deterministic random-like sample size of current listed stocks (100-800)"
+        required: true
+        default: "250"
+
+permissions:
+  contents: read
+
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Offline replay and ingest tests
+        run: |
+          python -m unittest discover -s tests -p 'test_fair_strategy_backtest.py' -v
+          python -m unittest discover -s tests -p 'test_fetch_replay_history.py' -v
+      - name: Install OHLCV research provider
+        run: python -m pip install --disable-pip-version-check yfinance
+      - name: Download vendor-labelled history (no stale fallback)
+        env:
+          START_DATE: ${{ inputs.start_date }}
+          END_DATE: ${{ inputs.end_date }}
+          SAMPLE_LIMIT: ${{ inputs.sample_limit }}
+        run: |
+          python - <<'PY'
+          import os
+          n = int(os.environ["SAMPLE_LIMIT"])
+          if not 100 <= n <= 800:
+              raise SystemExit("SAMPLE_LIMIT_MUST_BE_100_TO_800")
+          PY
+          python scripts/fetch_replay_history.py --start "$START_DATE" --end "$END_DATE" --limit "$SAMPLE_LIMIT"
+      - name: Common-date fair strategy replay
+        run: python scripts/fair_strategy_backtest.py --panel data/historical_replay_panel.csv --min-symbols 100 --min-dates 10 --min-trades 30
+      - name: Preserve evidence, including on failed coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: research-panel-and-fair-replay
+          path: |
+            data/historical_replay_panel.metadata.json
+            data/fair_backtest_report.json
+          if-no-files-found: warn
+          retention-days: 30
