@@ -1,6 +1,7 @@
 {
   "sessions": [
-    "2026-11-17"
+    "2026-11-17",
+    "2026-11-18"
   ],
   "signals": [
     {
@@ -10,7 +11,9 @@
       "style": "PANIC_REVERSAL_WATCH",
       "rank": 1,
       "reference_close": 215.0,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -2.7907
+      }
     },
     {
       "date": "2026-11-17",
@@ -19,7 +22,9 @@
       "style": "PANIC_REVERSAL_WATCH",
       "rank": 2,
       "reference_close": 541.0,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -0.3697
+      }
     },
     {
       "date": "2026-11-17",
@@ -28,7 +33,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 1,
       "reference_close": 212.0,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": 3.066
+      }
     },
     {
       "date": "2026-11-17",
@@ -37,7 +44,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 2,
       "reference_close": 385.0,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -0.2597
+      }
     },
     {
       "date": "2026-11-17",
@@ -46,7 +55,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 3,
       "reference_close": 125.5,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -1.1952
+      }
     },
     {
       "date": "2026-11-17",
@@ -55,7 +66,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 4,
       "reference_close": 39.3,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -5.598
+      }
     },
     {
       "date": "2026-11-17",
@@ -64,7 +77,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 5,
       "reference_close": 48.1,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -2.7027
+      }
     },
     {
       "date": "2026-11-17",
@@ -73,7 +88,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 6,
       "reference_close": 23.1,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -0.8658
+      }
     },
     {
       "date": "2026-11-17",
@@ -82,7 +99,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 7,
       "reference_close": 226.5,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -1.1038
+      }
     },
     {
       "date": "2026-11-17",
@@ -91,7 +110,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 8,
       "reference_close": 516.0,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": 0.1938
+      }
     },
     {
       "date": "2026-11-17",
@@ -100,7 +121,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 9,
       "reference_close": 78.6,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -1.9084
+      }
     },
     {
       "date": "2026-11-17",
@@ -109,7 +132,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 10,
       "reference_close": 141.5,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": 1.4134
+      }
     },
     {
       "date": "2026-11-17",
@@ -118,7 +143,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 11,
       "reference_close": 74.8,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -3.0749
+      }
     },
     {
       "date": "2026-11-17",
@@ -127,7 +154,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 12,
       "reference_close": 108.5,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -6.4516
+      }
     },
     {
       "date": "2026-11-17",
@@ -136,7 +165,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 13,
       "reference_close": 181.5,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": 2.2039
+      }
     },
     {
       "date": "2026-11-17",
@@ -145,7 +176,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 14,
       "reference_close": 70.4,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": 2.1307
+      }
     },
     {
       "date": "2026-11-17",
@@ -154,7 +187,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 15,
       "reference_close": 39.9,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -0.7519
+      }
     },
     {
       "date": "2026-11-17",
@@ -163,7 +198,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 16,
       "reference_close": 35.4,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -3.9548
+      }
     },
     {
       "date": "2026-11-17",
@@ -172,7 +209,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 17,
       "reference_close": 79.0,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": 2.1519
+      }
     },
     {
       "date": "2026-11-17",
@@ -181,7 +220,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 18,
       "reference_close": 38.75,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -1.5484
+      }
     },
     {
       "date": "2026-11-17",
@@ -190,7 +231,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 19,
       "reference_close": 112.0,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -1.7857
+      }
     },
     {
       "date": "2026-11-17",
@@ -199,7 +242,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 20,
       "reference_close": 83.0,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -0.7229
+      }
     },
     {
       "date": "2026-11-17",
@@ -208,7 +253,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 21,
       "reference_close": 374.0,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -1.4706
+      }
     },
     {
       "date": "2026-11-17",
@@ -217,7 +264,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 22,
       "reference_close": 44.4,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": 0.4505
+      }
     },
     {
       "date": "2026-11-17",
@@ -226,7 +275,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 23,
       "reference_close": 97.1,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": 0.9269
+      }
     },
     {
       "date": "2026-11-17",
@@ -235,7 +286,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 24,
       "reference_close": 119.5,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": 0.0
+      }
     },
     {
       "date": "2026-11-17",
@@ -244,7 +297,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 25,
       "reference_close": 60.9,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": 2.2989
+      }
     },
     {
       "date": "2026-11-17",
@@ -253,7 +308,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 26,
       "reference_close": 39.7,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -0.2519
+      }
     },
     {
       "date": "2026-11-17",
@@ -262,7 +319,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 27,
       "reference_close": 205.0,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": 0.7317
+      }
     },
     {
       "date": "2026-11-17",
@@ -271,7 +330,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 28,
       "reference_close": 14.7,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -1.3605
+      }
     },
     {
       "date": "2026-11-17",
@@ -280,7 +341,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 29,
       "reference_close": 61.4,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -0.6515
+      }
     },
     {
       "date": "2026-11-17",
@@ -289,7 +352,9 @@
       "style": "EARLY_STRENGTH_WATCH",
       "rank": 30,
       "reference_close": 27.05,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": 0.0
+      }
     },
     {
       "date": "2026-11-17",
@@ -298,7 +363,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 1,
       "reference_close": 1135.0,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": 2.6432
+      }
     },
     {
       "date": "2026-11-17",
@@ -307,7 +374,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 2,
       "reference_close": 485.0,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -1.8557
+      }
     },
     {
       "date": "2026-11-17",
@@ -316,7 +385,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 3,
       "reference_close": 56.6,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": 1.5901
+      }
     },
     {
       "date": "2026-11-17",
@@ -325,7 +396,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 4,
       "reference_close": 533.0,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": 6.9418
+      }
     },
     {
       "date": "2026-11-17",
@@ -334,7 +407,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 5,
       "reference_close": 74.8,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -3.7433
+      }
     },
     {
       "date": "2026-11-17",
@@ -343,7 +418,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 6,
       "reference_close": 34.5,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -6.2319
+      }
     },
     {
       "date": "2026-11-17",
@@ -352,7 +429,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 7,
       "reference_close": 66.6,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -5.4054
+      }
     },
     {
       "date": "2026-11-17",
@@ -361,7 +440,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 8,
       "reference_close": 41.35,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": 0.6046
+      }
     },
     {
       "date": "2026-11-17",
@@ -370,7 +451,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 9,
       "reference_close": 268.0,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": 2.4254
+      }
     },
     {
       "date": "2026-11-17",
@@ -379,7 +462,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 10,
       "reference_close": 38.5,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -6.4935
+      }
     },
     {
       "date": "2026-11-17",
@@ -388,7 +473,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 11,
       "reference_close": 18.9,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": 1.8519
+      }
     },
     {
       "date": "2026-11-17",
@@ -397,7 +484,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 12,
       "reference_close": 435.5,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": 0.2296
+      }
     },
     {
       "date": "2026-11-17",
@@ -406,7 +495,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 13,
       "reference_close": 112.5,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": 7.5556
+      }
     },
     {
       "date": "2026-11-17",
@@ -415,7 +506,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 14,
       "reference_close": 14.35,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": 1.0453
+      }
     },
     {
       "date": "2026-11-17",
@@ -424,7 +517,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 15,
       "reference_close": 16.55,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": 2.719
+      }
     },
     {
       "date": "2026-11-17",
@@ -433,7 +528,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 16,
       "reference_close": 248.0,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": 0.8065
+      }
     },
     {
       "date": "2026-11-17",
@@ -442,7 +539,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 17,
       "reference_close": 18.55,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -3.2345
+      }
     },
     {
       "date": "2026-11-17",
@@ -451,7 +550,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 18,
       "reference_close": 101.0,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": 0.9901
+      }
     },
     {
       "date": "2026-11-17",
@@ -460,7 +561,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 19,
       "reference_close": 59.6,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -0.3356
+      }
     },
     {
       "date": "2026-11-17",
@@ -469,7 +572,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 20,
       "reference_close": 26.75,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": 2.8037
+      }
     },
     {
       "date": "2026-11-17",
@@ -478,7 +583,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 21,
       "reference_close": 15.6,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -2.8846
+      }
     },
     {
       "date": "2026-11-17",
@@ -487,7 +594,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 22,
       "reference_close": 3.03,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -1.6502
+      }
     },
     {
       "date": "2026-11-17",
@@ -496,7 +605,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 23,
       "reference_close": 39.2,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -3.9541
+      }
     },
     {
       "date": "2026-11-17",
@@ -505,7 +616,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 24,
       "reference_close": 62.9,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -0.159
+      }
     },
     {
       "date": "2026-11-17",
@@ -514,7 +627,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 25,
       "reference_close": 38.75,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -1.2903
+      }
     },
     {
       "date": "2026-11-17",
@@ -523,7 +638,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 26,
       "reference_close": 60.6,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": -0.165
+      }
     },
     {
       "date": "2026-11-17",
@@ -532,7 +649,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 27,
       "reference_close": 11.05,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": 0.905
+      }
     },
     {
       "date": "2026-11-17",
@@ -541,7 +660,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 28,
       "reference_close": 129.0,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": 0.3876
+      }
     },
     {
       "date": "2026-11-17",
@@ -550,7 +671,9 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 29,
       "reference_close": 39.4,
-      "forward_close_returns_pct": {}
+      "forward_close_returns_pct": {
+        "1": 1.5228
+      }
     },
     {
       "date": "2026-11-17",
@@ -559,11 +682,553 @@
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "rank": 30,
       "reference_close": 123.0,
+      "forward_close_returns_pct": {
+        "1": -2.439
+      }
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "4904",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 1,
+      "reference_close": 109.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "2609",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 2,
+      "reference_close": 60.5,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "2357",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 3,
+      "reference_close": 841.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "2451",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 4,
+      "reference_close": 218.5,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "3231",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 5,
+      "reference_close": 162.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "2382",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 6,
+      "reference_close": 265.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "6199",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 7,
+      "reference_close": 171.5,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "1519",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 8,
+      "reference_close": 478.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "5269",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 9,
+      "reference_close": 1165.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "5871",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 10,
+      "reference_close": 99.3,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "7750",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 11,
+      "reference_close": 1340.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "8415",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 12,
+      "reference_close": 41.6,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "1513",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 13,
+      "reference_close": 143.5,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "2912",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 14,
+      "reference_close": 214.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "3023",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 15,
+      "reference_close": 274.5,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "4966",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 16,
+      "reference_close": 402.5,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "2323",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 17,
+      "reference_close": 12.05,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "6414",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 18,
+      "reference_close": 327.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "2254",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 19,
+      "reference_close": 110.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "3227",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 20,
+      "reference_close": 185.5,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "4961",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 21,
+      "reference_close": 180.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "6957",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 22,
+      "reference_close": 393.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "2352",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 23,
+      "reference_close": 26.6,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "3596",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 24,
+      "reference_close": 136.5,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "5234",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 25,
+      "reference_close": 244.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "2363",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 26,
+      "reference_close": 46.4,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "2207",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 27,
+      "reference_close": 538.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "2645",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 28,
+      "reference_close": 162.5,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "2332",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 29,
+      "reference_close": 16.65,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "2633",
+      "style": "EARLY_STRENGTH_WATCH",
+      "rank": 30,
+      "reference_close": 25.65,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "3711",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 1,
+      "reference_close": 548.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "2395",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 2,
+      "reference_close": 589.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "3491",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 3,
+      "reference_close": 1510.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "3324",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 4,
+      "reference_close": 979.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "2345",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 5,
+      "reference_close": 1420.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "3653",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 6,
+      "reference_close": 4570.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "3189",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 7,
+      "reference_close": 579.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "2368",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 8,
+      "reference_close": 877.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "6510",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 9,
+      "reference_close": 2915.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "6139",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 10,
+      "reference_close": 587.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "6805",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 11,
+      "reference_close": 1760.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "2615",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 12,
+      "reference_close": 111.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "2449",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 13,
+      "reference_close": 194.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "3017",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 14,
+      "reference_close": 2715.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "3044",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 15,
+      "reference_close": 481.5,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "3661",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 16,
+      "reference_close": 3950.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "3665",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 17,
+      "reference_close": 1550.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "3715",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 18,
+      "reference_close": 140.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "4916",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 19,
+      "reference_close": 111.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "4977",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 20,
+      "reference_close": 197.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "6285",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 21,
+      "reference_close": 202.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "6442",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 22,
+      "reference_close": 1065.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "6223",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 23,
+      "reference_close": 4390.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "2413",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 24,
+      "reference_close": 53.3,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "4971",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 25,
+      "reference_close": 353.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "2441",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 26,
+      "reference_close": 101.5,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "3701",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 27,
+      "reference_close": 63.2,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "6443",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 28,
+      "reference_close": 27.75,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "8016",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 29,
+      "reference_close": 249.0,
+      "forward_close_returns_pct": {}
+    },
+    {
+      "date": "2026-11-18",
+      "session_index": 1,
+      "symbol": "3131",
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "rank": 30,
+      "reference_close": 1620.0,
       "forward_close_returns_pct": {}
     }
   ],
   "schema_version": 1,
   "data_source": "TWSE_TPEX_OFFICIAL_EOD",
   "metric_note": "Future close vs signal-day close, NOT achievable execution return. No entry fill, fees, slippage, or intraday stop simulated.",
-  "last_date": "2026-11-17"
+  "last_date": "2026-11-18"
 }
