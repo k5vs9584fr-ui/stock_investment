@@ -1,0 +1,27 @@
+name: Fair Strategy Replay Tests
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/fair_strategy_backtest.py'
+      - 'tests/test_fair_strategy_backtest.py'
+      - 'docs/validation/fair-strategy-replay.md'
+      - '.github/workflows/fair_strategy_replay.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Offline replay and anti-lookahead tests
+        run: python -m unittest discover -s tests -p 'test_fair_strategy_backtest.py' -v
+      - name: Verify CLI parameters
+        run: python scripts/fair_strategy_backtest.py --help
