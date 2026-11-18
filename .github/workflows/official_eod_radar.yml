@@ -33,14 +33,19 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_official_eod_radar.py' -v
       - name: Offline risk-first ranking tests
         run: python -m unittest discover -s tests -p 'test_risk_first_radar.py' -v
+      - name: Test EOD signal journal
+        run: python -m unittest discover -s tests -p 'test_eod_signal_journal.py' -v
       - name: Verify both official exchanges and scan all eligible stocks
         run: python scripts/official_eod_radar.py
+      - name: Record research-only forward outcomes
+        if: github.ref == 'refs/heads/main'
+        run: python scripts/eod_signal_journal.py
       - name: Persist result or explicit failure state
         if: always() && github.ref == 'refs/heads/main'
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add data/official_eod_radar.json
+          git add data/official_eod_radar.json data/eod_signal_journal.json
           git diff --cached --quiet || git commit -m "Update official EOD radar status"
           git pull --rebase -X theirs origin main
           git push
