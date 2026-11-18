@@ -36,7 +36,7 @@ jobs:
       - name: Verify both official exchanges and scan all eligible stocks
         run: python scripts/official_eod_radar.py
       - name: Persist result or explicit failure state
-        if: always()
+        if: always() && github.ref == 'refs/heads/main'
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
