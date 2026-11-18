@@ -20,7 +20,7 @@ class CohortTests(unittest.TestCase):
         cohort = analyze(rows)["cohorts"][-1]
         self.assertEqual(cohort["signal_count"], 50)
         self.assertEqual(cohort["signal_dates"], 1)
-        self.assertFalse(cohort["eligible_to_report"])
+        self.assertFalse(cohort["t5"]["eligible_to_report"])
 
     def test_metrics_and_cost_not_claimed_executable(self):
         rows = [r(f"2026-02-{10+i:02d}", str(2000+i), 8, value, value*2)
@@ -33,6 +33,14 @@ class CohortTests(unittest.TestCase):
         self.assertEqual(out["positive_fraction"], .6667)
         self.assertEqual(report["decision"],
                          "EVIDENCE_NOT_SUFFICIENT_TO_REMOVE_BREAKOUT_STRATEGY")
+
+    def test_unmatured_t10_does_not_enter_t5_sample(self):
+        rows = [r(f"2026-02-{10+i:02d}", str(2000+i), 8, 2, 3) for i in range(3)]
+        rows[0]["t10_return_pct"] = ""
+        report = analyze(rows, minimum_rows=3, minimum_dates=3)
+        self.assertEqual(report["cohorts"][-1]["t5"]["completed_samples"], 3)
+        self.assertEqual(report["cohorts"][-1]["t10"]["completed_samples"], 2)
+        self.assertFalse(report["cohorts"][-1]["t10"]["eligible_to_report"])
 
     def test_duplicate_and_nonfinite_rejected(self):
         x = r("2026-02-09", "2337", 8, 1, 2)
