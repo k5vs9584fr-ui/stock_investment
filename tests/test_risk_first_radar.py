@@ -38,7 +38,7 @@ class RiskFirstTests(unittest.TestCase):
         self.assertIsNone(evaluate(sample(close=float("nan"))))
 
     def test_sorted_lists_do_not_promote_breakouts(self):
-        reversal = sample(symbol="1234", close=96, high=110, low=90,
+        reversal = sample(symbol="1234", close=96, high=100, low=94,
                           change_pct=-6, strength=.65)
         breakout = sample(symbol="5678", close=105, high=105, low=100,
                           change_pct=7, strength=1)
