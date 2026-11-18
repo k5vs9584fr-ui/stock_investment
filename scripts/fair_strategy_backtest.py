@@ -3,7 +3,7 @@
 REQUIRES a normalized historical market panel: date,symbol,open,high,low,close,
 volume,trade_value. Only one panel and common signal dates are compared.
 No prices obtained from the future are used in signal generation.
-Hypothetical fills at NEXT OPEN and exits at D+1 / D+2 CLOSE; no stop/target
+Hypothetical fills at NEXT OPEN and exits after ONE / TWO nights; no stop/target
 orders assumed filled. This is research, not an actual execution backtest.
 """
 from __future__ import annotations
@@ -25,7 +25,7 @@ REQUIRED = {"date", "symbol", "open", "high", "low", "close", "volume", "trade_v
 STRATEGIES = ("PANIC_REVERSAL_WATCH", "EXTENDED_OR_BREAKOUT_WATCH")
 COST_BPS = 58.5  # illustrative fees both directions 0.1425% each + sale tax 0.3%.
 # 28.5 bp commissions + 30 bp sale tax = 58.5 bp, no fee discounts.
-HOLD_SESSIONS = (1, 2)
+HOLD_NIGHTS = (1, 2)
 
 
 def read_panel(path):
@@ -99,8 +99,8 @@ def replay(panel, dates, *, minimum_symbols=100, minimum_signal_dates=10,
     missing = defaultdict(int)
     date_coverage = []
     for idx in range(1, len(dates) - 3):
-        # Purge training signals whose D+2 settlement would touch test dates.
-        if idx < split_index and idx + max(HOLD_SESSIONS) >= split_index:
+        # Purge training signals whose overnight exit would touch test dates.
+        if idx < split_index and idx + max(HOLD_NIGHTS) + 1 >= split_index:
             missing["purged_train_test_boundary_signals"] += 1
             continue
         day = dates[idx]
@@ -129,9 +129,9 @@ def replay(panel, dates, *, minimum_symbols=100, minimum_signal_dates=10,
             if not math.isfinite(entry_open) or entry_open <= 0:
                 missing["invalid_next_open"] += 1
                 continue
-            for hold in HOLD_SESSIONS:
-                # Hold=1 means exit at entry-day close; hold=2 means exit next day's close.
-                exit_idx = idx + hold
+            for hold in HOLD_NIGHTS:
+                # Buy at signal D+1 open. One night exits D+2 close; two nights D+3 close.
+                exit_idx = idx + hold + 1
                 exitbar = panel.get((dates[exit_idx], symbol))
                 if exitbar is None:
                     missing[f"missing_exit_{hold}"] += 1
@@ -144,7 +144,7 @@ def replay(panel, dates, *, minimum_symbols=100, minimum_signal_dates=10,
                 gross = (exitbar["close"] / entry_open - 1) * 100
                 records.append({
                     "date": day, "symbol": symbol, "strategy": item["style"],
-                    "hold_sessions": hold, "signal_close": panel[(day, symbol)]["close"],
+                    "holding_nights": hold, "signal_close": panel[(day, symbol)]["close"],
                     "entry_date": dates[idx+1], "exit_date": dates[exit_idx],
                     "entry_open": entry_open, "exit_close": exitbar["close"],
                     "gross_return_pct": round(gross, 6),
@@ -155,14 +155,14 @@ def replay(panel, dates, *, minimum_symbols=100, minimum_signal_dates=10,
     summaries = []
     for stage in ("train", "test"):
         for style in STRATEGIES:
-            for hold in HOLD_SESSIONS:
+            for hold in HOLD_NIGHTS:
                 trades = [x for x in records if x["stage"] == stage and
-                          x["strategy"] == style and x["hold_sessions"] == hold]
+                          x["strategy"] == style and x["holding_nights"] == hold]
                 days = {x["date"] for x in trades}
                 enough = (len(trades) >= minimum_trades_per_style and
                           len(days) >= minimum_signal_dates)
                 summary = {"stage": stage, "strategy": style,
-                           "holding_sessions": hold, "completed_trades": len(trades),
+                           "holding_nights": hold, "completed_trades": len(trades),
                            "independent_signal_dates": len(days),
                            "sufficient_data": enough}
                 if enough:
@@ -190,10 +190,10 @@ def replay(panel, dates, *, minimum_symbols=100, minimum_signal_dates=10,
     # Equal-weight each style within each date, then take paired daily differences.
     paired = []
     for stage in ("train", "test"):
-        for hold in HOLD_SESSIONS:
+        for hold in HOLD_NIGHTS:
             grouped = defaultdict(lambda: defaultdict(list))
             for trade in records:
-                if trade["stage"] == stage and trade["hold_sessions"] == hold:
+                if trade["stage"] == stage and trade["holding_nights"] == hold:
                     grouped[trade["date"]][trade["strategy"]].append(trade["net_return_pct"])
             paired_days = []
             for signal_date, strategies in sorted(grouped.items()):
@@ -201,7 +201,7 @@ def replay(panel, dates, *, minimum_symbols=100, minimum_signal_dates=10,
                     reversal = sum(strategies[STRATEGIES[0]]) / len(strategies[STRATEGIES[0]])
                     breakout = sum(strategies[STRATEGIES[1]]) / len(strategies[STRATEGIES[1]])
                     paired_days.append((signal_date, reversal - breakout))
-            summary = {"stage": stage, "holding_sessions": hold,
+            summary = {"stage": stage, "holding_nights": hold,
                        "matched_signal_dates": len(paired_days),
                        "sufficient_matched_dates": len(paired_days) >= minimum_signal_dates}
             if summary["sufficient_matched_dates"]:
