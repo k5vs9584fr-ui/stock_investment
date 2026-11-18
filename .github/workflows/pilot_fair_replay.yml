@@ -1,0 +1,47 @@
+name: One-off V3 Historical Replay Pilot
+
+on:
+  push:
+    branches:
+      - research/fair-replay-pilot-20261118
+    paths:
+      - '.github/workflows/pilot_fair_replay.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  research-pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 28
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate backtest and ingestion logic
+        run: |
+          python -m unittest discover -s tests -p 'test_fair_strategy_backtest.py' -v
+          python -m unittest discover -s tests -p 'test_fetch_replay_history.py' -v
+      - name: Install research data provider
+        run: python -m pip install --disable-pip-version-check yfinance
+      - name: Fetch 160 deterministic sample stocks (2026-05 to 2026-11)
+        run: |
+          python scripts/fetch_replay_history.py \
+            --start 2026-05-01 --end 2026-11-13 \
+            --limit 160 --pause 0.15
+      - name: Replay both signals with same panel and next-open entries
+        run: |
+          python scripts/fair_strategy_backtest.py \
+            --panel data/historical_replay_panel.csv \
+            --min-symbols 100 --min-dates 10 --min-trades 30
+      - name: Save research evidence even after provider errors
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fair-strategy-pilot-20261118
+          path: |
+            data/historical_replay_panel.metadata.json
+            data/fair_backtest_report.json
+          if-no-files-found: warn
+          retention-days: 14
