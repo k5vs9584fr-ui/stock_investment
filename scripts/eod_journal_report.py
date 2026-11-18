@@ -14,7 +14,7 @@ MIN_SAMPLE = 30
 MIN_SESSIONS = 10
 
 
-def summarize(journal, min_sample=MIN_SAMPLE):
+def summarize(journal, min_sample=MIN_SAMPLE, min_dates=MIN_SESSIONS):
     groups = defaultdict(list)
     dates = defaultdict(set)
     for s in journal.get("signals", []):
@@ -29,7 +29,7 @@ def summarize(journal, min_sample=MIN_SAMPLE):
         vals = sorted(returns)
         row = {"style": style, "horizon_sessions": int(horizon),
                "completed_samples": n, "independent_signal_dates": trading_dates,
-               "sufficient_sample": n >= min_sample and trading_dates >= MIN_SESSIONS}
+               "sufficient_sample": n >= min_sample and trading_dates >= min_dates}
         if n >= min_sample and trading_dates >= MIN_SESSIONS:
             row.update({
                 "mean_close_return_pct": round(sum(vals) / n, 3),
@@ -44,7 +44,7 @@ def summarize(journal, min_sample=MIN_SAMPLE):
         "data_status": "RESEARCH_CLOSE_TO_CLOSE_ONLY",
         "last_date": journal.get("last_date"),
         "min_sample": min_sample,
-        "min_independent_signal_dates": MIN_SESSIONS,
+        "min_independent_signal_dates": min_dates,
         "groups": table,
         "disclaimer": (
             "Look-ahead-free signal-date close to future close research. "
