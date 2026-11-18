@@ -35,6 +35,8 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_risk_first_radar.py' -v
       - name: Test EOD signal journal
         run: python -m unittest discover -s tests -p 'test_eod_signal_journal.py' -v
+      - name: Test research outcome summaries
+        run: python -m unittest discover -s tests -p 'test_eod_journal_report.py' -v
       - name: Verify both official exchanges and scan all eligible stocks
         run: python scripts/official_eod_radar.py
       - name: Record research-only forward outcomes
