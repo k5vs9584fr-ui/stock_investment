@@ -55,13 +55,15 @@ def clean_rows(rows):
             symbol = str(row["ticker"]).strip()
             change = float(row["day_chg_pct"])
             strength = float(row["close_strength"])
-            t5 = float(row["t5_return_pct"])
-            t10 = float(row["t10_return_pct"])
+            raw5 = row["t5_return_pct"]
+            raw10 = row["t10_return_pct"]
+            t5 = float(raw5) if raw5 is not None and str(raw5).strip() else None
+            t10 = float(raw10) if raw10 is not None and str(raw10).strip() else None
         except (TypeError, ValueError) as exc:
             raise ValueError("INVALID_HISTORICAL_ROW") from exc
         if (len(date) != 10 or not date[:4].isdigit()
                 or not symbol.isdigit() or not all(
-                    math.isfinite(x) for x in (change, strength, t5, t10))
+                    math.isfinite(x) for x in (change, strength, t5, t10) if x is not None)
                 or not (0 <= strength <= 1) or not (-100 < change <= 100)):
             raise ValueError("INVALID_HISTORICAL_ROW")
         key = (date, symbol)
@@ -84,20 +86,29 @@ def analyze(rows, minimum_rows=MIN_ROWS, minimum_dates=MIN_DATES):
         items = groups[cohort]
         dates = {x["date"] for x in items}
         observation = {"cohort": cohort, "signal_count": len(items),
-                       "signal_dates": len(dates),
-                       "eligible_to_report": len(items) >= minimum_rows and
-                       len(dates) >= minimum_dates}
-        if not observation["eligible_to_report"]:
-            observation["reason"] = "INSUFFICIENT_SAMPLE_OR_DATES"
-            result.append(observation)
-            continue
+                       "signal_dates": len(dates)}
         for horizon in ("t5", "t10"):
-            returns = sorted(x[horizon] for x in items)
+            matured = [x for x in items if x[horizon] is not None]
+            horizon_dates = {x["date"] for x in matured}
+            enough = (len(matured) >= minimum_rows and
+                      len(horizon_dates) >= minimum_dates)
+            if not enough:
+                observation[horizon] = {
+                    "completed_samples": len(matured),
+                    "completed_signal_dates": len(horizon_dates),
+                    "eligible_to_report": False,
+                    "reason": "INSUFFICIENT_MATURED_OUTCOMES_OR_DATES",
+                }
+                continue
+            returns = sorted(x[horizon] for x in matured)
             means_by_date = defaultdict(list)
-            for item in items:
+            for item in matured:
                 means_by_date[item["date"]].append(item[horizon])
             daily_means = [sum(v) / len(v) for v in means_by_date.values()]
             observation[horizon] = {
+                "completed_samples": len(matured),
+                "completed_signal_dates": len(horizon_dates),
+                "eligible_to_report": True,
                 "mean_pct": round(sum(returns) / len(returns), 4),
                 "median_pct": round(_median(returns), 4),
                 "positive_fraction": round(
