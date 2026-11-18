@@ -1,0 +1,33 @@
+name: Historical Signal Cohort Audit
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/historical_cohort_audit.py'
+      - 'tests/test_historical_cohort_audit.py'
+      - 'data/surge_backtest.csv'
+      - '.github/workflows/historical_cohort_audit.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Historical cohort tests
+        run: python -m unittest discover -s tests -p 'test_historical_cohort_audit.py' -v
+      - name: Run historical research audit
+        run: python scripts/historical_cohort_audit.py
+      - name: Save audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: historical-cohort-audit
+          path: data/historical_cohort_audit.json
+          retention-days: 30
