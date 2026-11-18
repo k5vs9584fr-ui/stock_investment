@@ -52,6 +52,12 @@ class ReplayTests(unittest.TestCase):
         result = replay(panel, dates, minimum_symbols=2,
                         minimum_signal_dates=1, minimum_trades_per_style=1)
         self.assertGreater(result["trade_count"], 0)
+        for trade in result["sample_trade_audit"]:
+            signal_index = dates.index(trade["date"])
+            self.assertEqual(trade["entry_date"], dates[signal_index + 1])
+            self.assertEqual(trade["exit_date"],
+                             dates[signal_index + 1 + trade["holding_nights"]])
+            self.assertGreater(trade["exit_date"], trade["entry_date"])
         self.assertEqual(result["data_status"], "HISTORICAL_RESEARCH_ONLY")
         self.assertTrue(any(s["sufficient_matched_dates"]
                             for s in result["paired_same_date_comparisons"]))
