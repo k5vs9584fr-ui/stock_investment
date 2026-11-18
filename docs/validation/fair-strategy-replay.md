@@ -23,7 +23,7 @@ Default rules:
 - Single unified daily panel, complete-date coverage gate of 100 securities.
 - Generate each signal from its own current OHLCV and previous session close only. Never use later prices or after-close revisions for the signal.
 - Explicitly classify V2 panic-reversal eligible setups and extended/breakout setups. Other setups remain watch-only; the engine does not use future outcomes in selection.
-- Both strategies get the same entry rule: next session **open**. Simulated exits: close of entry day and following trading day. Buying at next open is an idealized fill, not guaranteed.
+- Both strategies get the same entry rule: next session **open**. Simulated exits: after **one night** (D+2 close) and **two nights** (D+3 close) following a D+1 open entry. Never use entry-day close as an overnight exit. Buying at next open is an idealized fill, not guaranteed.
 - Use one common calendar of dates from the supplied data; missing ticker next-open or exit prices skip that observation and are counted.
 - Gross = exit close / entry open - 1; illustrative roundtrip cost defaults to **0.585%** (two full-rate 0.1425% commissions plus 0.3% sell tax). Brokerage discounts, minimum fees, day-trade tax, and execution frictions may differ. This is a simplified cost scenario, not a broker settlement.
 - Record path min low vs next open. **Do not simulate stop fills or intraday sequencing from daily OHLCV**, particularly in gaps.
