@@ -182,7 +182,36 @@ def replay(panel, dates, *, minimum_symbols=100, minimum_signal_dates=10,
                 else:
                     summary["reason"] = "NOT_ENOUGH_SIGNALS_OR_DATES"
                 summaries.append(summary)
+    # Matched dates compare both strategies under the same calendar regime.
+    # Equal-weight each style within each date, then take paired daily differences.
+    paired = []
+    for stage in ("train", "test"):
+        for hold in HOLD_SESSIONS:
+            grouped = defaultdict(lambda: defaultdict(list))
+            for trade in records:
+                if trade["stage"] == stage and trade["hold_sessions"] == hold:
+                    grouped[trade["date"]][trade["strategy"]].append(trade["net_return_pct"])
+            paired_days = []
+            for signal_date, strategies in sorted(grouped.items()):
+                if all(strategies.get(kind) for kind in STRATEGIES):
+                    reversal = sum(strategies[STRATEGIES[0]]) / len(strategies[STRATEGIES[0]])
+                    breakout = sum(strategies[STRATEGIES[1]]) / len(strategies[STRATEGIES[1]])
+                    paired_days.append((signal_date, reversal - breakout))
+            summary = {"stage": stage, "holding_sessions": hold,
+                       "matched_signal_dates": len(paired_days),
+                       "sufficient_matched_dates": len(paired_days) >= minimum_signal_dates}
+            if summary["sufficient_matched_dates"]:
+                diffs = [v for _, v in paired_days]
+                summary.update({
+                    "mean_reversal_minus_breakout_pct": round(sum(diffs)/len(diffs), 4),
+                    "fraction_reversal_outperformed": round(sum(x > 0 for x in diffs)/len(diffs), 4),
+                    "worst_daily_relative_pct": round(min(diffs), 4),
+                })
+            else:
+                summary["reason"] = "NOT_ENOUGH_MATCHED_SIGNAL_DATES"
+            paired.append(summary)
     return {
+        "paired_same_date_comparisons": paired,
         "data_status": "HISTORICAL_RESEARCH_ONLY",
         "period_start": dates[0], "period_end": dates[-1],
         "symbols_with_any_data": len(symbols), "market_sessions": len(dates),
