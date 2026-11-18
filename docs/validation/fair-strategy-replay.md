@@ -27,7 +27,11 @@ Default rules:
 - Use one common calendar of dates from the supplied data; missing ticker next-open or exit prices skip that observation and are counted.
 - Gross = exit close / entry open - 1; illustrative roundtrip cost defaults to **0.585%** (two full-rate 0.1425% commissions plus 0.3% sell tax). Brokerage discounts, minimum fees, day-trade tax, and execution frictions may differ. This is a simplified cost scenario, not a broker settlement.
 - Record path min low vs next open. **Do not simulate stop fills or intraday sequencing from daily OHLCV**, particularly in gaps.
-- Date-ordered train/test split. No thresholds tuned with held-out dates. Check missing, universe coverage, and report data sufficiency per strategy and holding horizon.
+- Date-ordered train/test split. Additional paired comparison uses ONLY signal dates with both strategies, equal-weighting each style within date before differencing. If fewer than ten matched days it withholds the comparison. No thresholds tuned with held-out dates. Check missing, universe coverage, and report data sufficiency per strategy and holding horizon.
+
+## Obtain history (optional manual GitHub Actions run)
+
+Use the **Historical Fair Strategy Research** workflow (Actions → Run workflow), which uses the *explicit TWSE/TPEx market field* in current stock universe and reproducible symbol-hash sampling. It downloads raw unadjusted daily bars from yfinance (not an official full-market archive), exports a normalized panel, then runs this replay. Default sample 250 stocks; at least 100 symbols must be present for the replay to proceed. The provider can fail or limit requests; the job will report the issue rather than fabricate results. Output metadata explicitly states that trade value is **close × volume proxy** and lists missing symbols. Results go to a GitHub Actions artifact; the workflow does not commit large vendor datasets to the repository. This is a *biased research sample* due to current-universe survivorship and price-adjustment limitations, not full-market evidence.
 
 ## Interpretation caveats
 
