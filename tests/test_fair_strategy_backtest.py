@@ -30,7 +30,7 @@ def mock_panel():
         price = 100
         for i, day in enumerate(dates):
             # Alternating down and rebound sessions (both strategies arise).
-            nextprice = price * (.95 if i % 2 else 1.07)
+            nextprice = price * (.95 if (i + (symbol == "1002")) % 2 else 1.07)
             row = bar(day, symbol, nextprice, price)
             panel[(day, symbol)] = row
             price = nextprice
@@ -53,6 +53,8 @@ class ReplayTests(unittest.TestCase):
                         minimum_signal_dates=1, minimum_trades_per_style=1)
         self.assertGreater(result["trade_count"], 0)
         self.assertEqual(result["data_status"], "HISTORICAL_RESEARCH_ONLY")
+        self.assertTrue(any(s["sufficient_matched_dates"]
+                            for s in result["paired_same_date_comparisons"]))
         self.assertTrue(any(s["strategy"] == "EXTENDED_OR_BREAKOUT_WATCH"
                             and s["completed_trades"] > 0
                             for s in result["comparisons"]))
