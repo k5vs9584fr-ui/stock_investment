@@ -11,21 +11,26 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "data" / "eod_signal_journal.json"
 DEST = ROOT / "data" / "eod_signal_report.json"
 MIN_SAMPLE = 30
+MIN_SESSIONS = 10
 
 
-def summarize(journal, min_sample=MIN_SAMPLE):
+def summarize(journal, min_sample=MIN_SAMPLE, min_dates=MIN_SESSIONS):
     groups = defaultdict(list)
+    dates = defaultdict(set)
     for s in journal.get("signals", []):
         for horizon, ret in s.get("forward_close_returns_pct", {}).items():
             if ret is not None and horizon in ("1", "2", "5"):
                 groups[(s["style"], horizon)].append(float(ret))
+                dates[(s["style"], horizon)].add(s["date"])
     table = []
     for (style, horizon), returns in sorted(groups.items()):
         n = len(returns)
+        trading_dates = len(dates[(style, horizon)])
         vals = sorted(returns)
         row = {"style": style, "horizon_sessions": int(horizon),
-               "completed_samples": n, "sufficient_sample": n >= min_sample}
-        if n >= min_sample:
+               "completed_samples": n, "independent_signal_dates": trading_dates,
+               "sufficient_sample": n >= min_sample and trading_dates >= min_dates}
+        if n >= min_sample and trading_dates >= min_dates:
             row.update({
                 "mean_close_return_pct": round(sum(vals) / n, 3),
                 "median_close_return_pct": round(
@@ -33,12 +38,13 @@ def summarize(journal, min_sample=MIN_SAMPLE):
                 "positive_close_fraction": round(sum(v > 0 for v in vals) / n, 4),
             })
         else:
-            row["reason"] = "INSUFFICIENT_COMPLETED_SAMPLES"
+            row["reason"] = "INSUFFICIENT_SAMPLES_OR_SIGNAL_DATES"
         table.append(row)
     return {
         "data_status": "RESEARCH_CLOSE_TO_CLOSE_ONLY",
         "last_date": journal.get("last_date"),
         "min_sample": min_sample,
+        "min_independent_signal_dates": min_dates,
         "groups": table,
         "disclaimer": (
             "Look-ahead-free signal-date close to future close research. "

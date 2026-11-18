@@ -39,6 +39,12 @@ class JournalTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "MISMATCHED"):
             advance(j, bad)
 
+    def test_reference_price_must_match_official_close(self):
+        bad = day("2026-11-16", 90)
+        bad["risk_first_v2"]["top_risk_first"][0]["reference_close"] = 100
+        with self.assertRaisesRegex(ValueError, "SIGNAL_REFERENCE_PRICE_MISMATCH"):
+            advance({}, bad)
+
     def test_watch_only_restriction(self):
         bad = day("2026-11-16", 90)
         bad["risk_first_v2"]["top_risk_first"][0]["entry_confirmed"] = True

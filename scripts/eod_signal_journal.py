@@ -58,6 +58,8 @@ def advance(journal, daily):
             reference = float(row["reference_close"])
             if symbol not in price_map or reference <= 0:
                 continue
+            if abs(reference - price_map[symbol]) > max(0.01, 0.0001 * reference):
+                raise ValueError("SIGNAL_REFERENCE_PRICE_MISMATCH")
             signals.append({
                 "date": date_key, "session_index": index, "symbol": symbol,
                 "style": style, "rank": rank, "reference_close": reference,
