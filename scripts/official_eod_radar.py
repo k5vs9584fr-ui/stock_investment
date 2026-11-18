@@ -7,6 +7,8 @@ from datetime import date, datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
+from risk_first_radar import build_risk_radar
+
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "data" / "official_eod_radar.json"
 UNIVERSE = ROOT / "data" / "stock_universe.json"
@@ -184,8 +186,11 @@ def build(payloads, universe, today):
     reversal_watch.sort(
         key=lambda r: (r["close_strength"], r["value"]), reverse=True
     )
+    # Official EOD gives watchlists, never executable entry calls.
+    risk_radar = build_risk_radar(list(mapped.values()))
     # Strong closes are research watchlist entries, not confirmed next-day entry prices.
     return {
+        "risk_first_v2": risk_radar,
         "scan_date": today.isoformat(),
         "generated_at": datetime.now(ZoneInfo("Asia/Taipei")).isoformat(timespec="seconds"),
         "source": "TWSE_TPEX_OFFICIAL_EOD",
@@ -235,7 +240,7 @@ def main():
         }, ensure_ascii=False, indent=2), encoding="utf-8")
         raise
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(json.dumps({k: v for k, v in payload.items() if k not in ("all_scanned", "top_strong_close", "top_next_day_watch", "top_early_stage", "top_reversal_watch")}, ensure_ascii=False, indent=2))
+    print(json.dumps({k: v for k, v in payload.items() if k not in ("all_scanned", "top_strong_close", "top_next_day_watch", "top_early_stage", "top_reversal_watch", "risk_first_v2")}, ensure_ascii=False, indent=2))
     print("NEXT-DAY WATCH:", [(r["symbol"], r["name"], r["change_pct"]) for r in payload["top_next_day_watch"][:15]])
 
 
