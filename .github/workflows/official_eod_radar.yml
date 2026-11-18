@@ -45,7 +45,8 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add data/official_eod_radar.json data/eod_signal_journal.json
+          git add data/official_eod_radar.json
+          if [ -f data/eod_signal_journal.json ]; then git add data/eod_signal_journal.json; fi
           git diff --cached --quiet || git commit -m "Update official EOD radar status"
           git pull --rebase -X theirs origin main
           git push
