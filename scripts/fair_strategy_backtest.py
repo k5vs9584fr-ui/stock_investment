@@ -16,7 +16,9 @@ from collections import defaultdict
 from datetime import date
 from pathlib import Path
 
-from risk_first_radar import evaluate
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from scripts.risk_first_radar import evaluate
 
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED = {"date", "symbol", "open", "high", "low", "close", "volume", "trade_value"}
