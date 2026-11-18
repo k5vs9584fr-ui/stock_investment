@@ -1,4 +1,4 @@
-name: One-off V3 Historical Replay Pilot
+name: One-off V3 Overnight Replay Pilot
 
 on:
   push:
@@ -30,7 +30,7 @@ jobs:
           python scripts/fetch_replay_history.py \
             --start 2026-05-01 --end 2026-11-13 \
             --limit 160 --pause 0.15
-      - name: Replay both signals with same panel and next-open entries
+      - name: Replay both signals with true one- or two-night holds
         run: |
           python scripts/fair_strategy_backtest.py \
             --panel data/historical_replay_panel.csv \
@@ -39,7 +39,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: fair-strategy-pilot-20261118
+          name: overnight-strategy-pilot-20261118
           path: |
             data/historical_replay_panel.metadata.json
             data/fair_backtest_report.json
