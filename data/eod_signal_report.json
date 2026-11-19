@@ -1,12 +1,20 @@
 {
   "data_status": "RESEARCH_CLOSE_TO_CLOSE_ONLY",
-  "last_date": "2026-11-18",
+  "last_date": "2026-11-19",
   "min_sample": 30,
   "min_independent_signal_dates": 10,
   "groups": [
     {
       "style": "EARLY_STRENGTH_WATCH",
       "horizon_sessions": 1,
+      "completed_samples": 60,
+      "independent_signal_dates": 2,
+      "sufficient_sample": false,
+      "reason": "INSUFFICIENT_SAMPLES_OR_SIGNAL_DATES"
+    },
+    {
+      "style": "EARLY_STRENGTH_WATCH",
+      "horizon_sessions": 2,
       "completed_samples": 30,
       "independent_signal_dates": 1,
       "sufficient_sample": false,
@@ -15,6 +23,14 @@
     {
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "horizon_sessions": 1,
+      "completed_samples": 60,
+      "independent_signal_dates": 2,
+      "sufficient_sample": false,
+      "reason": "INSUFFICIENT_SAMPLES_OR_SIGNAL_DATES"
+    },
+    {
+      "style": "EXTENDED_OR_BREAKOUT_WATCH",
+      "horizon_sessions": 2,
       "completed_samples": 30,
       "independent_signal_dates": 1,
       "sufficient_sample": false,
@@ -23,6 +39,14 @@
     {
       "style": "PANIC_REVERSAL_WATCH",
       "horizon_sessions": 1,
+      "completed_samples": 2,
+      "independent_signal_dates": 1,
+      "sufficient_sample": false,
+      "reason": "INSUFFICIENT_SAMPLES_OR_SIGNAL_DATES"
+    },
+    {
+      "style": "PANIC_REVERSAL_WATCH",
+      "horizon_sessions": 2,
       "completed_samples": 2,
       "independent_signal_dates": 1,
       "sufficient_sample": false,
