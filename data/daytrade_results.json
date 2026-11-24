@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-23T23:44:09+08:00",
-  "scan_date": "2026-11-23",
+  "generated_at": "2026-11-24T18:39:06+08:00",
+  "scan_date": "2026-11-24",
   "source": "error",
   "data_status": "ERROR_NO_LIVE_MARKET_DATA",
   "error": "MARKET_DATA_AUTH_FAILED HTTP 403: check FUGLE_API_KEY, plan access, and endpoint permissions",
