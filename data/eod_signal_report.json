@@ -1,54 +1,54 @@
 {
   "data_status": "RESEARCH_CLOSE_TO_CLOSE_ONLY",
-  "last_date": "2026-11-24",
+  "last_date": "2026-11-25",
   "min_sample": 30,
   "min_independent_signal_dates": 10,
   "groups": [
     {
       "style": "EARLY_STRENGTH_WATCH",
       "horizon_sessions": 1,
-      "completed_samples": 141,
-      "independent_signal_dates": 5,
+      "completed_samples": 170,
+      "independent_signal_dates": 6,
       "sufficient_sample": false,
       "reason": "INSUFFICIENT_SAMPLES_OR_SIGNAL_DATES"
     },
     {
       "style": "EARLY_STRENGTH_WATCH",
       "horizon_sessions": 2,
-      "completed_samples": 115,
-      "independent_signal_dates": 4,
+      "completed_samples": 145,
+      "independent_signal_dates": 5,
       "sufficient_sample": false,
       "reason": "INSUFFICIENT_SAMPLES_OR_SIGNAL_DATES"
     },
     {
       "style": "EARLY_STRENGTH_WATCH",
       "horizon_sessions": 5,
-      "completed_samples": 30,
-      "independent_signal_dates": 1,
+      "completed_samples": 60,
+      "independent_signal_dates": 2,
       "sufficient_sample": false,
       "reason": "INSUFFICIENT_SAMPLES_OR_SIGNAL_DATES"
     },
     {
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "horizon_sessions": 1,
-      "completed_samples": 122,
-      "independent_signal_dates": 5,
+      "completed_samples": 152,
+      "independent_signal_dates": 6,
       "sufficient_sample": false,
       "reason": "INSUFFICIENT_SAMPLES_OR_SIGNAL_DATES"
     },
     {
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "horizon_sessions": 2,
-      "completed_samples": 94,
-      "independent_signal_dates": 4,
+      "completed_samples": 124,
+      "independent_signal_dates": 5,
       "sufficient_sample": false,
       "reason": "INSUFFICIENT_SAMPLES_OR_SIGNAL_DATES"
     },
     {
       "style": "EXTENDED_OR_BREAKOUT_WATCH",
       "horizon_sessions": 5,
-      "completed_samples": 30,
-      "independent_signal_dates": 1,
+      "completed_samples": 60,
+      "independent_signal_dates": 2,
       "sufficient_sample": false,
       "reason": "INSUFFICIENT_SAMPLES_OR_SIGNAL_DATES"
     },
@@ -63,8 +63,8 @@
     {
       "style": "PANIC_REVERSAL_WATCH",
       "horizon_sessions": 2,
-      "completed_samples": 2,
-      "independent_signal_dates": 1,
+      "completed_samples": 3,
+      "independent_signal_dates": 2,
       "sufficient_sample": false,
       "reason": "INSUFFICIENT_SAMPLES_OR_SIGNAL_DATES"
     },
